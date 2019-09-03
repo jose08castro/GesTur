@@ -1,4 +1,7 @@
-package com.example.gestur.logic;
+package com.example.gestur.logic.forms;
+
+import com.example.gestur.logic.BinaryChapter;
+import com.example.gestur.logic.forms.BinaryForm;
 
 import java.util.ArrayList;
 

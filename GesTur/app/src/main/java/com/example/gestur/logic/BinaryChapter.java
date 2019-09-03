@@ -1,5 +1,7 @@
 package com.example.gestur.logic;
 
+import com.example.gestur.logic.forms.BinaryForm;
+
 import java.util.ArrayList;
 
 public class BinaryChapter{
