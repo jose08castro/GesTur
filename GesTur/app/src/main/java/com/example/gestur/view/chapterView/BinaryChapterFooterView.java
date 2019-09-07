@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.gestur.logic.BinaryChapter;
+import com.example.gestur.logic.chapters.BinaryChapter;
 import com.example.gestur.view.IFooterView;
 
 public class BinaryChapterFooterView implements IFooterView, IBinaryViewConstants {

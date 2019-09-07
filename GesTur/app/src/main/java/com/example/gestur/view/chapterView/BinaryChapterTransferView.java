@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.example.gestur.logic.BinaryChapter;
+import com.example.gestur.logic.chapters.BinaryChapter;
 import com.example.gestur.view.FormView;
 import com.example.gestur.view.IChapterTransferView;
 

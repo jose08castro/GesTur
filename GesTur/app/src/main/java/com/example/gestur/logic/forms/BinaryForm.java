@@ -1,19 +1,15 @@
 package com.example.gestur.logic.forms;
 
-import com.example.gestur.logic.BinaryChapter;
+import com.example.gestur.logic.chapters.BinaryChapter;
 
 import java.util.ArrayList;
 
-public class BinaryForm{
+public class BinaryForm extends Form{
 
-    protected String name;
-    private int totalPoints;
-    private int achievedPoints;
-    private float achievedPercentage;
     protected ArrayList<BinaryChapter> chapters;
 
     public BinaryForm(String name,ArrayList<BinaryChapter> chapters){
-        this.name = name;
+        super(name);
         this.chapters = new ArrayList<>();
         totalPoints = 0;
         achievedPercentage = 0f;
@@ -21,7 +17,7 @@ public class BinaryForm{
         addChapters(chapters);
         update();
     }
-    protected void addChapters(ArrayList<BinaryChapter> chapters){
+    public void addChapters(ArrayList<BinaryChapter> chapters){
         if(chapters!=null) {
             for (BinaryChapter chapter : chapters) {
                 addChapter(chapter);
@@ -29,13 +25,16 @@ public class BinaryForm{
         }
     }
     public void addChapter(BinaryChapter chapter){
-        chapter.setForm(this);
-        chapters.add(chapter);
+        if(chapter!=null){
+            chapter.setForm(this);
+            chapters.add(chapter);
+        }
     }
 
     public ArrayList<BinaryChapter> getChapters(){
         return chapters;
     }
+
     public void update(){
         if(chapters!=null) {
             totalPoints = 0;
@@ -48,20 +47,6 @@ public class BinaryForm{
             }
         }
     }
-    public String getName(){
-        return name;
-    }
-    public int getAchievedPoints(){
-        update();
-        return achievedPoints;
-    }
-    public int getTotalPoints(){
-        update();
-        return totalPoints;
-    }
-    public float getAchievedPercentage(){
-        update();
-        return achievedPercentage;
-    }
+
 
 }

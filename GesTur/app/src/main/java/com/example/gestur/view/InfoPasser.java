@@ -1,8 +1,8 @@
 package com.example.gestur.view;
 
-import com.example.gestur.logic.BinaryChapter;
-import com.example.gestur.logic.BinaryForm;
-import com.example.gestur.logic.ConCentersBinaryForm;
+import com.example.gestur.logic.chapters.BinaryChapter;
+import com.example.gestur.logic.forms.BinaryForm;
+import com.example.gestur.logic.forms.ConCentersBinaryForm;
 
 public class InfoPasser {
 

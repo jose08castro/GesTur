@@ -9,8 +9,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.gestur.logic.BinaryChapter;
-import com.example.gestur.logic.BinaryForm;
+import com.example.gestur.logic.chapters.BinaryChapter;
+import com.example.gestur.logic.forms.BinaryForm;
 import com.example.gestur.view.CanvasView;
 import com.example.gestur.view.InfoPasser;
 import com.example.gestur.view.ChapterView;

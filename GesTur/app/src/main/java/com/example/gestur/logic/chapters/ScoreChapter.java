@@ -1,28 +1,23 @@
-package com.example.gestur.logic;
+package com.example.gestur.logic.chapters;
 
+import com.example.gestur.logic.questions.IScoreQuestion;
+import com.example.gestur.logic.questions.ScoreObsQuestion;
+import com.example.gestur.logic.questions.ScoreQuestion;
 import com.example.gestur.logic.forms.ScoreForm;
 
 import java.util.ArrayList;
 
-public class ScoreChapter {
+public class ScoreChapter extends Chapter{
 
-    private ScoreForm form;
-    private String number;
-    private String name;
     private ArrayList<ScoreQuestion> questions;
-    private float totalPercentage;
     private int achievedPoints;
     private int totalPoints;
     private int applicablePoints;
     private int naPoints;
-    private float achievedChapterPercentage;
-    private float achievedFormPercentage;
 
     public ScoreChapter(String num, String name, ArrayList<ScoreQuestion> questions, float totalPercentage){
-        number = num;
-        this. name = name;
+        super(name,num,totalPercentage);
         this.questions = new ArrayList<>();
-        this.totalPercentage = totalPercentage;
         form = null;
         addQuestions(questions);
         update();
@@ -64,7 +59,7 @@ public class ScoreChapter {
         }
     }
     public ScoreForm getForm() {
-        return form;
+        return (ScoreForm) form;
     }
     public void setForm(ScoreForm form) {
         this.form = form;
@@ -81,18 +76,6 @@ public class ScoreChapter {
         questions.add(quest);
     }
 
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -101,52 +84,18 @@ public class ScoreChapter {
         return questions;
     }
 
-    public void setQuestions(ArrayList<ScoreQuestion> questions) {
-        this.questions = questions;
-    }
-
-    public float getTotalPercentage() {
-        return totalPercentage;
-    }
-
-    public void setTotalPercentage(float totalPercentage) {
-        this.totalPercentage = totalPercentage;
-    }
-
     public int getAchievedChapterPoints() {
         return achievedPoints;
-    }
-
-    public void setAchievedPoints(int achievedChapterPoints) {
-        this.achievedPoints = achievedChapterPoints;
     }
 
     public int getTotalPoints() {
         return totalPoints;
     }
 
-    public void setTotalPoints(int totalChapterPoints) {
-        this.totalPoints = totalChapterPoints;
-    }
-
-    public float getAchievedPercentage() {
-        return achievedChapterPercentage;
-    }
-
-    public void setAchievedChapterPercentage(float achievedChapterPercentage) {
-        this.achievedChapterPercentage = achievedChapterPercentage;
-    }
-
-    public float getAchievedFormPercentage() {
-        return achievedFormPercentage;
-    }
-
-    public void setAchievedFormPercentage(float achievedFormPercentage) {
-        this.achievedFormPercentage = achievedFormPercentage;
-    }
     public int getApplicablePoints(){
         return applicablePoints;
     }
+
     public int getNaPoints(){
         return naPoints;
     }

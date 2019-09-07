@@ -4,19 +4,21 @@ import com.example.gestur.logic.chapters.ScoreChapter;
 
 import java.util.ArrayList;
 
-public class SpaForm extends ScoreForm{
+public class CafeteriaFondaSodaForm extends ScoreForm{
 
     private String establishmentName;
+    private int tables;
+    private int places;
     private int collaborators;
-    private String typology;
-    private int rooms;
+    private String type;
 
-    public SpaForm(String establishmentName,int collabs,String type, int rooms,String name, ArrayList<ScoreChapter> chapters) {
+    public CafeteriaFondaSodaForm(String establishmentName, int tables, int places, int collabs, String name, ArrayList<ScoreChapter> chapters,String type) {
         super(name, chapters);
         this.establishmentName = establishmentName;
+        this.tables = tables;
+        this.places = places;
         this.collaborators = collabs;
-        this.typology = type;
-        this.rooms = rooms;
+        this.type = type;
     }
     @Override
     public void addChapters(ArrayList<ScoreChapter> chapters){

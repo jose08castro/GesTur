@@ -1,26 +1,25 @@
 package com.example.gestur.logic.forms;
 
-import com.example.gestur.logic.ScoreChapter;
+import com.example.gestur.logic.chapters.ScoreChapter;
 
 import java.util.ArrayList;
 
-public class ScoreForm {
+public class ScoreForm extends Form{
 
-    private String name;
-    private int totalPoints;
-    private int applicablePoints;
-    private int achievedPoints;
-    private int NApoints;
-    private float achievedPercentage;
-    private ArrayList<ScoreChapter> chapters;
+    protected int applicablePoints;
+    protected int NApoints;
+    protected ArrayList<ScoreChapter> chapters;
 
     public ScoreForm(String name,ArrayList<ScoreChapter> chapters){
-        this.name = name;
+        super(name);
+        applicablePoints = 0;
+        NApoints = 0;
         this.chapters = new ArrayList<>();
         addChapters(chapters);
         update();
     }
 
+    @Override
     public void update(){
         totalPoints = 0;
         applicablePoints = 0;
@@ -37,7 +36,8 @@ public class ScoreForm {
             }
         }
     }
-    protected void addChapters(ArrayList<ScoreChapter> chapters){
+
+    public void addChapters(ArrayList<ScoreChapter> chapters){
         if(chapters!=null) {
             for (ScoreChapter chapter : chapters) {
                 addChapter(chapter);
@@ -45,6 +45,7 @@ public class ScoreForm {
         }
     }
     public void addChapter(ScoreChapter chapter){
+
         chapter.setForm(this);
         chapters.add(chapter);
     }

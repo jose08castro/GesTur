@@ -3,8 +3,8 @@ package com.example.gestur.view.chapterView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.gestur.logic.BinaryChapter;
-import com.example.gestur.logic.BinaryQuestion;
+import com.example.gestur.logic.chapters.BinaryChapter;
+import com.example.gestur.logic.questions.BinaryQuestion;
 import com.example.gestur.view.ChapterView;
 import com.example.gestur.view.IPanelView;
 

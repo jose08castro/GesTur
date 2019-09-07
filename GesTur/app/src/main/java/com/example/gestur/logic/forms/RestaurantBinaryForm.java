@@ -1,7 +1,6 @@
 package com.example.gestur.logic.forms;
 
-import com.example.gestur.logic.BinaryChapter;
-import com.example.gestur.logic.forms.BinaryForm;
+import com.example.gestur.logic.chapters.BinaryChapter;
 
 import java.util.ArrayList;
 
@@ -22,6 +21,22 @@ public class RestaurantBinaryForm extends BinaryForm {
         this.places = places;
         this.collaborators = collaborators;
     }
+    @Override
+    public void addChapters(ArrayList<BinaryChapter> chapters){
+        if(chapters!=null) {
+            for (BinaryChapter chapter : chapters) {
+                addChapter(chapter);
+            }
+        }
+    }
+    @Override
+    public void addChapter(BinaryChapter chapter){
+        if(chapter!=null){
+            chapter.setForm(this);
+            chapters.add(chapter);
+        }
+    }
+
 
     public String getEstablishmentName() {
         return establishmentName;

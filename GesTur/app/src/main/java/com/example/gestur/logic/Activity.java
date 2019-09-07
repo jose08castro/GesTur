@@ -5,14 +5,12 @@ import java.util.ArrayList;
 public class Activity {
 
     private String name;
-    private ArrayList<User> usersInCharge;
     private Address location;
     private Boolean isOperative;
     private String category;
 
-    public Activity(String name, ArrayList<User> usersInCharge, Address location, Boolean isOperative, String category) {
+    public Activity(String name, Address location, Boolean isOperative, String category) {
         this.name = name;
-        this.usersInCharge = usersInCharge;
         this.location = location;
         this.isOperative = isOperative;
         this.category = category;
@@ -24,14 +22,6 @@ public class Activity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public ArrayList<User> getUsersInCharge() {
-        return usersInCharge;
-    }
-
-    public void setUsersInCharge(ArrayList<User> usersInCharge) {
-        this.usersInCharge = usersInCharge;
     }
 
     public Address getLocation() {

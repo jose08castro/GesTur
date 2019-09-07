@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.gestur.logic.BinaryForm;
+import com.example.gestur.logic.forms.BinaryForm;
 import com.example.gestur.view.IFooterView;
 
 public class BinaryFormFooterView implements IFooterView,IBinaryFormFooterViewConstants {

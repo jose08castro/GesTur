@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.gestur.logic.RestaurantBinaryForm;
+import com.example.gestur.logic.forms.RestaurantBinaryForm;
 import com.example.gestur.view.IHeaderView;
 
 public class RestaurantHeaderView implements IHeaderView,IRestaurantHeaderViewConstants {

@@ -6,9 +6,7 @@ import android.graphics.Point;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.PasswordTransformationMethod;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,9 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.gestur.R;
-import com.example.gestur.logic.BinaryChapter;
-import com.example.gestur.logic.BinaryQuestion;
-import com.example.gestur.logic.ConCentersBinaryForm;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -27,12 +22,12 @@ public class RegisterActivity extends AppCompatActivity {
     private int height;
 
     private TextView textTitle;
+    private TextView textActivityRegister;
+
     private EditText editUserName;
     private EditText editPassword;
-    private CheckBox checkRemember;
-    private Button buttonLogin;
-    private TextView textNoAccount;
-    private Button buttonRegister;
+
+
 
     private ConstraintLayout layout;
     private int totalY;
@@ -54,28 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
             setItemsYVertical();
             setItemsSizesVertical();
         }
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(context, FormView.class);
-                startActivity(i);
-            }
-        });
-
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Intent i = new Intent(context, RegisterActivity.class);
-                //startActivity(i);
-            }
-        });
-        layout.addView(textTitle);
-        layout.addView(editUserName);
-        layout.addView(editPassword);
-        layout.addView(checkRemember);
-        layout.addView(buttonLogin);
-        layout.addView(textNoAccount);
-        layout.addView(buttonRegister);
 
 
         //DB db = new DB();
@@ -230,10 +203,6 @@ public class RegisterActivity extends AppCompatActivity {
         textTitle = new TextView(this);
         editUserName = new EditText(this);
         editPassword = new EditText(this);
-        checkRemember = new CheckBox(this);
-        buttonLogin = new Button(this);
-        textNoAccount = new TextView(this);
-        buttonRegister = new Button(this);
         layout = findViewById(R.id.layoutLogin);
     }
 

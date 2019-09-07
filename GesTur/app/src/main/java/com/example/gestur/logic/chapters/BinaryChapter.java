@@ -1,31 +1,22 @@
-package com.example.gestur.logic;
+package com.example.gestur.logic.chapters;
 
+import com.example.gestur.logic.questions.BinaryQuestion;
 import com.example.gestur.logic.forms.BinaryForm;
 
 import java.util.ArrayList;
 
-public class BinaryChapter{
+public class BinaryChapter extends Chapter{
 
-    private int number;
-    private String name;
     private ArrayList<BinaryQuestion> questions;
-    private int totalPercentage;
     private int yesQuestions;
     private int noQuestions;
     private int NAQuestions;
-    private float achievedChapterPercentage;
-    private float achievedFormPercentage;
-    private BinaryForm form;
 
-    public BinaryChapter(String name,int num, ArrayList<BinaryQuestion> questions, int percentage){
-        this.name = name;
-        number = num;
-        totalPercentage = percentage;
+    public BinaryChapter(String name,String num, ArrayList<BinaryQuestion> questions, int percentage){
+        super(name,num,percentage);
         yesQuestions = 0;
         noQuestions = 0;
         NAQuestions = 0;
-        achievedChapterPercentage = 0f;
-        achievedFormPercentage = 0f;
         form = null;
         this.questions = new ArrayList<>();
         addQuestions(questions);
@@ -37,16 +28,14 @@ public class BinaryChapter{
             }
         }
     }
-    public void setForm(BinaryForm form){
-        this.form = form;
-    }
     public BinaryForm getForm(){
-        return form;
+        return (BinaryForm) form;
     }
     public void addQuestion(BinaryQuestion question){
         question.setChapter(this);
         questions.add(question);
     }
+
     public void update(){
         updateTotals();
         updatePercentages();
@@ -79,16 +68,17 @@ public class BinaryChapter{
             }
         }
     }
-    public String getName(){ return name; }
-    public int getNumber(){ return number; }
+
+
     public int getTotalQuestions(){return questions.size();}
     public int getYesQuestions(){return yesQuestions;}
     public int getNoQuestions(){return noQuestions;}
     public int getNAQuestions(){return NAQuestions;}
-    public int getTotalPercentage(){return totalPercentage;}
-    public float getAchievedChapterPercentage(){return achievedChapterPercentage;}
-    public float getAchievedFormPercentage(){return achievedFormPercentage;}
+
+
+
     public ArrayList<BinaryQuestion> getQuestions(){ return questions; }
+
     public int getTotalPoints(){
         if(questions!=null){
             int count = questions.size();

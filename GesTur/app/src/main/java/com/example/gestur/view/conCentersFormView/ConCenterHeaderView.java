@@ -6,7 +6,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.gestur.logic.ConCentersBinaryForm;
+import com.example.gestur.logic.forms.ConCentersBinaryForm;
 import com.example.gestur.view.IHeaderView;
 
 public class ConCenterHeaderView implements IHeaderView, IConCenterHeaderViewConstants {

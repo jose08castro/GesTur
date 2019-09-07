@@ -2,12 +2,10 @@ package com.example.gestur.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Display;
 import android.view.Gravity;
@@ -18,11 +16,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.gestur.R;
-import com.example.gestur.logic.BinaryChapter;
-import com.example.gestur.logic.BinaryQuestion;
-import com.example.gestur.logic.ConCentersBinaryForm;
-import com.example.gestur.view.InfoPasser;
-import com.example.gestur.view.FormView;
+import com.example.gestur.logic.chapters.BinaryChapter;
+import com.example.gestur.logic.forms.BinaryForm;
+import com.example.gestur.logic.forms.CafeteriaFondaSodaForm;
+import com.example.gestur.logic.forms.RestaurantBinaryForm;
+import com.example.gestur.logic.forms.ScoreForm;
+import com.example.gestur.logic.forms.SpaForm;
+import com.example.gestur.logic.questions.BinaryQuestion;
+import com.example.gestur.logic.forms.ConCentersBinaryForm;
 
 public class LoginActivity extends AppCompatActivity implements ILoginActivityConstants{
 
@@ -71,8 +72,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent i = new Intent(context, RegisterActivity.class);
-                //startActivity(i);
+                startActivity(new Intent(context, RegisterUserActivity.class));
             }
         });
         layout.addView(textTitle);
@@ -231,44 +231,47 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
         layout = findViewById(R.id.layoutLogin);
     }
     private void setData(){
-        //String name = "CALIFICACION DE ACTIVIDADES TURISTICAS TEMATICAS";
-        String name = "CALIFICACION DE CENTROS DE CONGRESOS Y CONVENCIONES";
-        //BinaryForm form = new BinaryForm(name,null);
-        ConCentersBinaryForm form = new ConCentersBinaryForm(name,"",0,0,0,null);
+        String name1 = "CALIFICACION DE ACTIVIDADES TURISTICAS TEMATICAS";
+        String name2 = "MANUAL DE HOTELES";
+        String name3 = "CALIFICACION PARA AGENCIAS DE VIAJES";
+        String name4 = "CALIFICACION PARA ALQUILER DE AUTOMOVILES,CUADRACICLOS,MOTOCICLETAS";
+        String name5 = "CALIFICACION PARA LINEAS AEREAS";
+        String name6 = "CALIFICACION PARA TRANSPORTE ACUATICO Y TOURS";
+        String name7 = "CALIFICACION DE CENTROS DE CONGRESOS Y CONVENCIONES";
+        String name8 = "Calificación Empresa Organizadora de Congresos y Convenciones";
+        String name9 = "Calificación de Restaurantes";
+        String name10 = "Calificación para Fondas y Sodas ";
+        String name11 = "Calificación para Cafeterías";
+        String name12 = "Calificación para Actividades Recreativas Acuáticas";
+        String name13 = "Calificación Actividades Recreativas Aéreas";
+        String name14 = "Calificación de Spa";
 
-        BinaryChapter binaryChapter1 = new BinaryChapter("Capitulo 1: De la Organizacion",1,null,17);
+        BinaryForm formTematics = new BinaryForm(name1,null);
+        ScoreForm  formHotels = new ScoreForm(name2,null);
+        BinaryForm formTravelAgencies = new BinaryForm(name3,null);
+        BinaryForm formRentVehicules = new BinaryForm(name4,null);
+        BinaryForm formAirLines = new BinaryForm(name5,null);
+        BinaryForm formWaterTransport = new BinaryForm(name6,null);
+        ConCentersBinaryForm formCenters = new ConCentersBinaryForm(name7,"Centro Artes",1,1,1,null);
+        BinaryForm formEnterprise = new BinaryForm(name8,null);
+        RestaurantBinaryForm formRestaurant = new RestaurantBinaryForm(name9,"KFC","",0,0,0,null);
+        CafeteriaFondaSodaForm formSoda = new CafeteriaFondaSodaForm(name10,0,0,0,"Rio de Janeiro",null,"Soda");
+        CafeteriaFondaSodaForm formCafeteria = new CafeteriaFondaSodaForm(name11,0,0,0,"Rio de Janeiro",null,"Cafeteria");
+        BinaryForm formWaterActivities = new BinaryForm(name12,null);
+        BinaryForm formAirActivities = new BinaryForm(name13,null);
+        SpaForm formSpa = new SpaForm("Spa",0,"Montaña",0,name14,null);
 
-        binaryChapter1.addQuestion(new BinaryQuestion("1.Cumple con las regulaciones del Ministerio de Salud.",1,false,false,false));
-        binaryChapter1.addQuestion(new BinaryQuestion("1.Cumple con las regulaciones de Hacienda.",2,false,false,false));
-        binaryChapter1.addQuestion(new BinaryQuestion("Inscrito ante las autoridades locales.",3,false,false,false));
-        binaryChapter1.addQuestion(new BinaryQuestion("Posee un seguro de Responsabilidad Civil.",4,false,false,false));
+        BinaryChapter binaryChapter1 = new BinaryChapter("Capitulo 1: De la Organizacion","I",null,17);
 
-        BinaryChapter binaryChapter2 = new BinaryChapter("Capitulo 2: De la Operacion",2,null,39);
-        binaryChapter2.addQuestion(new BinaryQuestion("2.Cumple con las regulaciones del Ministerio de Salud.",1,false,false,false));
-        binaryChapter2.addQuestion(new BinaryQuestion("2,.Cumple con las regulaciones de Hacienda.",2,false,false,false));
-        binaryChapter2.addQuestion(new BinaryQuestion("Inscrito ante las autoridades locales.",3,false,false,false));
-        binaryChapter2.addQuestion(new BinaryQuestion("Posee un seguro de Responsabilidad Civil.",4,false,false,false));
+        binaryChapter1.addQuestion(new BinaryQuestion("1.Cumple con las regulaciones del Ministerio de Salud.","1",false,false,false));
+        binaryChapter1.addQuestion(new BinaryQuestion("1.Cumple con las regulaciones de Hacienda.","2",false,false,false));
+        binaryChapter1.addQuestion(new BinaryQuestion("Inscrito ante las autoridades locales.","3",false,false,false));
+        binaryChapter1.addQuestion(new BinaryQuestion("Posee un seguro de Responsabilidad Civil.","4",false,false,false));
 
-        BinaryChapter binaryChapter3 = new BinaryChapter("Capitulo 3: Variables ambientales y culturales",3,null,20);
-        binaryChapter3.addQuestion(new BinaryQuestion("3.Cumple con las regulaciones del Ministerio de Salud.",1,false,false,false));
-        binaryChapter3.addQuestion(new BinaryQuestion("Cumple con las regulaciones de Hacienda.",2,false,false,false));
-        binaryChapter3.addQuestion(new BinaryQuestion("Inscrito ante las autoridades locales.",3,false,false,false));
-        binaryChapter3.addQuestion(new BinaryQuestion("Posee un seguro de Responsabilidad Civil.",4,false,false,false));
+        formTematics.addChapter(binaryChapter1);
 
-        BinaryChapter binaryChapter4 = new BinaryChapter("Capitulo 4: Del servicio al cliente",4,null,24);
-        binaryChapter4.addQuestion(new BinaryQuestion("4.Cumple con las regulaciones del Ministerio de Salud.",1,false,false,false));
-        binaryChapter4.addQuestion(new BinaryQuestion("4.Cumple con las regulaciones de Hacienda.",2,false,false,false));
-        binaryChapter4.addQuestion(new BinaryQuestion("Inscrito ante las autoridades locales.",3,false,false,false));
-        binaryChapter4.addQuestion(new BinaryQuestion("Posee un seguro de Responsabilidad Civil.",4,false,false,false));
 
-        form.addChapter(binaryChapter1);
-        form.addChapter(binaryChapter2);
-        form.addChapter(binaryChapter3);
-        form.addChapter(binaryChapter4);
-
-        //InfoPasser.getInstance().setCurrentForm(form);
-
-        InfoPasser.getInstance().setCurrentForm(form);
+        InfoPasser.getInstance().setCurrentForm(formTematics);
     }
     private void getScreenSizes()
     {

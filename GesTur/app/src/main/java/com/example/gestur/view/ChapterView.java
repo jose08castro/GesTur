@@ -7,7 +7,7 @@ import android.view.Display;
 import android.widget.RelativeLayout;
 
 import com.example.gestur.R;
-import com.example.gestur.logic.BinaryChapter;
+import com.example.gestur.logic.chapters.BinaryChapter;
 import com.example.gestur.view.chapterView.BinaryChapterFooterView;
 import com.example.gestur.view.chapterView.BinaryChapterHeaderView;
 import com.example.gestur.view.chapterView.BinaryChapterPanelView;
