@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.gestur.view.main.TrackableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollRegisterUser"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.RegisterUserActivity">
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".view.main.RegisterUserActivity">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/layoutRegisterUser"
         android:layout_width="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_height="wrap_content">
 
     </android.support.constraint.ConstraintLayout>
-</ScrollView>
+</com.example.gestur.view.main.TrackableScrollView>

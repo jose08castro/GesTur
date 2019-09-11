@@ -1,7 +1,6 @@
-package com.example.gestur.view;
+package com.example.gestur.view.main;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Point;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,15 +10,14 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.gestur.R;
+import com.example.gestur.view.IRegisterUserConstants;
 
-public class RegisterUserActivity extends AppCompatActivity implements IRegisterUserConstants{
+public class RegisterUserActivity extends AppCompatActivity implements IRegisterUserConstants {
     final Context context = this;
     private int width;
     private int height;
@@ -59,12 +57,14 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
     private ConstraintLayout layout;
     private int totalY;
 
+    private TrackableScrollView scroll;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
 
-        //final ScrollView scroll = findViewById(R.id.scrollRegisterUser);
+        scroll = findViewById(R.id.scrollRegisterUser);
 
         totalY = 0;
         layout = findViewById(R.id.layoutRegisterUser);
@@ -85,7 +85,102 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         }
         addComponents();
         layout.setMinHeight(totalY+100);
+        setFocusListeners();
+    }
+    private void setFocusListeners(){
+        layout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                scroll.setScrollingEnabled(true);
+                editIdNumber.clearFocus();
+                editFullName.clearFocus();
+                editEmail.clearFocus();
+                editUserName.clearFocus();
+                editPassword.clearFocus();
+                editConfirmPassword.clearFocus();
+                editPhone.clearFocus();
+                return false;
+            }
+        });
 
+
+        editIdNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    scroll.scrollTo(0, (int) textIdNumber.getY());
+                    scroll.setScrollingEnabled(false);
+                }else{
+                    scroll.setScrollingEnabled(true);
+                }
+            }
+        });
+        editFullName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    scroll.scrollTo(0, (int) textFullName.getY());
+                    scroll.setScrollingEnabled(false);
+                }else{
+                    scroll.setScrollingEnabled(true);
+                }
+            }
+        });
+        editEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    scroll.scrollTo(0, (int) textEmail.getY());
+                    scroll.setScrollingEnabled(false);
+                }else{
+                    scroll.setScrollingEnabled(true);
+                }
+            }
+        });
+        editUserName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    scroll.scrollTo(0, (int) textUserName.getY());
+                    scroll.setScrollingEnabled(false);
+                }else{
+                    scroll.setScrollingEnabled(true);
+                }
+            }
+        });
+        editPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    scroll.scrollTo(0, (int) textPassword.getY());
+                    scroll.setScrollingEnabled(false);
+                }else{
+                    scroll.setScrollingEnabled(true);
+                }
+            }
+        });
+        editConfirmPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    scroll.scrollTo(0, (int) textConfirmPassword.getY());
+                    scroll.setScrollingEnabled(false);
+                }else{
+                    scroll.setScrollingEnabled(true);
+                }
+            }
+        });
+        editPhone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    scroll.scrollTo(0, (int) textPhone.getY());
+                    scroll.setScrollingEnabled(false);
+                }else{
+                    scroll.setScrollingEnabled(true);
+                }
+            }
+        });
 
     }
     private void addComponents(){

@@ -1,4 +1,4 @@
-package com.example.gestur.view;
+package com.example.gestur.view.main;
 
 import java.util.ArrayList;
 

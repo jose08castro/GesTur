@@ -1,4 +1,4 @@
-package com.example.gestur.view;
+package com.example.gestur.view.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,8 +24,10 @@ import com.example.gestur.logic.forms.ScoreForm;
 import com.example.gestur.logic.forms.SpaForm;
 import com.example.gestur.logic.questions.BinaryQuestion;
 import com.example.gestur.logic.forms.ConCentersBinaryForm;
+import com.example.gestur.view.ILoginActivityConstants;
+import com.example.gestur.view.InfoPasser;
 
-public class LoginActivity extends AppCompatActivity implements ILoginActivityConstants{
+public class LoginActivity extends AppCompatActivity implements ILoginActivityConstants {
 
     final Context context = this;
     private int width;
@@ -64,7 +66,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, FormView.class);
+                Intent i = new Intent(context, LobbyActivity.class);
                 startActivity(i);
             }
         });
