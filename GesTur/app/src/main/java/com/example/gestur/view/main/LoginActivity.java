@@ -81,9 +81,8 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showSingIn();
-                //Intent i = new Intent(context, LobbyActivity.class);
-                //startActivity(i);
+                //showSingIn();
+                startActivity(new Intent(context, LobbyActivity.class));
             }
         });
 
