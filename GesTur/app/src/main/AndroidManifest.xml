@@ -9,11 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.RegisterUserActivity"></activity>
-        <activity android:name=".view.RegisterActivity" />
+        <activity
+            android:name=".view.main.LobbyActivity"
+            android:label="@string/title_activity_lobby"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".view.main.RegisterUserActivity" />
+        <activity android:name=".view.main.RegisterActivity" />
         <activity android:name=".view.FormView" />
         <activity android:name=".view.ChapterView" />
-        <activity android:name=".view.LoginActivity">
+        <activity android:name=".view.main.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

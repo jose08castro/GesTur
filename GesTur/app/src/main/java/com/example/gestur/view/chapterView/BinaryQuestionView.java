@@ -9,7 +9,7 @@ import com.example.gestur.logic.questions.BinaryQuestion;
 import com.example.gestur.view.ChapterView;
 import com.example.gestur.view.IQuestion;
 
-public class BinaryChapterQuestionView implements IQuestion, IBinaryViewConstants {
+public class BinaryQuestionView implements IQuestion, IBinaryViewConstants {
 
     private BinaryQuestion binaryQuestion;
     private TextView questionView;
@@ -24,7 +24,9 @@ public class BinaryChapterQuestionView implements IQuestion, IBinaryViewConstant
     private View.OnClickListener NoListener;
     private View.OnClickListener NAListener;
 
-    public BinaryChapterQuestionView(BinaryQuestion binaryQuestion, ChapterView context){
+    private int totalY;
+
+    public BinaryQuestionView(BinaryQuestion binaryQuestion, ChapterView context){
         this.binaryQuestion = binaryQuestion;
         questionView = new TextView(context);
         numberView = new TextView(context);
@@ -36,6 +38,7 @@ public class BinaryChapterQuestionView implements IQuestion, IBinaryViewConstant
 
         questionView.setText(binaryQuestion.getQuestion());
         numberView.setText(String.valueOf(binaryQuestion.getNumber()));
+        totalY = 0;
         setListeners();
     }
     @Override
@@ -85,6 +88,12 @@ public class BinaryChapterQuestionView implements IQuestion, IBinaryViewConstant
         layout.addView(buttonNo);
         layout.addView(buttonNA);
     }
+
+    @Override
+    public int getHeight() {
+        return totalY;
+    }
+
     private void setListeners(){
         YesListener = new View.OnClickListener(){
             public void onClick(View v) {

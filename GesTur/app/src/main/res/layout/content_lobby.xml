@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.gestur.view.main.TrackableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollRegister"
+    android:id="@+id/scrollLobby"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.main.RegisterActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".view.main.LobbyActivity"
+    tools:showIn="@layout/app_bar_lobby">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/layoutRegister"
+        android:id="@+id/layoutLobby"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
     </android.support.constraint.ConstraintLayout>
-</com.example.gestur.view.main.TrackableScrollView>
+</ScrollView>

@@ -1,8 +1,9 @@
-package com.example.gestur.view;
+package com.example.gestur.view.main;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gestur.R;
 import com.example.gestur.logic.chapters.BinaryChapter;
@@ -24,8 +26,18 @@ import com.example.gestur.logic.forms.ScoreForm;
 import com.example.gestur.logic.forms.SpaForm;
 import com.example.gestur.logic.questions.BinaryQuestion;
 import com.example.gestur.logic.forms.ConCentersBinaryForm;
+import com.example.gestur.view.FormView;
+import com.example.gestur.view.ILoginActivityConstants;
+import com.example.gestur.view.InfoPasser;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity extends AppCompatActivity implements ILoginActivityConstants{
+import java.util.Arrays;
+import java.util.List;
+
+public class LoginActivity extends AppCompatActivity implements ILoginActivityConstants {
 
     final Context context = this;
     private int width;
@@ -42,10 +54,15 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
     private ConstraintLayout layout;
     private int totalY;
 
+    private List<AuthUI.IdpConfig> providers;
+    private int MY_REQUEST_CODE = 7117;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        providers = Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build());
 
         getScreenSizes();
         setData();
@@ -64,8 +81,9 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, FormView.class);
-                startActivity(i);
+                showSingIn();
+                //Intent i = new Intent(context, LobbyActivity.class);
+                //startActivity(i);
             }
         });
 
@@ -76,8 +94,8 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
             }
         });
         layout.addView(textTitle);
-        layout.addView(editUserName);
-        layout.addView(editPassword);
+        //layout.addView(editUserName);
+        //layout.addView(editPassword);
         layout.addView(checkRemember);
         layout.addView(buttonLogin);
         layout.addView(textNoAccount);
@@ -87,6 +105,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
         //DB db = new DB();
         //db.registerUser("josueggss73@gmail.com","warrior73");
 
+        //FirebaseFirestore db = FirebaseFirestore.getInstance();
     }
     private void setItemsConfig(){
         textTitle.setText(text_Title);
@@ -284,5 +303,27 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
     private void setY(View view, float value){
         view.setY(totalY);
         totalY+=value;
+    }
+    private void showSingIn(){
+        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .setTheme(R.style.MyTheme)
+                .build(),MY_REQUEST_CODE
+        );
+    }
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode == MY_REQUEST_CODE){
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+            if(resultCode==RESULT_OK){
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                startActivity(new Intent(context, LobbyActivity.class));
+            }
+            else{
+                Toast.makeText(this,22+response.getError().getMessage(),Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 }

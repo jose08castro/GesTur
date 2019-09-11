@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "696160089458-fihcm4l02ofp8eqbqvnt1r1o8iuh7udo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gestur",
+            "certificate_hash": "080bc7daa6f8c6aabe5263c99f6c985edc919aeb"
+          }
+        },
+        {
           "client_id": "696160089458-r8o09nifarhqlc3s55eet68h6cp2pos0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

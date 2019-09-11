@@ -25,7 +25,7 @@ public class BinaryChapterPanelView implements IPanelView, IBinaryViewConstants 
 
     private int panelHeight;
 
-    private ArrayList<BinaryChapterQuestionView> questions;
+    private ArrayList<BinaryQuestionView> questions;
     private BinaryChapter chapter;
     private ChapterView context;
 
@@ -51,7 +51,7 @@ public class BinaryChapterPanelView implements IPanelView, IBinaryViewConstants 
     public void createQuestions(ChapterView context){
         questions = new ArrayList<>();
         for(BinaryQuestion question: chapter.getQuestions()){
-            questions.add(new BinaryChapterQuestionView(question,context));
+            questions.add(new BinaryQuestionView(question,context));
         }
     }
 
