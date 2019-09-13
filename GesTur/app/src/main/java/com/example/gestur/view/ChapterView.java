@@ -1,5 +1,6 @@
 package com.example.gestur.view;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import com.example.gestur.view.chapterView.BinaryChapterFooterView;
 import com.example.gestur.view.chapterView.BinaryChapterHeaderView;
 import com.example.gestur.view.chapterView.BinaryChapterPanelView;
 import com.example.gestur.view.chapterView.BinaryChapterTransferView;
+import com.example.gestur.view.main.LobbyActivity;
 
 public class ChapterView extends AppCompatActivity {
 
@@ -92,5 +94,9 @@ public class ChapterView extends AppCompatActivity {
         display.getSize(size);
         width = size.x;
         height = size.y;
+    }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, FormView.class));
     }
 }

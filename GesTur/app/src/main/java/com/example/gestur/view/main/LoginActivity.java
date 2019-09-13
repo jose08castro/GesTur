@@ -262,7 +262,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
         String name14 = "Calificación de Spa";
 
         BinaryForm formTematics = new BinaryForm(name1,1,null);
-        ScoreForm  formHotels = new ScoreForm(name2,1,null);
+        /*ScoreForm  formHotels = new ScoreForm(name2,1,null);
         BinaryForm formTravelAgencies = new BinaryForm(name3,1,null);
         BinaryForm formRentVehicules = new BinaryForm(name4,1,null);
         BinaryForm formAirLines = new BinaryForm(name5,1,null);
@@ -275,16 +275,155 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
         BinaryForm formWaterActivities = new BinaryForm(name12,1,null);
         BinaryForm formAirActivities = new BinaryForm(name13,1,null);
         SpaForm formSpa = new SpaForm("Spa",0,"Montaña",0,name14,1,null);
-
+*/
         BinaryChapter binaryChapter1 = new BinaryChapter("Capitulo I: De la Organizacion","I",null,17);
         BinaryChapter binaryChapter2 = new BinaryChapter("Capitulo II: De la Operacion","II",null,39);
         BinaryChapter binaryChapter3 = new BinaryChapter("Capitulo III: De la Variables Ambientales y Culturales","III",null,20);
         BinaryChapter binaryChapter4 = new BinaryChapter("Capitulo IV: De la Organizacion","IV",null,14);
 
-        binaryChapter1.addQuestion(new BinaryQuestion("1.Cumple con las regulaciones del Ministerio de Salud.","1",false,false,false));
-        binaryChapter1.addQuestion(new BinaryQuestion("1.Cumple con las regulaciones de Hacienda.","2",false,false,false));
-        binaryChapter1.addQuestion(new BinaryQuestion("Inscrito ante las autoridades locales.","3",false,false,false));
-        binaryChapter1.addQuestion(new BinaryQuestion("Posee un seguro de Responsabilidad Civil.","4",false,false,false));
+        String pregunta1 = "Cumple con las regulaciones para su operación establecidas por el Ministerio de Salud.";
+        String pregunta2 = "Cumple con las Regulaciones para su operación establecidas por la Municipalidad local.                                                 \n";
+        String pregunta3 = "En caso de ofrecer los servicios de hospedaje se encuentra debidamente inscrito ante las autoridades locales.";
+        String pregunta4 = "La empresa dispone de un Seguro de Responsabilidad Civil y gastos médicos.";
+        String pregunta5 = "Cuando se involucran actividades de Turismo de Aventura las mismas se apegan a lo establecido por el Ministerio de Salud.";
+        String pregunta6 = "La empresa dispone de una bitácora de Mantenimiento";
+        String pregunta7 = "La empresa dispone de un Manual de Seguridad";
+        String pregunta8 = "Los Guías tienen el certificado de Primeros Auxilios y RCP";
+        String pregunta9 = "Se dispone de Guías para atender a los turistas tanto en forma individual o grupal";
+        String pregunta10 = "La empresa dispone de un Reglamento Interno de Operación para el desarrollo de sus visitas.";
+
+        String pregunta11 = "Considera un aspecto temático  como eje principal  de su Actividad Turística. \n";
+        String pregunta12 = "En lo que respecta a su ubicación el proyecto se encuentra rodeado de atractivos turísticos tanto naturales como culturales de importancia.\n";
+        String pregunta13 = "Se cuenta con  Disposiciones Generales de Información y Seguridad al Turista.\n";
+        String pregunta14 = "\"Se cuenta con una sala  para la recepción del turista individual o en grupo, \n" +
+                "donde se le proporcionan servicios varios y de información general.                                   \"\n";
+        String pregunta15 = "Todos los servicios y accesos a las actividades  se encuentran  señalados.                   \n";
+        String pregunta16 = "En caso de contar con un restaurante, su planta física  se encuentra en buen estado de mantenimiento y limpieza.\n";
+        String pregunta17 = "Se dispone de una carta de menú, donde se detalla la composición de los platos y precios con los impuestos de ley.\n";
+        String pregunta18 = "Las mesas y sillas del salón se encuentran en buen estado de mantenimiento y limpieza. \n";
+        String pregunta19 = "En caso de contar con kioskos o sodas para el consumo de alimentos y bebidas estos se encuentran en buen estado de mantenimiento y limpieza.\n";
+        String pregunta20 = "El mobiliario de los kioskos o sodas se encuentran en buen estado de mantenimiento y limpieza.\n";
+        String pregunta21 = "La empresa dispone de equipo de comunicación portátil entre  los guías con la base de operaciones.\n";
+        String pregunta22 = "La empresa dispone de equipo especializado para el desarrollo de sus programas (Caminatas, Caballos, Cavernas, "+
+                "Canopy y de aventura en general) el cual según su modalidad será certificado y se encontrará en buen estado de mantenimiento y limpieza,"+
+                "lo que implica que según la modalidad de prestación de servicio deberá contar con equipo certificado para la práctica de este tipo de "+
+                "deportes que se caracteriza por su nivel de acto riesgo. El equipo disponible no debe tener malos olores, ni presentar desgaste o deterioro alguno. \n";
+        String pregunta23 = "La empresa dispone de un local para la venta de recuerdos y artesanías.\n";
+
+        String pregunta24 = " La Planta Física a nivel de áreas comerciales  se observa en buen estado "+
+                "de Mantenimiento y Limpieza, lo que significa que cualquier construcción que se haya desarrollado "+
+                "en el proyecto con fines de explotación turística, deberá contar con pisos, paredes, cielo raso, "+
+                "equipo y accesorios disponibles que le garanticen al turista su buen uso y seguridad. \n";
+        String pregunta25 = "Cualquier instalación con fines turísticos, a nivel de bodegas, establos, "+
+                "viveros u otros de uso y acceso para el turista deberá encontrarse en buen estado de mantenimiento "+
+                "a nivel de pisos, paredes, cielo raso y techos, como a nivel de equipo y accesorios. En cuanto a la "+
+                "limpieza se refiere, esta incluye superficie libres de suciedad, manchas o cualquier otro detalle que "+
+                "resulte desagradable a la vista del turista incluyendo la ausencia de malos olores.\n";
+        String pregunta26 = " Los senderos, puentes, barandas y cualquier otro acceso peatonal \n" +
+                "se observa en buen estado de mantenimiento y limpieza.";
+        String pregunta27 = "Los servicios sanitarios públicos están equipados con los accesorios básicos : "+
+                "Porta-papel, porta-toallas, secador de manos,  espejos, jabonera líquida, y basureros";
+        String pregunta28 = "La loza sanitaria a nivel de inodoros, lavabos, y otros, se encuentra en buen estado de mantenimiento y limpieza, esto significa que debe tener todas sus piezas completas a nivel de inodoro, tanque y lavatorio, siendo el acabado del mismo acorde  para sus propósitos de operación. En lo que respecta a la limpieza dicha loza debe encontrarse libre de manchas y de suciedad alguna como de malos olores.\n";
+        String pregunta29 = "La planta física a nivel de Servicios Sanitarios se encuentra en buen estado de mantenimiento y limpieza a nivel de pisos, paredes, cielo raso, puertas y ventanas debe encontrase libre de deterioro alguno, reflejando un buen acabado en sus materiales constructivos, como en su textura y pinturas tanto exteriores como interiores.\n";
+        String pregunta30 = "El personal que atiende a los turistas lleva su correspondiente gafete.\n";
+        String pregunta31 = "El personal estará debidamente uniformado.\n";
+        String pregunta32 = "El personal se encontrará capacitado según los puestos de trabajo.\n";
+        String pregunta33 = "\"Se dispone   de  Areas y de Información ( Visual, sonora o de texto)  para Personas \n" +
+                "con Capacidad Física Restringida.\"\n";
+
+        String pregunta34 = "La empresa da a conocer el patrimonio natural existente en el sitio en donde se realizan las actividades.\n";
+        String pregunta35 = "La empresa da a conocer el patrimonio cultural existente en el sitio donde se realizan las actividades.\n";
+        String pregunta36 = "La empresas demuestra que promueve la Educación Ambiental y consolida la Cultura Ambientalista.\n";
+        String pregunta37 = "Se establecen recomendaciones para el Turista sobre su comportamiento para con el medio natural.\n";
+        String pregunta38 = "La empresa demuestra que esta interesada en implementar medidas para reducir su impacto con el medio ambiente (uso de productos biodegradables, etc.).\n";
+        String pregunta39 = "La empresa demuestra  que desarrolla prácticas ambientales sostenibles.\n";
+        String pregunta40 = "La empresa incluye dentro de sus actividades espectáculos o expresiones artístico-culturales. \n";
+        String pregunta41 = "La empresa apega sus diseños al modelo de Arquitectura  propios de su región.\n";
+        String pregunta42 = "\"Se da  la puesta en valor de la gastronomía local, como un elemento de \n" +
+                "rescate del patrimonio costarricense.\"\n";
+        String pregunta43 = "La empresa desarrolla programas ambientales con la comunidad inmediata\n";
+        String pregunta44 = "La empresa dispone de programas ambientales específicos para la conservación de los recursos naturales\n";
+        String pregunta45 = "La experiencia dentro del sitio  permite  reconocer elementos culturales locales además de los nacionales.\n";
+
+        String pregunta46 = "La declaración de Misión de la Organización menciona \"el servicio al cliente\" como parte de su carácter especial.\n";
+        String pregunta47 = "La empresa demuestra  que tiene una política escrita de servicio al cliente\n";
+        String pregunta48 = "El servicio al cliente esta incluido en el  Plan de Mercadeo\n";
+        String pregunta49 = "Se comunican las políticas de servicio a los clientes. \n";
+        String pregunta50 = "La empresa dispone de un sistema de medición de la satisfacción del cliente.\n";
+        String pregunta51 = "La Junta Directiva o el más alto nivel de la empresa utiliza la información del servicio al cliente como base para tomar decisiones.\n";
+        String pregunta52 = "La Junta Directiva consigna recursos suficientes para dar mantenimiento o seguimiento la tema de servicio al cliente. \n";
+        String pregunta53 = "Para el servicio al cliente  se recogen datos esenciales mediante la aplicación de una boleta.\n";
+        String pregunta54 = "Las boletas o formularios relacionados con el servicio al cliente  se llevan en un archivo  debidamente foliado.\n";
+        String pregunta55 = "Al personal se le dan instrucciones claras respecto a la naturaleza de su esperada contribución  al servicio al cliente. \n";
+        String pregunta56 = "El servicio al cliente se evalúa periódicamente en busca de la mejora continúa.\n";
+        String pregunta57 = "La empresa tiene un procedimiento legal para tratar las quejas de los turistas consumidores y que esta reflejado en su documento de contrato.\n";
+        String pregunta58 = "Sigue y contesta las quejas que surgen de sus Representantes o Comercializadores" +
+                "(Otros prestadores de Servicios como las Oficinas de Reservaciones, Agencias de Viajes, Hoteles, etc.";
+        String pregunta59 = "La empresa proporciona  entrenamiento periódico para reforzar la importancia del servicio al cliente.";
+
+
+        binaryChapter1.addQuestion(new BinaryQuestion(pregunta1,"1",false,false,false));
+        binaryChapter1.addQuestion(new BinaryQuestion(pregunta2,"2",false,false,false));
+        binaryChapter1.addQuestion(new BinaryQuestion(pregunta3,"3",false,false,false));
+        binaryChapter1.addQuestion(new BinaryQuestion(pregunta4,"4",false,false,false));
+        binaryChapter1.addQuestion(new BinaryQuestion(pregunta5,"5",false,false,false));
+        binaryChapter1.addQuestion(new BinaryQuestion(pregunta6,"6",false,false,false));
+        binaryChapter1.addQuestion(new BinaryQuestion(pregunta7,"7",false,false,false));
+        binaryChapter1.addQuestion(new BinaryQuestion(pregunta8,"8",false,false,false));
+        binaryChapter1.addQuestion(new BinaryQuestion(pregunta9,"9",false,false,false));
+        binaryChapter1.addQuestion(new BinaryQuestion(pregunta10,"10",false,false,false));
+
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta11,"11",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta12,"12",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta13,"13",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta14,"14",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta15,"15",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta16,"16",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta17,"17",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta18,"18",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta19,"19",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta20,"20",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta21,"21",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta22,"22",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta23,"23",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta24,"24",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta25,"25",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta26,"26",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta27,"27",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta28,"28",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta29,"29",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta30,"30",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta31,"31",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta32,"32",false,false,false));
+        binaryChapter2.addQuestion(new BinaryQuestion(pregunta33,"33",false,false,false));
+
+        binaryChapter3.addQuestion(new BinaryQuestion(pregunta34,"34",false,false,false));
+        binaryChapter3.addQuestion(new BinaryQuestion(pregunta35,"35",false,false,false));
+        binaryChapter3.addQuestion(new BinaryQuestion(pregunta36,"36",false,false,false));
+        binaryChapter3.addQuestion(new BinaryQuestion(pregunta37,"37",false,false,false));
+        binaryChapter3.addQuestion(new BinaryQuestion(pregunta38,"38",false,false,false));
+        binaryChapter3.addQuestion(new BinaryQuestion(pregunta39,"39",false,false,false));
+        binaryChapter3.addQuestion(new BinaryQuestion(pregunta40,"40",false,false,false));
+        binaryChapter3.addQuestion(new BinaryQuestion(pregunta41,"41",false,false,false));
+        binaryChapter3.addQuestion(new BinaryQuestion(pregunta42,"42",false,false,false));
+        binaryChapter3.addQuestion(new BinaryQuestion(pregunta43,"43",false,false,false));
+        binaryChapter3.addQuestion(new BinaryQuestion(pregunta44,"44",false,false,false));
+        binaryChapter3.addQuestion(new BinaryQuestion(pregunta45,"45",false,false,false));
+
+        binaryChapter4.addQuestion(new BinaryQuestion(pregunta46,"46",false,false,false));
+        binaryChapter4.addQuestion(new BinaryQuestion(pregunta47,"47",false,false,false));
+        binaryChapter4.addQuestion(new BinaryQuestion(pregunta48,"48",false,false,false));
+        binaryChapter4.addQuestion(new BinaryQuestion(pregunta49,"49",false,false,false));
+        binaryChapter4.addQuestion(new BinaryQuestion(pregunta50,"50",false,false,false));
+        binaryChapter4.addQuestion(new BinaryQuestion(pregunta51,"51",false,false,false));
+        binaryChapter4.addQuestion(new BinaryQuestion(pregunta52,"52",false,false,false));
+        binaryChapter4.addQuestion(new BinaryQuestion(pregunta53,"53",false,false,false));
+        binaryChapter4.addQuestion(new BinaryQuestion(pregunta54,"54",false,false,false));
+        binaryChapter4.addQuestion(new BinaryQuestion(pregunta55,"55",false,false,false));
+        binaryChapter4.addQuestion(new BinaryQuestion(pregunta56,"56",false,false,false));
+        binaryChapter4.addQuestion(new BinaryQuestion(pregunta57,"57",false,false,false));
+        binaryChapter4.addQuestion(new BinaryQuestion(pregunta58,"58",false,false,false));
+        binaryChapter4.addQuestion(new BinaryQuestion(pregunta59,"59",false,false,false));
 
         formTematics.addChapter(binaryChapter1);
         formTematics.addChapter(binaryChapter2);

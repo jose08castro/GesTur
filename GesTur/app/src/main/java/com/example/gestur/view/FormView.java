@@ -1,5 +1,6 @@
 package com.example.gestur.view;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.example.gestur.view.formView.BinaryFormChapterTransferView;
 import com.example.gestur.view.formView.BinaryFormFooterView;
 import com.example.gestur.view.formView.BinaryFormHeaderView;
 import com.example.gestur.view.formView.BinaryFormPanelView;
+import com.example.gestur.view.main.LobbyActivity;
 
 public class FormView extends AppCompatActivity {
 
@@ -89,5 +91,9 @@ public class FormView extends AppCompatActivity {
         display.getSize(size);
         width = size.x;
         height = size.y;
+    }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, LobbyActivity.class));
     }
 }

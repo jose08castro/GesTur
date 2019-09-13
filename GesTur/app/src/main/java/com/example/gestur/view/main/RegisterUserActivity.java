@@ -9,6 +9,8 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -43,9 +45,14 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
     private EditText editConfirmPassword;
 
     private TextView textBornDate;
-    private Spinner day;
-    private Spinner month;
-    private Spinner year;
+
+    private TextView textDay;
+    private TextView textMonth;
+    private TextView textYear;
+
+    private Spinner spinnerDay;
+    private Spinner spinnerMonth;
+    private Spinner spinnerYear;
 
     private TextView textPhone;
     private EditText editPhone;
@@ -77,10 +84,10 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
             setItemsWidthVertical();
             setItemsHeightVertical();
         }else{
-            setItemsXHorizontal(); //Falta
-            setItemsYHorizontal(); //Falta
-            setItemsWidthHorizontal(); //Falta
-            setItemsHeightHorizontal(); //Falta
+            //setItemsXHorizontal(); //Falta
+            //setItemsYHorizontal(); //Falta
+            //setItemsWidthHorizontal(); //Falta
+            //setItemsHeightHorizontal(); //Falta
         }
         addComponents();
         layout.setMinHeight(totalY+100);
@@ -101,8 +108,6 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
                 return false;
             }
         });
-
-
         editIdNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
@@ -180,8 +185,19 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
                 }
             }
         });
+        spinnerMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                loadSpinnerDays();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
+
     private void addComponents(){
         layout.addView(textTitle);
         layout.addView(textRegister);
@@ -198,9 +214,12 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         layout.addView(textConfirmPassword);
         layout.addView(editConfirmPassword);
         layout.addView(textBornDate);
-        layout.addView(day);
-        layout.addView(month);
-        layout.addView(year);
+        layout.addView(textDay);
+        layout.addView(textMonth);
+        layout.addView(textYear);
+        layout.addView(spinnerDay);
+        layout.addView(spinnerMonth);
+        layout.addView(spinnerYear);
         layout.addView(textPhone);
         layout.addView(editPhone);
         layout.addView(buttonAddPhoneField);
@@ -214,19 +233,49 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
 
         textRegister.setText(text_Register);
         textRegister.setGravity(Gravity.CENTER);
-        textRegister.setTextSize(20);
+        textRegister.setTextSize(26);
 
         textIdNumber.setText(text_Id);
+        textIdNumber.setTextSize(20);
+
         textFullName.setText(text_Full_Name);
+        textFullName.setTextSize(20);
+
         textEmail.setText(text_Email);
+        textEmail.setTextSize(20);
+
         textUserName.setText(text_userName);
+        textUserName.setTextSize(20);
+
         textPassword.setText(text_Password);
+        textPassword.setTextSize(20);
+
         textConfirmPassword.setText(text_Confirm_Password);
+        textConfirmPassword.setTextSize(20);
+
         textBornDate.setText(text_Born_Date);
+        textBornDate.setTextSize(20);
+
+        textDay.setText(text_day);
+        textDay.setTextSize(20);
+        textDay.setGravity(Gravity.CENTER);
+
+        textMonth.setText(text_month);
+        textMonth.setTextSize(20);
+        textMonth.setGravity(Gravity.CENTER);
+
+        textYear.setText(text_year);
+        textYear.setTextSize(20);
+        textYear.setGravity(Gravity.CENTER);
+
         textPhone.setText(text_Phone_Numbers);
 
         buttonCompleteRegister.setText(text_Complete_Register);
         buttonAddPhoneField.setText("+");
+
+        loadSpinnerYears();
+        loadSpinnerMonths();
+        loadSpinnerDays();
 
     }
 
@@ -246,14 +295,35 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         textConfirmPassword.setX(width*textX_V);
         editConfirmPassword.setX(width*editX_V);
         textBornDate.setX(width*textX_V);
-        day.setX(width*editDayX_V);
-        month.setX(width*editMonthX_V);
-        year.setX(width*editYearX_V);
+
+        textDay.setX(width*textDayX_V);
+        textMonth.setX(width*textMonthX_V);
+        textYear.setX(width*textYearX_V);
+
+        spinnerDay.setX(width*editDayX_V);
+        spinnerMonth.setX(width*editMonthX_V);
+        spinnerYear.setX(width*editYearX_V);
         textPhone.setX(width*textX_V);
         editPhone.setX(width*editPhoneX_V);
         buttonAddPhoneField.setX(width*buttonPlusX_V);
         buttonCompleteRegister.setX(width*buttonX_V);
     }
+    private void loadSpinnerYears(){
+        spinnerYear.setAdapter(new ArrayAdapter<Integer>(context,android.R.layout.simple_spinner_item, DateManager.getYears()));
+        spinnerYear.setSelection(0);
+    }
+    private void loadSpinnerMonths(){
+        spinnerMonth.setAdapter(new ArrayAdapter<Integer>(context,android.R.layout.simple_spinner_item, DateManager.getMonths()));
+        spinnerMonth.setSelection(0);
+    }
+    private void loadSpinnerDays(){
+        spinnerDay.setAdapter(new ArrayAdapter<Integer>(context,
+                android.R.layout.simple_spinner_item,
+                DateManager.getDaysFromMonth((Integer)spinnerMonth.getSelectedItem(),(Integer)spinnerYear.getSelectedItem())));
+        spinnerDay.setSelection(0);
+    }
+
+
     private void setItemsYVertical(){
 
         totalY = 0;
@@ -275,11 +345,18 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         setY(editConfirmPassword,(height*editHeight_V));
         setY(textBornDate,(height*textHeight_V));
 
-        setY(day,(height*editHeight_V));
+        setY(textDay,(height*textHeight_V));
+        totalY-=(height*textHeight_V);
+        setY(textMonth,(height*textHeight_V));
+        totalY-=(height*textHeight_V);
+        setY(textYear,(height*textHeight_V));
+
+        setY(spinnerDay,(height*editHeight_V));
         totalY-=(height*editHeight_V);
-        setY(month,(height*editHeight_V));
+        setY(spinnerMonth,(height*editHeight_V));
         totalY-=(height*editHeight_V);
-        setY(year,(height*editHeight_V));
+        setY(spinnerYear,(height*editHeight_V));
+
         setY(textPhone,(height*textHeight_V));
         setY(editPhone,(height*editHeight_V));
         totalY-=(height*editHeight_V);
@@ -304,9 +381,14 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         textConfirmPassword.setWidth((int)(width*textWidth_V));
         editConfirmPassword.setWidth((int)(width*editWidth_V));
         textBornDate.setWidth((int)(width*textWidth_V));
-        day.setMinimumWidth((int)(width*editDate_Width));
-        month.setMinimumWidth((int)(width*editDate_Width));
-        year.setMinimumWidth((int)(width*editDate_Width));
+
+        textDay.setWidth((int)(textDate_Width*width));
+        textMonth.setWidth((int)(textDate_Width*width));
+        textYear.setWidth((int)(textDate_Width*width));
+
+        spinnerYear.setMinimumWidth((int)(width*editDate_Width));
+        spinnerMonth.setMinimumWidth((int)(width*editDate_Width));
+        spinnerDay.setMinimumWidth((int)(width*editDate_Width));
         textPhone.setWidth((int)(width*textWidth_V));
         editPhone.setWidth((int)(width*editPhoneWidth_V));
         buttonAddPhoneField.setWidth((int)(width*buttonPlusWidth_V));
@@ -328,76 +410,19 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         textConfirmPassword.setHeight((int)(height*textHeight_V));
         editConfirmPassword.setHeight((int)(height*editHeight_V));
         textBornDate.setHeight((int)(height*textHeight_V));
-        day.setMinimumHeight((int)(height*editHeight_V));
-        month.setMinimumHeight((int)(height*editHeight_V));
-        year.setMinimumHeight((int)(height*editHeight_V));
+
+        textDay.setHeight((int)(height*textHeight_V));
+        textMonth.setHeight((int)(height*textHeight_V));
+        textYear.setHeight((int)(height*textHeight_V));
+
+        spinnerDay.setMinimumHeight((int)(height*editHeight_V));
+        spinnerMonth.setMinimumHeight((int)(height*editHeight_V));
+        spinnerYear.setMinimumHeight((int)(height*editHeight_V));
         textPhone.setHeight((int)(height*textHeight_V));
         editPhone.setHeight((int)(height*editHeight_V));
         buttonAddPhoneField.setHeight((int)(height*editHeight_V));
         buttonCompleteRegister.setHeight((int)(height*editHeight_V));
     }
-
-    private void setItemsXHorizontal(){
-/*
-        textTitle.setX(width*titleX_H);
-        editUserName.setX(width*editX_H);
-        editPassword.setX(width*editX_H);
-        checkRemember.setX(width*checkBoxX_H);
-        buttonLogin.setX(width*buttonL_H);
-        textNoAccount.setX(width*textNoAccountX_H);
-        buttonRegister.setX(width*buttonR_H);
-        */
-    }
-    private void setItemsYHorizontal(){
-        /*
-        totalY = 0;
-        setY(textTitle,titleHeight_H*height);
-        setY(textNoAccount,texNoCountHeight_H*height);
-        totalY+=(space1p_H*height);
-        setY(buttonRegister,buttonHeight_H*height);
-
-        totalY=(int)(initialY_H*height);
-
-        setY(editUserName,height*editHeight_H);
-        totalY+=(space1p_H*height);
-        setY(editPassword,height*editHeight_H);
-        totalY+=(space1p_H*height);
-        totalY+=(space1p_H*height);
-        totalY+=(space1p_H*height);
-        totalY+=(space1p_H*height);
-        setY(checkRemember,checkBoxHeight_H*height);
-        totalY+=(space1p_H*height);
-        setY(buttonLogin,buttonHeight_H*height);
-        */
-    }
-    private void setItemsHeightHorizontal(){
-        /*
-        textTitle.setWidth((int)(width*titleWidth_H));
-        textTitle.setHeight((int)(height*titleHeight_H));
-
-        editUserName.setWidth((int)(width*editWidth_H));
-        editUserName.setHeight((int)(height*editHeight_H));
-
-        editPassword.setWidth((int)(width*editWidth_H));
-        editPassword.setHeight((int)(height*editHeight_H));
-
-        checkRemember.setWidth((int)(checkBoxWidth_H*width));
-        checkRemember.setHeight((int)(checkBoxHeight_H*height));
-
-        buttonLogin.setWidth((int)(buttonWidth_H*width));
-        buttonLogin.setHeight((int)(buttonHeight_H*height));
-
-        textNoAccount.setWidth((int)(textNoAccountWidth_H*width));
-        textNoAccount.setHeight((int)(texNoCountHeight_H*height));
-
-        buttonRegister.setWidth((int)(buttonWidth_H*width));
-        buttonRegister.setHeight((int)(buttonHeight_H*height));
-        */
-    }
-    private void setItemsWidthHorizontal(){
-
-    }
-
     private void createItems(){
         textTitle = new TextView(this);
         textRegister = new TextView(this);
@@ -414,9 +439,12 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         textConfirmPassword = new TextView(this);
         editConfirmPassword = new EditText(this);
         textBornDate = new TextView(this);
-        day = new Spinner(this);
-        month = new Spinner(this);
-        year = new Spinner(this);
+        textDay = new TextView(this);
+        textMonth = new TextView(this);
+        textYear = new TextView(this);
+        spinnerDay = new Spinner(this);
+        spinnerMonth = new Spinner(this);
+        spinnerYear = new Spinner(this);
         textPhone = new TextView(this);
         editPhone = new EditText(this);
         buttonAddPhoneField = new Button(this);

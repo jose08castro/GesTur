@@ -1,5 +1,6 @@
 package com.example.gestur.view.chapterView;
 
+import android.view.Gravity;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -81,30 +82,35 @@ public class BinaryChapterPanelView implements IPanelView, IBinaryViewConstants 
         textNumber.setText("#");
         textNumber.setX(startX*screenX);
         textNumber.setY(currentY);
+        textNumber.setGravity(Gravity.CENTER);
         textNumber.setWidth((int)(numberWidth*screenX));
         textNumber.setHeight((int)(dataBarHeight*screenY));
 
         textReq.setText("Requerimientos");
         textReq.setX(questionX*screenX);
         textReq.setY(currentY);
+        textReq.setGravity(Gravity.CENTER);
         textReq.setWidth((int)(textWidth*screenX));
         textReq.setHeight((int)(dataBarHeight*screenY));
 
         textYes.setText("Si");
         textYes.setX(yesX*screenX);
         textYes.setY(currentY);
+        textYes.setGravity(Gravity.CENTER);
         textYes.setWidth((int)(radioButtonWidth*screenX));
         textYes.setHeight((int)(dataBarHeight*screenY));
 
         textNo.setText("No");
         textNo.setX(noX*screenX);
         textNo.setY(currentY);
+        textNo.setGravity(Gravity.CENTER);
         textNo.setWidth((int)(radioButtonWidth*screenX));
         textNo.setHeight((int)(dataBarHeight*screenY));
 
         textNa.setText("NA");
         textNa.setX(naX*screenX);
         textNa.setY(currentY);
+        textNa.setGravity(Gravity.CENTER);
         textNa.setWidth((int)(radioButtonWidth*screenX));
         textNa.setHeight((int)(dataBarHeight*screenY));
 
