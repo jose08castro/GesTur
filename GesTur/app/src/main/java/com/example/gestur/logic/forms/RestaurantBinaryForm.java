@@ -13,8 +13,8 @@ public class RestaurantBinaryForm extends BinaryForm {
     private int collaborators;
     private String schedule;
 
-    public RestaurantBinaryForm(String name,String establishment,String specialty,int tables,int places,int collaborators, ArrayList<BinaryChapter> chapters) {
-        super(name, chapters);
+    public RestaurantBinaryForm(String name,int type,String establishment,String specialty,int tables,int places,int collaborators, ArrayList<BinaryChapter> chapters) {
+        super(name,type,chapters);
         this.establishmentName = establishment;
         this.specialty = specialty;
         this.tables = tables;

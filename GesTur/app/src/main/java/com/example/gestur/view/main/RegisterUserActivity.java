@@ -15,7 +15,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.gestur.R;
-import com.example.gestur.view.IRegisterUserConstants;
 
 public class RegisterUserActivity extends AppCompatActivity implements IRegisterUserConstants {
     final Context context = this;

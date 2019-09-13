@@ -26,8 +26,6 @@ import com.example.gestur.logic.forms.ScoreForm;
 import com.example.gestur.logic.forms.SpaForm;
 import com.example.gestur.logic.questions.BinaryQuestion;
 import com.example.gestur.logic.forms.ConCentersBinaryForm;
-import com.example.gestur.view.FormView;
-import com.example.gestur.view.ILoginActivityConstants;
 import com.example.gestur.view.InfoPasser;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -81,7 +79,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //showSingIn();
                 startActivity(new Intent(context, LobbyActivity.class));
             }
         });
@@ -264,22 +261,25 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
         String name13 = "Calificación Actividades Recreativas Aéreas";
         String name14 = "Calificación de Spa";
 
-        BinaryForm formTematics = new BinaryForm(name1,null);
-        ScoreForm  formHotels = new ScoreForm(name2,null);
-        BinaryForm formTravelAgencies = new BinaryForm(name3,null);
-        BinaryForm formRentVehicules = new BinaryForm(name4,null);
-        BinaryForm formAirLines = new BinaryForm(name5,null);
-        BinaryForm formWaterTransport = new BinaryForm(name6,null);
-        ConCentersBinaryForm formCenters = new ConCentersBinaryForm(name7,"Centro Artes",1,1,1,null);
-        BinaryForm formEnterprise = new BinaryForm(name8,null);
-        RestaurantBinaryForm formRestaurant = new RestaurantBinaryForm(name9,"KFC","",0,0,0,null);
-        CafeteriaFondaSodaForm formSoda = new CafeteriaFondaSodaForm(name10,0,0,0,"Rio de Janeiro",null,"Soda");
-        CafeteriaFondaSodaForm formCafeteria = new CafeteriaFondaSodaForm(name11,0,0,0,"Rio de Janeiro",null,"Cafeteria");
-        BinaryForm formWaterActivities = new BinaryForm(name12,null);
-        BinaryForm formAirActivities = new BinaryForm(name13,null);
-        SpaForm formSpa = new SpaForm("Spa",0,"Montaña",0,name14,null);
+        BinaryForm formTematics = new BinaryForm(name1,1,null);
+        ScoreForm  formHotels = new ScoreForm(name2,1,null);
+        BinaryForm formTravelAgencies = new BinaryForm(name3,1,null);
+        BinaryForm formRentVehicules = new BinaryForm(name4,1,null);
+        BinaryForm formAirLines = new BinaryForm(name5,1,null);
+        BinaryForm formWaterTransport = new BinaryForm(name6,1,null);
+        ConCentersBinaryForm formCenters = new ConCentersBinaryForm(name7,1,"Centro Artes",1,1,1,null);
+        BinaryForm formEnterprise = new BinaryForm(name8,1,null);
+        RestaurantBinaryForm formRestaurant = new RestaurantBinaryForm(name9,1,"KFC","",0,0,0,null);
+        CafeteriaFondaSodaForm formSoda = new CafeteriaFondaSodaForm(name10,0,0,0,"Rio de Janeiro",1,null,"Soda");
+        CafeteriaFondaSodaForm formCafeteria = new CafeteriaFondaSodaForm(name11,0,0,0,"Rio de Janeiro",1,null,"Cafeteria");
+        BinaryForm formWaterActivities = new BinaryForm(name12,1,null);
+        BinaryForm formAirActivities = new BinaryForm(name13,1,null);
+        SpaForm formSpa = new SpaForm("Spa",0,"Montaña",0,name14,1,null);
 
-        BinaryChapter binaryChapter1 = new BinaryChapter("Capitulo 1: De la Organizacion","I",null,17);
+        BinaryChapter binaryChapter1 = new BinaryChapter("Capitulo I: De la Organizacion","I",null,17);
+        BinaryChapter binaryChapter2 = new BinaryChapter("Capitulo II: De la Operacion","II",null,39);
+        BinaryChapter binaryChapter3 = new BinaryChapter("Capitulo III: De la Variables Ambientales y Culturales","III",null,20);
+        BinaryChapter binaryChapter4 = new BinaryChapter("Capitulo IV: De la Organizacion","IV",null,14);
 
         binaryChapter1.addQuestion(new BinaryQuestion("1.Cumple con las regulaciones del Ministerio de Salud.","1",false,false,false));
         binaryChapter1.addQuestion(new BinaryQuestion("1.Cumple con las regulaciones de Hacienda.","2",false,false,false));
@@ -287,7 +287,9 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
         binaryChapter1.addQuestion(new BinaryQuestion("Posee un seguro de Responsabilidad Civil.","4",false,false,false));
 
         formTematics.addChapter(binaryChapter1);
-
+        formTematics.addChapter(binaryChapter2);
+        formTematics.addChapter(binaryChapter3);
+        formTematics.addChapter(binaryChapter4);
 
         InfoPasser.getInstance().setCurrentForm(formTematics);
     }

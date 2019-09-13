@@ -7,12 +7,20 @@ import java.util.ArrayList;
 public abstract class Form implements IForm{
 
     protected String name;
+    protected int type;
     protected int totalPoints;
     protected int achievedPoints;
     protected float achievedPercentage;
 
-    public Form(String name){
+    public Form(String name,int type){
         this.name = name;
+        this.type = type;
+    }
+    public int getType(){
+        return type;
+    }
+    public void setType(int type){
+        this.type = type;
     }
 
     public String getName() {

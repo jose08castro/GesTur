@@ -11,11 +11,11 @@ public class SpaForm extends ScoreForm{
     private String typology;
     private int rooms;
 
-    public SpaForm(String establishmentName,int collabs,String type, int rooms,String name, ArrayList<ScoreChapter> chapters) {
-        super(name, chapters);
+    public SpaForm(String establishmentName,int collabs,String typology, int rooms,String name,int type, ArrayList<ScoreChapter> chapters) {
+        super(name,type,chapters);
         this.establishmentName = establishmentName;
         this.collaborators = collabs;
-        this.typology = type;
+        this.typology = typology;
         this.rooms = rooms;
     }
     @Override

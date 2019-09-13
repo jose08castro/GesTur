@@ -10,15 +10,15 @@ public class CafeteriaFondaSodaForm extends ScoreForm{
     private int tables;
     private int places;
     private int collaborators;
-    private String type;
+    private String placeType;
 
-    public CafeteriaFondaSodaForm(String establishmentName, int tables, int places, int collabs, String name, ArrayList<ScoreChapter> chapters,String type) {
-        super(name, chapters);
+    public CafeteriaFondaSodaForm(String establishmentName, int tables, int places, int collabs, String name,int type, ArrayList<ScoreChapter> chapters,String placeType) {
+        super(name,type,chapters);
         this.establishmentName = establishmentName;
         this.tables = tables;
         this.places = places;
         this.collaborators = collabs;
-        this.type = type;
+        this.placeType = placeType;
     }
     @Override
     public void addChapters(ArrayList<ScoreChapter> chapters){

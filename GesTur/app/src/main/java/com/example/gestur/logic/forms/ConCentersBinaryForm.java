@@ -11,8 +11,8 @@ public class ConCentersBinaryForm extends BinaryForm {
     private int places;
     private int collaborators;
 
-    public ConCentersBinaryForm(String name, String establishment, int rooms, int places, int collaborators, ArrayList<BinaryChapter> chapters) {
-        super(name, chapters);
+    public ConCentersBinaryForm(String name,int type, String establishment, int rooms, int places, int collaborators, ArrayList<BinaryChapter> chapters) {
+        super(name,type,chapters);
         this.establishmentName = establishment;
         this.eventRooms = rooms;
         this.places = places;

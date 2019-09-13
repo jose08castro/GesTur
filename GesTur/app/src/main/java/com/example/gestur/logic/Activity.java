@@ -1,6 +1,7 @@
 package com.example.gestur.logic;
 
-import java.util.ArrayList;
+import com.example.gestur.logic.checkList.CheckListForm;
+import com.example.gestur.logic.forms.Form;
 
 public class Activity {
 
@@ -8,12 +9,18 @@ public class Activity {
     private Address location;
     private Boolean isOperative;
     private String category;
+    private int type;
+    private Form mainForm;
+    private CheckListForm checkForm;
 
-    public Activity(String name, Address location, Boolean isOperative, String category) {
+    public Activity(String name, Address location, Boolean isOperative, String category,int type) {
         this.name = name;
+        this.type = type;
         this.location = location;
         this.isOperative = isOperative;
         this.category = category;
+        this.mainForm = FormFactory.getForm(type);
+        this.checkForm = FormFactory.getCheckList();
     }
 
     public String getName() {

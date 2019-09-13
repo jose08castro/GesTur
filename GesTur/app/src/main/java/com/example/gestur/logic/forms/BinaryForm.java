@@ -8,8 +8,8 @@ public class BinaryForm extends Form{
 
     protected ArrayList<BinaryChapter> chapters;
 
-    public BinaryForm(String name,ArrayList<BinaryChapter> chapters){
-        super(name);
+    public BinaryForm(String name,int type,ArrayList<BinaryChapter> chapters){
+        super(name,type);
         this.chapters = new ArrayList<>();
         totalPoints = 0;
         achievedPercentage = 0f;
@@ -47,6 +47,5 @@ public class BinaryForm extends Form{
             }
         }
     }
-
 
 }

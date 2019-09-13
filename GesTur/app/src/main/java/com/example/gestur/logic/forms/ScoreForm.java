@@ -10,8 +10,8 @@ public class ScoreForm extends Form{
     protected int NApoints;
     protected ArrayList<ScoreChapter> chapters;
 
-    public ScoreForm(String name,ArrayList<ScoreChapter> chapters){
-        super(name);
+    public ScoreForm(String name,int type,ArrayList<ScoreChapter> chapters){
+        super(name,type);
         applicablePoints = 0;
         NApoints = 0;
         this.chapters = new ArrayList<>();
