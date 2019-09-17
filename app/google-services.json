@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "696160089458",
+    "firebase_url": "https://gestur-aed55.firebaseio.com",
+    "project_id": "gestur-aed55",
+    "storage_bucket": "gestur-aed55.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:696160089458:android:c188a153838b3f09",
+        "android_client_info": {
+          "package_name": "com.example.gestur"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "696160089458-fihcm4l02ofp8eqbqvnt1r1o8iuh7udo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gestur",
+            "certificate_hash": "080bc7daa6f8c6aabe5263c99f6c985edc919aeb"
+          }
+        },
+        {
+          "client_id": "696160089458-r8o09nifarhqlc3s55eet68h6cp2pos0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gestur",
+            "certificate_hash": "0c9e3fd10168480c56ea488bf7142d898e6a7200"
+          }
+        },
+        {
+          "client_id": "696160089458-23k4sn95klsdsboj5fvp26rm52fugi3u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnH7qw09NsYonykxr4-gK03iDTzFF0V7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "696160089458-23k4sn95klsdsboj5fvp26rm52fugi3u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
