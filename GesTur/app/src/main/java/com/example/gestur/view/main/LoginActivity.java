@@ -8,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.gestur.DB.FormsDefinition;
 import com.example.gestur.R;
 import com.example.gestur.logic.chapters.BinaryChapter;
 import com.example.gestur.logic.forms.BinaryForm;
@@ -31,9 +33,17 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements ILoginActivityConstants {
 
@@ -53,7 +63,13 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
     private int totalY;
 
     private List<AuthUI.IdpConfig> providers;
+    private static final String TAG = "Get--";
+
     private int MY_REQUEST_CODE = 7117;
+
+    private DatabaseReference myRef;
+
+    private FirebaseDatabase mFirebaseDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,12 +112,46 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityCo
         layout.addView(buttonLogin);
         layout.addView(textNoAccount);
         layout.addView(buttonRegister);
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        myRef = mFirebaseDatabase.getReference("FormsDefinition");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "entro al onData");
+                addData1(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
 
         //DB db = new DB();
         //db.registerUser("josueggss73@gmail.com","warrior73");
 
         //FirebaseFirestore db = FirebaseFirestore.getInstance();
+    }
+    private void addData1(DataSnapshot dataSnapshot) {
+        Map<String, Object> objectMap = (HashMap<String, Object>)
+                dataSnapshot.getValue();
+        List<FormsDefinition> list= new ArrayList<FormsDefinition>();
+        for(Object obj : objectMap.values()) {
+            if (obj instanceof Map) {
+                Map<String, Object> mapObj = (Map<String, Object>) obj;
+                FormsDefinition match = new FormsDefinition();
+                match.setName((String) mapObj.get("name"));
+                list.add(match);
+            }
+            //display all the information
+            Log.d(TAG, "NOMBRE FORM------------------"+list.get(0).getName());
+
+            //Log.d(TAG, "showData: chapter: " + uInfo.getChapters().get(0).getName());
+        }
+
     }
     private void setItemsConfig(){
         textTitle.setText(text_Title);
