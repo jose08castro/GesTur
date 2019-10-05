@@ -29,7 +29,6 @@ public class BinaryFormHeaderView implements IHeaderView,IBinaryFormHeaderViewCo
         textTitle2 = new TextView(context);
         textTitle3 = new TextView(context);
         textName = new TextView(context);
-
         totalY = 0;
     }
 

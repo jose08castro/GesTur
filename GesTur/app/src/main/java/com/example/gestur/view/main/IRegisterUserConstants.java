@@ -32,9 +32,9 @@ public interface IRegisterUserConstants {
     float editMonthX_V = 7/19f;
     float editYearX_V = 1/19f;
 
-    float textDayX_V =  13/19f;
-    float textMonthX_V = 7/19f;
-    float textYearX_V = 1/19f;
+    float textDayX_V =  11/15f;
+    float textMonthX_V = 6/15f;
+    float textYearX_V = 1/15f;
 
     float editDate_Width = 5/19f;
     float textDate_Width = 5/19f;
@@ -50,7 +50,5 @@ public interface IRegisterUserConstants {
 
     float titleHeight_V = 3/20f;
     float editHeight_V = 2/25f;
-    float textHeight_V = 2/25f;
-
-    float spaceY_V = 1/20f;
+    float textHeight_V = 5/100f;
 }

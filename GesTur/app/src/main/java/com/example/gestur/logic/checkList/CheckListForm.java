@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class CheckListForm {
 
+    private String titleForm;
     private String enterpriseName;
     private String emailAddress;
     private String date;
@@ -13,13 +14,15 @@ public class CheckListForm {
     private int techQuestions;
     private float achievedPercentage;
 
-    public CheckListForm(String enterpriseName,
+    public CheckListForm(String titleForm,
+                         String enterpriseName,
                          String emailAddress,
                          String date,
                          String phoneNumber,
                          int legalQuestions,
                          int techQuestions,
                          ArrayList<CheckListQuestion> questions) {
+        this.titleForm = titleForm;
         this.enterpriseName = enterpriseName;
         this.emailAddress = emailAddress;
         this.date = date;
@@ -31,7 +34,9 @@ public class CheckListForm {
         addQuestions(questions);
         update();
     }
-
+    public String getTitleForm(){
+        return titleForm;
+    }
     public String getEnterpriseName() {
         return enterpriseName;
     }
@@ -65,7 +70,7 @@ public class CheckListForm {
     }
 
     public void addQuestions(ArrayList<CheckListQuestion> quests){
-        if(questions!=null){
+        if(quests!=null){
             for(CheckListQuestion q :quests){
                 addQuestion(q);
             }

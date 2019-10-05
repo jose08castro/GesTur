@@ -23,7 +23,7 @@ public class FormFactory {
 
     public static CheckListForm getCheckList(){
         //DB.requestForm(type)
-        return new CheckListForm("","","","",0,0,null);
+        return new CheckListForm("","","","","",0,0,null);
     }
 
     public static Form getForm(int type){

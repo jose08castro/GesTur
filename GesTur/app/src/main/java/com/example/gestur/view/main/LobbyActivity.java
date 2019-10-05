@@ -23,7 +23,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.gestur.R;
-import com.example.gestur.view.CheckListView;
+import com.example.gestur.view.checkListView.CheckListView;
 import com.example.gestur.view.FormView;
 
 public class LobbyActivity extends AppCompatActivity

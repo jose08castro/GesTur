@@ -1,10 +1,12 @@
 package com.example.gestur.view.main;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -79,15 +81,9 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         setItemsConfig();
 
         if(width<height){
-            setItemsXVertical();
-            setItemsYVertical();
-            setItemsWidthVertical();
-            setItemsHeightVertical();
+            setItemsBoundsVertical();
         }else{
-            //setItemsXHorizontal(); //Falta
-            //setItemsYHorizontal(); //Falta
-            //setItemsWidthHorizontal(); //Falta
-            //setItemsHeightHorizontal(); //Falta
+            setItemsBoundsHorizontal();//Falta
         }
         addComponents();
         layout.setMinHeight(totalY+100);
@@ -226,52 +222,80 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         layout.addView(buttonCompleteRegister);
     }
     private void setItemsConfig(){
+        int titleSize = width/15;
+        int title2Size = width/39;
+        int textSize = width/50;
+        int editSize = width/42;
 
         textTitle.setText(text_Title);
-        textTitle.setTextSize(72);
+        textTitle.setTextSize(titleSize);
         textTitle.setGravity(Gravity.CENTER);
 
         textRegister.setText(text_Register);
         textRegister.setGravity(Gravity.CENTER);
-        textRegister.setTextSize(26);
+        textRegister.setTextSize(title2Size);
 
         textIdNumber.setText(text_Id);
-        textIdNumber.setTextSize(20);
+        textIdNumber.setTextSize(textSize);
+
+        editIdNumber.setBackgroundColor(Color.rgb(210,210,210));
+        editIdNumber.setTextSize(editSize);
 
         textFullName.setText(text_Full_Name);
-        textFullName.setTextSize(20);
+        textFullName.setTextSize(textSize);
+
+        editFullName.setTextSize(editSize);
+        editFullName.setBackgroundColor(Color.rgb(210,210,210));
 
         textEmail.setText(text_Email);
-        textEmail.setTextSize(20);
+        textEmail.setTextSize(textSize);
+
+        editEmail.setTextSize(editSize);
+        editEmail.setBackgroundColor(Color.rgb(210,210,210));
 
         textUserName.setText(text_userName);
-        textUserName.setTextSize(20);
+        textUserName.setTextSize(textSize);
+
+        editUserName.setTextSize(editSize);
+        editUserName.setBackgroundColor(Color.rgb(210,210,210));
 
         textPassword.setText(text_Password);
-        textPassword.setTextSize(20);
+        textPassword.setTextSize(textSize);
+
+        editPassword.setTextSize(editSize);
+        editPassword.setBackgroundColor(Color.rgb(210,210,210));
+        editPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
         textConfirmPassword.setText(text_Confirm_Password);
-        textConfirmPassword.setTextSize(20);
+        textConfirmPassword.setTextSize(textSize);
+
+        editConfirmPassword.setTextSize(editSize);
+        editConfirmPassword.setBackgroundColor(Color.rgb(210,210,210));
+        editConfirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
         textBornDate.setText(text_Born_Date);
-        textBornDate.setTextSize(20);
+        textBornDate.setTextSize(textSize);
 
         textDay.setText(text_day);
-        textDay.setTextSize(20);
-        textDay.setGravity(Gravity.CENTER);
+        textDay.setTextSize(textSize);
 
         textMonth.setText(text_month);
-        textMonth.setTextSize(20);
-        textMonth.setGravity(Gravity.CENTER);
+        textMonth.setTextSize(textSize);
 
         textYear.setText(text_year);
-        textYear.setTextSize(20);
-        textYear.setGravity(Gravity.CENTER);
+        textYear.setTextSize(textSize);
 
         textPhone.setText(text_Phone_Numbers);
+        textPhone.setTextSize(textSize);
+
+        editPhone.setTextSize(editSize);
+        editPhone.setBackgroundColor(Color.rgb(210,210,210));
 
         buttonCompleteRegister.setText(text_Complete_Register);
+        buttonCompleteRegister.setTextSize(textSize);
+
         buttonAddPhoneField.setText("+");
+        buttonAddPhoneField.setTextSize(textSize);
 
         loadSpinnerYears();
         loadSpinnerMonths();
@@ -279,35 +303,6 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
 
     }
 
-    private void setItemsXVertical(){
-        textTitle.setX(width*titleX_V);
-        textRegister.setX(width*titleRegisterX_V);
-        textIdNumber.setX(width*textX_V);
-        editIdNumber.setX(width*editX_V);
-        textFullName.setX(width*textX_V);
-        editFullName.setX(width*editX_V);
-        textEmail.setX(width*textX_V);
-        editEmail.setX(width*editX_V);
-        textUserName.setX(width*textX_V);
-        editUserName.setX(width*editX_V);
-        textPassword.setX(width*textX_V);
-        editPassword.setX(width*editX_V);
-        textConfirmPassword.setX(width*textX_V);
-        editConfirmPassword.setX(width*editX_V);
-        textBornDate.setX(width*textX_V);
-
-        textDay.setX(width*textDayX_V);
-        textMonth.setX(width*textMonthX_V);
-        textYear.setX(width*textYearX_V);
-
-        spinnerDay.setX(width*editDayX_V);
-        spinnerMonth.setX(width*editMonthX_V);
-        spinnerYear.setX(width*editYearX_V);
-        textPhone.setX(width*textX_V);
-        editPhone.setX(width*editPhoneX_V);
-        buttonAddPhoneField.setX(width*buttonPlusX_V);
-        buttonCompleteRegister.setX(width*buttonX_V);
-    }
     private void loadSpinnerYears(){
         spinnerYear.setAdapter(new ArrayAdapter<Integer>(context,android.R.layout.simple_spinner_item, DateManager.getYears()));
         spinnerYear.setSelection(0);
@@ -322,107 +317,74 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
                 DateManager.getDaysFromMonth((Integer)spinnerMonth.getSelectedItem(),(Integer)spinnerYear.getSelectedItem())));
         spinnerDay.setSelection(0);
     }
-
-
-    private void setItemsYVertical(){
-
-        totalY = 0;
-        totalY+=(spaceY_V*height);
-        setY(textTitle,(titleHeight_V*height));
-        setY(textRegister,(textHeight_V*height));
-        totalY+=(spaceY_V*height);
-        setY(textIdNumber,(height*textHeight_V));
-        setY(editIdNumber,(height*editHeight_V));
-        setY(textFullName,(height*textHeight_V));
-        setY(editFullName,(height*editHeight_V));
-        setY(textEmail,(height*textHeight_V));
-        setY(editEmail,(height*editHeight_V));
-        setY(textUserName,(height*textHeight_V));
-        setY(editUserName,(height*editHeight_V));
-        setY(textPassword,(height*textHeight_V));
-        setY(editPassword,(height*editHeight_V));
-        setY(textConfirmPassword,(height*textHeight_V));
-        setY(editConfirmPassword,(height*editHeight_V));
-        setY(textBornDate,(height*textHeight_V));
-
-        setY(textDay,(height*textHeight_V));
+    private void setItemsBoundsVertical(){
+        setBounds(textTitle,1,titleHeight_V,0);
+        setBounds(textRegister,1,textHeight_V,0);
+        addSpace(5);
+        setBounds(textIdNumber,textWidth_V,textHeight_V,textX_V);
+        setBounds(editIdNumber,editWidth_V,editHeight_V,editX_V);
+        addSpace(5);
+        setBounds(textFullName,textWidth_V,textHeight_V,textX_V);
+        setBounds(editFullName,editWidth_V,editHeight_V,editX_V);
+        addSpace(5);
+        setBounds(textEmail,textWidth_V,textHeight_V,textX_V);
+        setBounds(editEmail,editWidth_V,editHeight_V,editX_V);
+        addSpace(5);
+        setBounds(textUserName,textWidth_V,textHeight_V,textX_V);
+        setBounds(editUserName,editWidth_V,editHeight_V,editX_V);
+        addSpace(5);
+        setBounds(textPassword,textWidth_V,textHeight_V,textX_V);
+        setBounds(editPassword,editWidth_V,editHeight_V,editX_V);
+        addSpace(5);
+        setBounds(textConfirmPassword,textWidth_V,textHeight_V,textX_V);
+        setBounds(editConfirmPassword,editWidth_V,editHeight_V,editX_V);
+        addSpace(5);
+        setBounds(textBornDate,textWidth_V,textHeight_V,textX_V);
+        setBounds(textDay,textDate_Width,textHeight_V,textDayX_V);
         totalY-=(height*textHeight_V);
-        setY(textMonth,(height*textHeight_V));
+        setBounds(textMonth,textDate_Width,textHeight_V,textMonthX_V);
         totalY-=(height*textHeight_V);
-        setY(textYear,(height*textHeight_V));
-
-        setY(spinnerDay,(height*editHeight_V));
+        setBounds(textYear,textDate_Width,textHeight_V,textYearX_V);
+        setSpinnerBounds(spinnerDay,editDate_Width,editHeight_V,editDayX_V);
         totalY-=(height*editHeight_V);
-        setY(spinnerMonth,(height*editHeight_V));
+        setSpinnerBounds(spinnerMonth,editDate_Width,editHeight_V,editMonthX_V);
         totalY-=(height*editHeight_V);
-        setY(spinnerYear,(height*editHeight_V));
-
-        setY(textPhone,(height*textHeight_V));
-        setY(editPhone,(height*editHeight_V));
+        setSpinnerBounds(spinnerYear,editDate_Width,editHeight_V,editYearX_V);
+        addSpace(5);
+        setBounds(textPhone,textWidth_V,textHeight_V,textX_V);
+        setBounds(editPhone,editPhoneWidth_V,editHeight_V,editPhoneX_V);
         totalY-=(height*editHeight_V);
-        setY(buttonAddPhoneField,(height*editHeight_V));
-        totalY+=(spaceY_V*height);
-        setY(buttonCompleteRegister,(height*editHeight_V));
+        setBounds(buttonAddPhoneField,buttonPlusWidth_V,editHeight_V,buttonPlusX_V);
+        addSpace(5);
+        setBounds(buttonCompleteRegister,buttonWidth_V,editHeight_V,buttonX_V);
 
     }
-    private void setItemsWidthVertical(){
-        textTitle.setWidth((int)(width*titleWidth_V));
-        textRegister.setWidth((int)(width*titleRegisterWidth_V));
-        textIdNumber.setWidth((int)(width*textWidth_V));
-        editIdNumber.setWidth((int)(width*editWidth_V));
-        textFullName.setWidth((int)(width*textWidth_V));
-        editFullName.setWidth((int)(width*editWidth_V));
-        textEmail.setWidth((int)(width*textWidth_V));
-        editEmail.setWidth((int)(width*editWidth_V));
-        textUserName.setWidth((int)(width*textWidth_V));
-        editUserName.setWidth((int)(width*editWidth_V));
-        textPassword.setWidth((int)(width*textWidth_V));
-        editPassword.setWidth((int)(width*editWidth_V));
-        textConfirmPassword.setWidth((int)(width*textWidth_V));
-        editConfirmPassword.setWidth((int)(width*editWidth_V));
-        textBornDate.setWidth((int)(width*textWidth_V));
-
-        textDay.setWidth((int)(textDate_Width*width));
-        textMonth.setWidth((int)(textDate_Width*width));
-        textYear.setWidth((int)(textDate_Width*width));
-
-        spinnerYear.setMinimumWidth((int)(width*editDate_Width));
-        spinnerMonth.setMinimumWidth((int)(width*editDate_Width));
-        spinnerDay.setMinimumWidth((int)(width*editDate_Width));
-        textPhone.setWidth((int)(width*textWidth_V));
-        editPhone.setWidth((int)(width*editPhoneWidth_V));
-        buttonAddPhoneField.setWidth((int)(width*buttonPlusWidth_V));
-        buttonCompleteRegister.setWidth((int)(width*buttonWidth_V));
+    private void setItemsBoundsHorizontal(){
+        //addSpace(3);
+        //setBounds(textTitle1,titleWidth,titleHeight,titleX);
+        //setBounds(textTitle2,titleWidth,titleHeight,titleX);
+        //setBounds(textTitle3,titleWidth,titleHeight,titleX);
+        //setBounds(textName,nameWidth,nameHeight,nameX);
     }
-    private void setItemsHeightVertical(){
-        textTitle.setHeight((int)(height*titleHeight_V));
-        textRegister.setHeight((int)(height*textHeight_V));
-        textIdNumber.setHeight((int)(height*textHeight_V));
-        editIdNumber.setHeight((int)(height*editHeight_V));
-        textFullName.setHeight((int)(height*textHeight_V));
-        editFullName.setHeight((int)(height*editHeight_V));
-        textEmail.setHeight((int)(height*textHeight_V));
-        editEmail.setHeight((int)(height*editHeight_V));
-        textUserName.setHeight((int)(height*textHeight_V));
-        editUserName.setHeight((int)(height*editHeight_V));
-        textPassword.setHeight((int)(height*textHeight_V));
-        editPassword.setHeight((int)(height*editHeight_V));
-        textConfirmPassword.setHeight((int)(height*textHeight_V));
-        editConfirmPassword.setHeight((int)(height*editHeight_V));
-        textBornDate.setHeight((int)(height*textHeight_V));
-
-        textDay.setHeight((int)(height*textHeight_V));
-        textMonth.setHeight((int)(height*textHeight_V));
-        textYear.setHeight((int)(height*textHeight_V));
-
-        spinnerDay.setMinimumHeight((int)(height*editHeight_V));
-        spinnerMonth.setMinimumHeight((int)(height*editHeight_V));
-        spinnerYear.setMinimumHeight((int)(height*editHeight_V));
-        textPhone.setHeight((int)(height*textHeight_V));
-        editPhone.setHeight((int)(height*editHeight_V));
-        buttonAddPhoneField.setHeight((int)(height*editHeight_V));
-        buttonCompleteRegister.setHeight((int)(height*editHeight_V));
+    private void setSpinnerBounds(Spinner spinner,float w,float h, float x){
+        spinner.setMinimumWidth((int)(w*width));
+        spinner.setMinimumHeight((int)(h*height));
+        spinner.setX(x*width);
+        spinner.setY(totalY);
+        totalY+=((int)(h*height));
     }
+    private void setBounds(TextView view, float w, float h, float x){
+        view.setWidth((int)(w*width));
+        view.setHeight((int)(h*height));
+        view.setX(x*width);
+        view.setY(totalY);
+        totalY+=((int)(h*height));
+    }
+    private void addSpace(int space){
+        totalY+=(space*height/100);
+    }
+
+
     private void createItems(){
         textTitle = new TextView(this);
         textRegister = new TextView(this);
@@ -458,9 +420,5 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         display.getSize(size);
         width = size.x;
         height = size.y;
-    }
-    private void setY(View view, float value){
-        view.setY(totalY);
-        totalY+=value;
     }
 }
