@@ -26,7 +26,9 @@ public class ScoreChapter extends Chapter{
     public void update(){
         updateTotals();
         updatePercentages();
-        form.update();
+        if(form!=null){
+            form.update();
+        }
     }
     private void updateTotals(){
         achievedPoints = 0;

@@ -15,11 +15,13 @@ public class CheckListForm {
     private ArrayList<CheckListQuestion> questionsLegal;
     private ArrayList<CheckListQuestion> questionsTech;
     private float achievedPercentage;
+    private int type;
 
-    public CheckListForm(String titleForm,String enterpriseName, String emailAddress,
+    public CheckListForm(String titleForm,int type,String enterpriseName, String emailAddress,
                          String date,String phoneNumber,ArrayList<CheckListQuestion> questionsLegal,
                          ArrayList<CheckListQuestion> questionsTech) {
         this.titleForm = titleForm;
+        this.type = type;
         this.enterpriseName = enterpriseName;
         this.emailAddress = emailAddress;
         this.date = date;
@@ -32,6 +34,9 @@ public class CheckListForm {
         update();
     }
 
+    public int getType(){
+        return type;
+    }
     public String getTitleForm(){
         return titleForm;
     }

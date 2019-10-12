@@ -15,12 +15,14 @@ public class CheckListDef {
     public ArrayList<CheckListQuestionDef> questionsLegal;
     public ArrayList<CheckListQuestionDef> questionsTech;
     public float achievedPercentage;
+    public int type;
 
     public CheckListDef(){
 
     }
-    public CheckListDef(String name,ArrayList<CheckListQuestionDef> questionsLegal,ArrayList<CheckListQuestionDef> questionsTech){
+    public CheckListDef(String name,int type,ArrayList<CheckListQuestionDef> questionsLegal,ArrayList<CheckListQuestionDef> questionsTech){
         this.name = name;
+        this.type = type;
         this.questionsLegal = questionsLegal;
         this.questionsTech = questionsTech;
         enterprise = "";

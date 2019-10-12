@@ -284,15 +284,13 @@ public class DummyRealFactory {
             questionsTech2.add(getRealClass(c));
         }
         return new CheckListForm(form.name,
+                form.type,
                 form.enterprise,
                 form.emailAddress,
                 form.date,
                 form.phoneNumber,questionsLegal2,questionsTech2);
     }
-    public static User getRealClass(UserDummy user){
-        return new User(user.id,user.fullName,user.userName,user.emailAddress,user.password,
-                user.bornDate,user.phoneNumbers);
-    }
+
 
 
     public static QuestionDefBinary getDummyBinaryQuestion(BinaryQuestion q){
@@ -538,6 +536,7 @@ public class DummyRealFactory {
 
     public static CheckListDef getDummyCheckList(CheckListForm f){
         CheckListDef checkListDef = new CheckListDef();
+        checkListDef.type = f.getType();
         checkListDef.name = f.getTitleForm();
         checkListDef.enterprise = f.getEnterpriseName();
         checkListDef.emailAddress = f.getEmailAddress();
@@ -614,6 +613,16 @@ public class DummyRealFactory {
         Address address = new Address(activity.province,activity.canton,activity.district,activity.address);
         return new Activity(activity.name,address,activity.isOperative,activity.type,form,checkListForm);
     }
+    public static ArrayList<ActivityDummy> getDummyActivityList(ArrayList<Activity> activities){
+        ArrayList<ActivityDummy> dummies = new ArrayList<>();
+        if(activities!=null) {
+            for (Activity act : activities) {
+                dummies.add(getDummyActivity(act));
+            }
+        }
+        return dummies;
+    }
+
 
     public static UserDummy getDummyUser(User user){
         UserDummy userDummy = new UserDummy();
@@ -633,8 +642,10 @@ public class DummyRealFactory {
     }
     public static User getRealUser(UserDummy userDummy){
         ArrayList<Activity> activities = new ArrayList<>();
-        for(ActivityDummy actDummy:userDummy.activities){
-            activities.add(getRealActivity(actDummy));
+        if(userDummy.activities!=null) {
+            for (ActivityDummy actDummy : userDummy.activities) {
+                activities.add(getRealActivity(actDummy));
+            }
         }
         return new User(userDummy.id,
                 userDummy.fullName,
@@ -645,4 +656,5 @@ public class DummyRealFactory {
                 userDummy.phoneNumbers,
                 activities);
     }
+
 }

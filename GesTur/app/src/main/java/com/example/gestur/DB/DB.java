@@ -40,6 +40,7 @@ public class DB {
     private FirebaseUser currentFireBaseUser;
 
     private User currentUser;
+    private String currentUserKey;
     private Activity currentActivity;
     private Form currentForm;
     private CheckListForm currentCheckListForm;
@@ -83,6 +84,11 @@ public class DB {
         logInResult = false;
         registerUserResult = false;
         registerUserDataResult = false;
+        currentUserKey = "";
+    }
+    public void updateUserActivities(){
+        DatabaseReference ref = firebaseDatabase.getReference("Users").child(currentUserKey);
+        ref.child("activities").setValue(DummyRealFactory.getDummyActivityList(currentUser.getActivities()));
     }
     private void logInWhenUserFound(final IObservable observable){
         mAuth.signInWithEmailAndPassword(currentUser.getEmailAddress(), currentUser.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -107,8 +113,10 @@ public class DB {
                     for(DataSnapshot ds : dataSnapshot.getChildren()){
                         UserDummy user = ds.getValue(UserDummy.class);
                         if(user.userName.equals(userName) && user.password.equals(password)){
-                            currentUser = DummyRealFactory.getRealClass(user);
+                            currentUser = DummyRealFactory.getRealUser(user);
+                            currentUserKey = ds.getKey();
                             logInWhenUserFound(observable);
+                            break;
                         }
                     }
                     if(currentUser == null){
@@ -156,9 +164,7 @@ public class DB {
                     }
                     currentActivity.setForm(currentForm);
                     currentUser.addActivity(currentActivity);
-
-                    //InfoPasser.getInstance().setCheckListForm(currentCheckListForm);
-                    //InfoPasser.getInstance().setCurrentForm(currentForm);
+                    updateUserActivities();
                     observable.notifyObservable(1,"Prueba todo bien");
 
                     break;
@@ -216,7 +222,7 @@ public class DB {
         User user = new User(id,fullName,username,email,password,date,null);
         user.addPhoneNumber(phoneNumber);
         currentUser = user;
-        firebaseDatabase.getReference("Users").push().setValue(user.getUserDummy()).addOnCompleteListener(new OnCompleteListener<Void>() {
+        firebaseDatabase.getReference("Users").push().setValue(DummyRealFactory.getDummyUser(user)).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
