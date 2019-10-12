@@ -1,8 +1,11 @@
 package com.example.gestur.logic.questions;
 
+import com.example.gestur.DB.definitionFormClasses.QuestionDefBinary;
 import com.example.gestur.logic.chapters.BinaryChapter;
 
-public class BinaryQuestion extends Question{
+import java.io.Serializable;
+
+public class BinaryQuestion extends Question implements Serializable {
 
     private Boolean yes;
     private Boolean no;

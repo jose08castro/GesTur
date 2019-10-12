@@ -1,5 +1,8 @@
 package com.example.gestur.DB.definitionFormClasses;
 
+import com.example.gestur.logic.chapters.BinaryChapter;
+import com.example.gestur.logic.forms.RestaurantBinaryForm;
+
 import java.util.ArrayList;
 
 public class FormDefRestaurant {
@@ -11,6 +14,7 @@ public class FormDefRestaurant {
     public float achievedPercentage;
 
     public ArrayList<ChapterDefBinary> chapters;
+    public ArrayList<String> chapterNames;
 
     public String establishmentName;
     public String specialty;
@@ -22,17 +26,16 @@ public class FormDefRestaurant {
     public FormDefRestaurant(){
 
     }
-    public FormDefRestaurant(String name,int type,ArrayList<ChapterDefBinary> chapters,String establishmentName,
-                             String specialty,int tables,int places,int collaborators,String schedule){
+    public FormDefRestaurant(String name,int type,ArrayList<ChapterDefBinary> chapters,ArrayList<String> chapterNames){
         this.name = name;
         this.type = type;
         this.chapters = chapters;
-        this.establishmentName = establishmentName;
-        this.specialty = specialty;
-        this.tables = tables;
-        this.places = places;
-        this.collaborators = collaborators;
-        this.schedule = schedule;
+        this.chapterNames = chapterNames;
+        this.establishmentName = "";
+        this.specialty = "";
+        this.tables = 0;
+        this.places = 0;
+        this.collaborators = 0;
+        this.schedule = "";
     }
-
 }

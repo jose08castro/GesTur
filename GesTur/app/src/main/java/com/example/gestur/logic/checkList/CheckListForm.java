@@ -1,5 +1,8 @@
 package com.example.gestur.logic.checkList;
 
+import com.example.gestur.DB.definitionCheckListClasses.CheckListDef;
+import com.example.gestur.DB.definitionCheckListClasses.CheckListQuestionDef;
+
 import java.util.ArrayList;
 
 public class CheckListForm {
@@ -9,31 +12,26 @@ public class CheckListForm {
     private String emailAddress;
     private String date;
     private String phoneNumber;
-    private ArrayList<CheckListQuestion> questions;
-    private int legalQuestions;
-    private int techQuestions;
+    private ArrayList<CheckListQuestion> questionsLegal;
+    private ArrayList<CheckListQuestion> questionsTech;
     private float achievedPercentage;
 
-    public CheckListForm(String titleForm,
-                         String enterpriseName,
-                         String emailAddress,
-                         String date,
-                         String phoneNumber,
-                         int legalQuestions,
-                         int techQuestions,
-                         ArrayList<CheckListQuestion> questions) {
+    public CheckListForm(String titleForm,String enterpriseName, String emailAddress,
+                         String date,String phoneNumber,ArrayList<CheckListQuestion> questionsLegal,
+                         ArrayList<CheckListQuestion> questionsTech) {
         this.titleForm = titleForm;
         this.enterpriseName = enterpriseName;
         this.emailAddress = emailAddress;
         this.date = date;
         this.phoneNumber = phoneNumber;
-        this.legalQuestions = legalQuestions;
-        this.techQuestions = techQuestions;
         this.achievedPercentage = 0f;
-        this.questions = new ArrayList<>();
-        addQuestions(questions);
+        this.questionsLegal = new ArrayList<>();
+        this.questionsTech = new ArrayList<>();
+        addQuestions(questionsLegal,1);
+        addQuestions(questionsTech,2);
         update();
     }
+
     public String getTitleForm(){
         return titleForm;
     }
@@ -53,39 +51,45 @@ public class CheckListForm {
         return phoneNumber;
     }
 
-    public ArrayList<CheckListQuestion> getQuestions() {
-        return questions;
+    public ArrayList<CheckListQuestion> getQuestionsLegal() {
+        return questionsLegal;
     }
 
-    public int getLegalQuestions() {
-        return legalQuestions;
-    }
-
-    public int getTechQuestions() {
-        return techQuestions;
+    public ArrayList<CheckListQuestion> getQuestionsTech() {
+        return questionsTech;
     }
 
     public float getAchievedPercentage() {
         return achievedPercentage;
     }
 
-    public void addQuestions(ArrayList<CheckListQuestion> quests){
+    public void addQuestions(ArrayList<CheckListQuestion> quests, int i){
         if(quests!=null){
             for(CheckListQuestion q :quests){
-                addQuestion(q);
+                addQuestion(q,i);
             }
         }
     }
-    public void addQuestion(CheckListQuestion q){
+    public void addQuestion(CheckListQuestion q,int i){
         if(q!=null){
             q.setForm(this);
-            questions.add(q);
+            if(i == 1){
+                questionsLegal.add(q);
+            }else{
+                questionsTech.add(q);
+            }
         }
     }
     public void update(){
         int done = 0;
         int total = 0;
-        for(CheckListQuestion q:questions){
+        for(CheckListQuestion q:questionsLegal){
+            total++;
+            if(q.isDone()){
+                done++;
+            }
+        }
+        for(CheckListQuestion q:questionsTech){
             total++;
             if(q.isDone()){
                 done++;

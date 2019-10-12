@@ -1,11 +1,9 @@
 package com.example.gestur.view.main;
 
 import android.content.Context;
-import android.graphics.Point;
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,46 +14,38 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.gestur.DB.DB;
 import com.example.gestur.R;
 
 import java.util.ArrayList;
 
-public class RegisterActivity extends AppCompatActivity implements IRegisterActivityConstants {
+public class RegisterActivity extends AbstractActivity implements IObservable, IRegisterActivityConstants {
 
     final Context context = this;
-    private int width;
-    private int height;
 
     private TextView textTitle;
     private TextView textActivityRegister;
-
     private TextView textName;
     private EditText editName;
-
     private TextView textCategory;
     private Spinner spinnerCategories;
-
     private TextView textOperative;
     private CheckBox checkOperative;
-
     private TextView textLocation;
-
     private TextView textProvince;
     private TextView textCanton;
     private TextView textDistrict;
     private Spinner spinnerProvinces;
     private Spinner spinnerCantons;
     private Spinner spinnerDistricts;
-
     private TextView textAddress;
     private EditText editAddress;
-
     private Button buttonCreate;
 
     private ConstraintLayout layout;
     private TrackableScrollView scroll;
-    private int totalY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,27 +53,57 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterActi
         setContentView(R.layout.activity_register);
         layout = findViewById(R.id.layoutRegister);
         scroll = findViewById(R.id.scrollRegister);
-        getScreenSizes();
         createItems();
-        setItemsConfig();
-        if(width>height){
-            setItemsXHorizontal();
-            setItemsYHorizontal();
-            setItemsSizesHorizontal();
-        }
-        if(width<height){
-            setItemsXVertical();
-            setItemsYVertical();
-            setItemsSizesVertical();
-        }
-        addItems();
+        setItemsConfiguration();
+        setItemsBounds();
         setFocusListeners();
+        addItems();
+
         layout.setMinHeight(totalY+100);
 
-        //DB db = new DB();
-        //db.registerUser("josueggss73@gmail.com","warrior73");
+        buttonCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validateData();
+            }
+        });
 
     }
+    private boolean validateData(){
+        String activityName = editName.getText().toString().trim();
+        String category = spinnerCategories.getSelectedItem().toString().trim();
+        boolean operative = checkOperative.isSelected();
+        String province = spinnerProvinces.getSelectedItem().toString().trim();
+        String canton = spinnerCantons.getSelectedItem().toString().trim();
+        String district = spinnerDistricts.getSelectedItem().toString().trim();
+        String address = editAddress.getText().toString().trim();
+
+        if(!activityName.isEmpty() & !address.isEmpty()){
+            //Empezar con la mierda que da vueltas
+            DB.getInstance().addActivity(activityName,getActivityType(category),getCheckListType(category),operative,province,canton,district,address,this);
+        }else{
+            Toast.makeText(this, "Ningún campo puede quedar vacío", Toast.LENGTH_SHORT).show();
+        }
+
+
+        return true;
+    }
+    @Override// 1 para exito, 2 para error, 3 para task successful
+    public void notifyObservable(int n, String msg) {
+        if(n == 1){
+            Toast.makeText(this, "EXITO: "+msg, Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(context, LobbyActivity.class));
+        }
+        if(n == 3){
+            Toast.makeText(this, "Funcionó: "+msg, Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this, "ERROR: "+msg, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
     private void setFocusListeners(){
         layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -216,7 +236,76 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterActi
         buttonCreate = new Button(this);
     }
 
-    private void setItemsConfig(){
+    private void addItems(){
+        layout.addView(textTitle);
+        layout.addView(textActivityRegister);
+        layout.addView(textName);
+        layout.addView(editName);
+        layout.addView(textCategory);
+        layout.addView(spinnerCategories);
+        layout.addView(textOperative);
+        layout.addView(checkOperative);
+        layout.addView(textLocation);
+        layout.addView(textProvince);
+        layout.addView(spinnerProvinces);
+        layout.addView(textCanton);
+        layout.addView(spinnerCantons);
+        layout.addView(textDistrict);
+        layout.addView(spinnerDistricts);
+        layout.addView(textAddress);
+        layout.addView(editAddress);
+        layout.addView(buttonCreate);
+    }
+
+
+    @Override
+    protected void setItemsBoundsHorizontal() {
+
+    }
+
+    @Override
+    protected void setItemsBoundsVertical() {
+        setBounds(textTitle,titleWidth_V,titleHeight_V,titleX_V);
+        setBounds(textActivityRegister,title_register_width_V,title_register_height_V,text_X_V);
+
+        addSpace(5,100);
+
+        setBounds(textName,text_Width_V,text_height,text_X_V);
+        setBounds(editName,edit_TextWidth_V,editHeight_V,edit_TextX_V);
+        setBounds(textCategory,text_Width_V,text_height,text_X_V);
+
+        addSpace(1,100);
+        setSpinnerBounds(spinnerCategories,spinnerWidth_V,editHeight_V,spinnerX_V);
+        addSpace(1,100);
+
+        setBounds(textOperative,text_operativeWidth_V,text_height,text_X_V);
+        totalY-=((int)(height*text_height));
+        setBounds(checkOperative,check_OperativeWidth_V,text_height,check_OperativeX_V);
+
+        addSpace(3,100);
+        setBounds(textLocation,text_Width_V,text_height,text_X_V);
+
+        addSpace(1,100);
+        setBounds(textProvince,text_Width_V,text_height,text_X_V);
+        setSpinnerBounds(spinnerProvinces,spinnerWidth_V,editHeight_V,spinnerX_V);
+
+        setBounds(textCanton,text_Width_V,text_height,text_X_V);
+        setSpinnerBounds(spinnerCantons,spinnerWidth_V,editHeight_V,spinnerX_V);
+
+        setBounds(textDistrict,text_Width_V,text_height,text_X_V);
+        setSpinnerBounds(spinnerDistricts,spinnerWidth_V,editHeight_V,spinnerX_V);
+
+        setBounds(textAddress,text_Width_V,text_height,text_X_V);
+        setBounds(editAddress,edit_TextWidth_V,editHeight_V,edit_TextX_V);
+
+        addSpace(2,100);
+        setBounds(buttonCreate,buttonCreate_Width_V,buttonCreate_Height_V,buttonCreate_X_V);
+
+
+    }
+
+    @Override
+    protected void setItemsConfiguration() {
 
         textTitle.setText(text_title);
         textTitle.setTextSize(72);
@@ -265,214 +354,15 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterActi
 
         buttonCreate.setText(text_button);
         buttonCreate.setTextSize(22);
-
-    }
-    private void setItemsSizesVertical(){
-        textTitle.setWidth((int)(width*titleWidth_V));
-        textTitle.setHeight((int)(height*titleHeight_V));
-
-        textActivityRegister.setWidth((int)(width*title_register_width_V));
-        textActivityRegister.setHeight((int)(title_register_height_V*height));
-
-        textName.setWidth((int)(width*text_Width_V));
-        textName.setHeight((int)(height*text_height));
-
-        editName.setWidth((int)(width*edit_TextWidth_V));
-        editName.setHeight((int)(height*editHeight_V));
-
-        textCategory.setWidth((int)(width*text_Width_V));
-        textCategory.setHeight((int)(height*text_height));
-
-        spinnerCategories.setMinimumWidth((int)(width*spinnerWidth_V));
-        spinnerCategories.setMinimumHeight((int)(height*editHeight_V));
-
-        textOperative.setWidth((int)(width*text_operativeWidth_V));
-        textOperative.setHeight((int)(height*text_height));
-
-        checkOperative.setWidth((int)(width*check_OperativeWidth_V));
-        checkOperative.setHeight((int)(height*text_height));
-
-        textLocation.setWidth((int)(width*text_Width_V));
-        textLocation.setHeight((int)(height*text_height));
-
-        textProvince.setWidth((int)(width*text_Width_V));
-        textProvince.setHeight((int)(height*text_height));
-
-        spinnerProvinces.setMinimumWidth((int)(width*spinnerWidth_V));
-        spinnerProvinces.setMinimumHeight((int)(height*editHeight_V));
-
-        textCanton.setWidth((int)(width*text_Width_V));
-        textCanton.setHeight((int)(height*text_height));
-
-        spinnerCantons.setMinimumWidth((int)(width*spinnerWidth_V));
-        spinnerCantons.setMinimumHeight((int)(height*editHeight_V));
-
-        textDistrict.setWidth((int)(width*text_Width_V));
-        textDistrict.setHeight((int)(height*text_height));
-
-        spinnerDistricts.setMinimumWidth((int)(width*spinnerWidth_V));
-        spinnerDistricts.setMinimumHeight((int)(height*editHeight_V));
-
-        textAddress.setWidth((int)(width*text_Width_V));
-        textAddress.setHeight((int)(height*text_height));
-
-        editAddress.setWidth((int)(width*edit_TextWidth_V));
-        editAddress.setHeight((int)(height*editHeight_V));
-
-        buttonCreate.setWidth((int)(width*buttonCreate_Width_V));
-        buttonCreate.setHeight((int)(height*buttonCreate_Height_V));
-    }
-    private void setItemsXVertical(){
-        textTitle.setX(width*titleX_V);
-        textActivityRegister.setX(width*text_X_V);
-        textName.setX(width*text_X_V);
-        editName.setX(width*edit_TextX_V);
-        textCategory.setX(width*text_X_V);
-        spinnerCategories.setX(width*spinnerX_V);
-        textOperative.setX(width*text_operativeX_V);
-        checkOperative.setX(width*check_OperativeX_V);
-        textLocation.setX(width*text_X_V);
-        textProvince.setX(width*text_X_V);
-        spinnerProvinces.setX(width*spinnerX_V);
-        textCanton.setX(width*text_X_V);
-        spinnerCantons.setX(width*spinnerX_V);
-        textDistrict.setX(width*text_X_V);
-        spinnerDistricts.setX(width*spinnerX_V);
-        textAddress.setX(width*text_X_V);
-        editAddress.setX(width*edit_TextX_V);
-        buttonCreate.setX(width*buttonCreate_X_V);
-    }
-    private void setItemsYVertical(){
-
-        totalY = 0;
-        setY(textTitle,titleHeight_V*height);
-        setY(textActivityRegister,title_register_height_V*height);
-        totalY+=(space5p_V*height);
-        setY(textName,height*text_height);
-        setY(editName,height*editHeight_V);
-        setY(textCategory,height*text_height);
-        totalY+=(space1p_V*height);
-        setY(spinnerCategories,height*editHeight_V);
-        totalY+=(space1p_V*height);
-        setY(textOperative,height*text_height);
-        totalY-=((int)(height*text_height));
-        setY(checkOperative,height*text_height);
-        totalY+=(space1p_V*height);
-        totalY+=(space1p_V*height);
-        totalY+=(space1p_V*height);
-        setY(textLocation,height*text_height);
-        totalY+=(space1p_V*height);
-        setY(textProvince,height*text_height);
-        setY(spinnerProvinces,height*editHeight_V);
-        setY(textCanton,height*text_height);
-        setY(spinnerCantons,height*editHeight_V);
-        setY(textDistrict,height*text_height);
-        setY(spinnerDistricts,height*editHeight_V);
-        setY(textAddress,height*text_height);
-        setY(editAddress,height*editHeight_V);
-        totalY+=(space1p_V*height);
-        totalY+=(space1p_V*height);
-        setY(buttonCreate,height*buttonCreate_Height_V);
-    }
-    private void addItems(){
-        layout.addView(textTitle);
-        layout.addView(textActivityRegister);
-        layout.addView(textName);
-        layout.addView(editName);
-        layout.addView(textCategory);
-        layout.addView(spinnerCategories);
-        layout.addView(textOperative);
-        layout.addView(checkOperative);
-        layout.addView(textLocation);
-        layout.addView(textProvince);
-        layout.addView(spinnerProvinces);
-        layout.addView(textCanton);
-        layout.addView(spinnerCantons);
-        layout.addView(textDistrict);
-        layout.addView(spinnerDistricts);
-        layout.addView(textAddress);
-        layout.addView(editAddress);
-        layout.addView(buttonCreate);
     }
 
 
-    private void setItemsXHorizontal(){
-/*
-        textTitle.setX(width*titleX_H);
-        editUserName.setX(width*editX_H);
-        editPassword.setX(width*editX_H);
-        checkRemember.setX(width*checkBoxX_H);
-        buttonLogin.setX(width*buttonL_H);
-        textNoAccount.setX(width*textNoAccountX_H);
-        buttonRegister.setX(width*buttonR_H);
-        */
-    }
-    private void setItemsYHorizontal(){
-        /*
-        totalY = 0;
-        setY(textTitle,titleHeight_H*height);
-        setY(textNoAccount,texNoCountHeight_H*height);
-        totalY+=(space1p_H*height);
-        setY(buttonRegister,buttonHeight_H*height);
-
-        totalY=(int)(initialY_H*height);
-
-        setY(editUserName,height*editHeight_H);
-        totalY+=(space1p_H*height);
-        setY(editPassword,height*editHeight_H);
-        totalY+=(space1p_H*height);
-        totalY+=(space1p_H*height);
-        totalY+=(space1p_H*height);
-        totalY+=(space1p_H*height);
-        setY(checkRemember,checkBoxHeight_H*height);
-        totalY+=(space1p_H*height);
-        setY(buttonLogin,buttonHeight_H*height);
-        */
-    }
-    private void setItemsSizesHorizontal(){
-        /*
-        textTitle.setWidth((int)(width*titleWidth_H));
-        textTitle.setHeight((int)(height*titleHeight_H));
-
-        editUserName.setWidth((int)(width*editWidth_H));
-        editUserName.setHeight((int)(height*editHeight_H));
-
-        editPassword.setWidth((int)(width*editWidth_H));
-        editPassword.setHeight((int)(height*editHeight_H));
-
-        checkRemember.setWidth((int)(checkBoxWidth_H*width));
-        checkRemember.setHeight((int)(checkBoxHeight_H*height));
-
-        buttonLogin.setWidth((int)(buttonWidth_H*width));
-        buttonLogin.setHeight((int)(buttonHeight_H*height));
-
-        textNoAccount.setWidth((int)(textNoAccountWidth_H*width));
-        textNoAccount.setHeight((int)(texNoCountHeight_H*height));
-
-        buttonRegister.setWidth((int)(buttonWidth_H*width));
-        buttonRegister.setHeight((int)(buttonHeight_H*height));
-        */
-    }
-
-    private void getScreenSizes()
-    {
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        width = size.x;
-        height = size.y;
-    }
-    private void setY(View view, float value){
-        view.setY(totalY);
-        totalY+=value;
-    }
     private void loadSpinnerCategories(){
         ArrayList<String> strings = new ArrayList<String>();
         strings.add("Actividad Temática");
         strings.add("Hotel");
         strings.add("Agencia de viajes");
         strings.add("Alquiler de Automóviles,Cuadraciclos y Motocicletas");
-        strings.add("Agencia de viajes");
         strings.add("Línea aérea");
         strings.add("Transporte Acuático y Tours");
         strings.add("Centro de Congresos y Convenciones");
@@ -484,6 +374,74 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterActi
         strings.add("Actividad Recreativa Aérea");
         strings.add("Spa");
         spinnerCategories.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, strings));
+    }
+    private int getCheckListType(String type){
+        switch (type){
+            case "Actividad Temática":
+                return 1;
+            case "Hotel":
+                return 1;
+            case "Agencia de viajes":
+                return 3;
+            case "Alquiler de Automóviles,Cuadraciclos y Motocicletas":
+                return 4;
+            case "Línea aérea":
+                return 5;
+            case "Transporte Acuático y Tours":
+                return 6;
+            case "Centro de Congresos y Convenciones":
+                return 7;
+            case "Empresa dedicada a Centros y Convenciones":
+                return 7;
+            case "Restaurante":
+                return 8;
+            case "Fonda/Soda":
+                return 8;
+            case "Cafetería":
+                return 8;
+            case "Actividad Recreativa Acuática":
+                return 9;
+            case "Actividad Recreativa Aérea":
+                return 10;
+            case "Spa":
+                return 11;
+            default:
+                return 0;
+        }
+    }
+    private int getActivityType(String type){
+        switch (type){
+            case "Actividad Temática":
+                return 1;
+            case "Hotel":
+                return 2;
+            case "Agencia de viajes":
+                return 3;
+            case "Alquiler de Automóviles,Cuadraciclos y Motocicletas":
+                return 4;
+            case "Línea aérea":
+                return 5;
+            case "Transporte Acuático y Tours":
+                return 6;
+            case "Centro de Congresos y Convenciones":
+                return 7;
+            case "Empresa dedicada a Centros y Convenciones":
+                return 8;
+            case "Restaurante":
+                return 9;
+            case "Fonda/Soda":
+                return 10;
+            case "Cafetería":
+                return 11;
+            case "Actividad Recreativa Acuática":
+                return 12;
+            case "Actividad Recreativa Aérea":
+                return 13;
+            case "Spa":
+                return 14;
+            default:
+                return 0;
+        }
     }
 
     private void loadSpinnerProvinces(){

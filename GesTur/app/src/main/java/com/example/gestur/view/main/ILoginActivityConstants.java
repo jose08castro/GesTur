@@ -10,13 +10,6 @@ public interface ILoginActivityConstants {
     String text_register = "Registrarse";
     String text_no_account = "¿Aún no tiene una cuenta?";
 
-    float initialY_V = 5/100f;
-    float space5p_V = 5/100f;
-    float space1p_V = 1/100f;
-
-    float titleX_V = 1/7f;
-    float titleWidth_V = 5/7f;
-
     float editX_V = 1/10f;
     float editWidth_V = 4/5f;
 
@@ -35,8 +28,7 @@ public interface ILoginActivityConstants {
     float buttonHeight_V = 10/100f;
     float texNoCountHeight_V = 4/100f;
 
-    float titleX_H = 5/100f;
-    float titleWidth_H = 40/100f;
+    float titleWidth_H = 50/100f;
 
     float editX_H = 52/100f;
     float editWidth_H = 46/100f;
@@ -58,6 +50,5 @@ public interface ILoginActivityConstants {
     float texNoCountHeight_H = 4/50f;
 
     float initialY_H = 5/50f;
-    float space1p_H = 1/50f;
 
 }

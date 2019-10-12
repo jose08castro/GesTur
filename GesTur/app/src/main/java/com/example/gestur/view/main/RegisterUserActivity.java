@@ -1,13 +1,11 @@
 package com.example.gestur.view.main;
 
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,34 +15,34 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.gestur.DB.DB;
 import com.example.gestur.R;
+import com.example.gestur.view.CanvasView;
 
-public class RegisterUserActivity extends AppCompatActivity implements IRegisterUserConstants {
-    final Context context = this;
-    private int width;
-    private int height;
+public class RegisterUserActivity extends AbstractActivity implements IRegisterUserConstants, IObservable {
 
     private TextView textTitle;
     private TextView textRegister;
 
-    private TextView textIdNumber;
     private EditText editIdNumber;
+    private TextInputLayout editIdNumberLayout;
 
-    private TextView textFullName;
     private EditText editFullName;
+    private TextInputLayout editFullNameLayout;
 
-    private TextView textEmail;
     private EditText editEmail;
+    private TextInputLayout editEmailLayout;
 
-    private TextView textUserName;
     private EditText editUserName;
+    private TextInputLayout editUserNameLayout;
 
-    private TextView textPassword;
     private EditText editPassword;
+    private TextInputLayout editPasswordLayout;
 
-    private TextView textConfirmPassword;
     private EditText editConfirmPassword;
+    private TextInputLayout editConfirmPasswordLayout;
 
     private TextView textBornDate;
 
@@ -56,16 +54,22 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
     private Spinner spinnerMonth;
     private Spinner spinnerYear;
 
-    private TextView textPhone;
+
     private EditText editPhone;
+    private TextInputLayout editPhoneLayout;
+
     private Button buttonAddPhoneField;
 
     private Button buttonCompleteRegister;
-
-    private ConstraintLayout layout;
-    private int totalY;
-
     private TrackableScrollView scroll;
+
+    private String userName;
+    private String idNumber;
+    private String phoneNumber;
+    private String password;
+    private String fullName;
+    private String emailAddress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,23 +77,25 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         setContentView(R.layout.activity_register_user);
 
         scroll = findViewById(R.id.scrollRegisterUser);
-
-        totalY = 0;
         layout = findViewById(R.id.layoutRegisterUser);
-        getScreenSizes();
         createItems();
-        setItemsConfig();
+        setItemsConfiguration();
+        setItemsBounds();
 
-        if(width<height){
-            setItemsBoundsVertical();
-        }else{
-            setItemsBoundsHorizontal();//Falta
-        }
         addComponents();
         layout.setMinHeight(totalY+100);
         setFocusListeners();
+        configCanvas();
     }
-    private void setFocusListeners(){
+    private void setFocusListeners()
+    {
+
+        buttonCompleteRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validateRegister();
+            }
+        });
         layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -108,7 +114,7 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(b){
-                    scroll.scrollTo(0, (int) textIdNumber.getY());
+                    scroll.scrollTo(0, (int) editIdNumberLayout.getY()-20);
                     scroll.setScrollingEnabled(false);
                 }else{
                     scroll.setScrollingEnabled(true);
@@ -119,7 +125,7 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(b){
-                    scroll.scrollTo(0, (int) textFullName.getY());
+                    scroll.scrollTo(0, (int) editFullNameLayout.getY()-20);
                     scroll.setScrollingEnabled(false);
                 }else{
                     scroll.setScrollingEnabled(true);
@@ -130,7 +136,7 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(b){
-                    scroll.scrollTo(0, (int) textEmail.getY());
+                    scroll.scrollTo(0, (int) editEmailLayout.getY()-20);
                     scroll.setScrollingEnabled(false);
                 }else{
                     scroll.setScrollingEnabled(true);
@@ -141,7 +147,7 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(b){
-                    scroll.scrollTo(0, (int) textUserName.getY());
+                    scroll.scrollTo(0, (int) editUserNameLayout.getY()-20);
                     scroll.setScrollingEnabled(false);
                 }else{
                     scroll.setScrollingEnabled(true);
@@ -152,7 +158,7 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(b){
-                    scroll.scrollTo(0, (int) textPassword.getY());
+                    scroll.scrollTo(0, (int) editPasswordLayout.getY()-20);
                     scroll.setScrollingEnabled(false);
                 }else{
                     scroll.setScrollingEnabled(true);
@@ -163,7 +169,7 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(b){
-                    scroll.scrollTo(0, (int) textConfirmPassword.getY());
+                    scroll.scrollTo(0, (int) editConfirmPasswordLayout.getY()-20);
                     scroll.setScrollingEnabled(false);
                 }else{
                     scroll.setScrollingEnabled(true);
@@ -174,7 +180,7 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(b){
-                    scroll.scrollTo(0, (int) textPhone.getY());
+                    scroll.scrollTo(0, (int) editPhoneLayout.getY()-20);
                     scroll.setScrollingEnabled(false);
                 }else{
                     scroll.setScrollingEnabled(true);
@@ -194,21 +200,147 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         });
     }
 
-    private void addComponents(){
+    private boolean validateRegister()
+    {
+        if(validateUserId() & validateFullName() & validateEmail() & validateUserName() & validatePasswords() & validatePhoneNumber()){
+            String day = spinnerDay.getSelectedItem().toString();
+            String month = spinnerMonth.getSelectedItem().toString();
+            String year = spinnerYear.getSelectedItem().toString();
+            String date = day+"/"+month+"/"+year;
+            DB.getInstance().registerUser(idNumber,fullName,emailAddress,userName,password,date,phoneNumber,this);
+        }
+        return true;
+    }
+
+    @Override// 1 para exito, 2 para error
+    public void notifyObservable(int n,String msg) {
+        if(n == 1){
+            startActivity(new Intent(context, LobbyActivity.class));
+            Toast.makeText(this, "DATOS CORRECTOS, BIENVENIDO", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean validateUserId()
+    {
+        idNumber = editIdNumberLayout.getEditText().getText().toString().trim();
+        if(idNumber.isEmpty()){
+            editIdNumberLayout.setError("El campo no puede quedar vacío");
+            return false;
+        }
+        if(idNumber.length()!=9){
+            editIdNumberLayout.setError("El número debe tener 9 dígitos");
+            return false;
+        }
+        editIdNumberLayout.setError(null);
+        return true;
+    }
+    private boolean validateFullName()
+    {
+        fullName = editFullNameLayout.getEditText().getText().toString().trim();
+        String[] names = fullName.split(" ");
+        if(fullName.isEmpty()){
+            editFullNameLayout.setError("El campo no puede quedar vacío");
+            return false;
+        }
+        if(names.length<=2){
+            editFullNameLayout.setError("Mínimo 1 nombre y 2 apellidos");
+            return false;
+        }
+        editFullNameLayout.setError(null);
+        return true;
+    }
+
+    private boolean validateEmail()
+    {
+        emailAddress = editEmailLayout.getEditText().getText().toString().trim();
+        if(emailAddress.isEmpty()){
+            editEmailLayout.setError("El campo no puede quedar vacío");
+            return false;
+        }
+        if(!validateEmailAddress(emailAddress)){
+            editEmailLayout.setError("Email inválido");
+            return false;
+        }else{
+            editEmailLayout.setError(null);
+            return true;
+        }
+
+    }
+
+    private boolean validateUserName()
+    {
+        userName = editUserNameLayout.getEditText().getText().toString().trim();
+        if(userName.isEmpty()){
+            editUserNameLayout.setError("El campo no puede quedar vacío");
+            return false;
+        }
+        editUserNameLayout.setError(null);
+        //Database search
+        return true;
+    }
+    private boolean validatePasswords()
+    {
+        password = editPasswordLayout.getEditText().getText().toString().trim();
+        String password2 = editConfirmPasswordLayout.getEditText().getText().toString().trim();
+        if(password.isEmpty() || password2.isEmpty()) {
+            if (password.isEmpty()) {
+                editPasswordLayout.setError("El campo no puede quedar vacío");
+            }
+            if (password2.isEmpty()) {
+                editConfirmPasswordLayout.setError("El campo no puede quedar vacío");
+            }
+            return false;
+        }
+        if(password.length() < 8 || password2.length() < 8){
+            if (password.length() < 8) {
+                editPasswordLayout.setError("Mínimo 8 caracteres");
+            }
+            if (password2.length() < 8) {
+                editConfirmPasswordLayout.setError("Mínimo 8 caracteres");
+            }
+            return false;
+        }
+        if(!password.equals(password2)){
+            editPasswordLayout.setError("Las contraseñas no coinciden");
+            editConfirmPasswordLayout.setError("Las contraseñas no coinciden");
+            return false;
+        }else{
+            editPasswordLayout.setError(null);
+            editConfirmPasswordLayout.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePhoneNumber()
+    {
+        phoneNumber = editPhoneLayout.getEditText().getText().toString().trim();
+        if(phoneNumber.isEmpty()){
+            editPhoneLayout.setError("El campo no puede quedar vacío");
+            return false;
+        }
+        if(phoneNumber.length()!=8){
+            editPhoneLayout.setError("El número debe tener 8 dígitos");
+            return false;
+        }else{
+            editPhoneLayout.setError(null);
+            return true;
+        }
+    }
+
+    private void addComponents()
+    {
         layout.addView(textTitle);
         layout.addView(textRegister);
-        layout.addView(textIdNumber);
-        layout.addView(editIdNumber);
-        layout.addView(textFullName);
-        layout.addView(editFullName);
-        layout.addView(textEmail);
-        layout.addView(editEmail);
-        layout.addView(textUserName);
-        layout.addView(editUserName);
-        layout.addView(textPassword);
-        layout.addView(editPassword);
-        layout.addView(textConfirmPassword);
-        layout.addView(editConfirmPassword);
+
+        layout.addView(editIdNumberLayout);
+        layout.addView(editFullNameLayout);
+        layout.addView(editEmailLayout);
+        layout.addView(editUserNameLayout);
+        layout.addView(editPasswordLayout);
+        layout.addView(editConfirmPasswordLayout);
+
         layout.addView(textBornDate);
         layout.addView(textDay);
         layout.addView(textMonth);
@@ -216,16 +348,19 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         layout.addView(spinnerDay);
         layout.addView(spinnerMonth);
         layout.addView(spinnerYear);
-        layout.addView(textPhone);
-        layout.addView(editPhone);
-        layout.addView(buttonAddPhoneField);
+
+        layout.addView(editPhoneLayout);
+
+        //layout.addView(buttonAddPhoneField);
         layout.addView(buttonCompleteRegister);
     }
-    private void setItemsConfig(){
-        int titleSize = width/15;
-        int title2Size = width/39;
-        int textSize = width/50;
-        int editSize = width/42;
+
+    @Override
+    protected void setItemsConfiguration(){
+        int titleSize = getTextSize(15);
+        int title2Size = getTextSize(39);
+        int textSize = getTextSize(50);
+        int editSize = getTextSize(42);
 
         textTitle.setText(text_Title);
         textTitle.setTextSize(titleSize);
@@ -235,42 +370,43 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         textRegister.setGravity(Gravity.CENTER);
         textRegister.setTextSize(title2Size);
 
-        textIdNumber.setText(text_Id);
-        textIdNumber.setTextSize(textSize);
-
-        editIdNumber.setBackgroundColor(Color.rgb(210,210,210));
+        //editIdNumber.setBackgroundColor(Color.rgb(215,215,215));
         editIdNumber.setTextSize(editSize);
-
-        textFullName.setText(text_Full_Name);
-        textFullName.setTextSize(textSize);
+        editIdNumber.setHint(text_Id);
+        editIdNumber.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editIdNumberLayout.setErrorEnabled(true);
+        editIdNumberLayout.setCounterEnabled(true);
+        editIdNumberLayout.setCounterMaxLength(9);
 
         editFullName.setTextSize(editSize);
-        editFullName.setBackgroundColor(Color.rgb(210,210,210));
-
-        textEmail.setText(text_Email);
-        textEmail.setTextSize(textSize);
+        //editFullName.setBackgroundColor(Color.rgb(215,215,215));
+        editFullName.setHint(text_Full_Name);
+        editFullNameLayout.setErrorEnabled(true);
 
         editEmail.setTextSize(editSize);
-        editEmail.setBackgroundColor(Color.rgb(210,210,210));
-
-        textUserName.setText(text_userName);
-        textUserName.setTextSize(textSize);
+        //editEmail.setBackgroundColor(Color.rgb(215,215,215));
+        editEmail.setHint(text_Email);
+        editEmailLayout.setErrorEnabled(true);
 
         editUserName.setTextSize(editSize);
-        editUserName.setBackgroundColor(Color.rgb(210,210,210));
+        //editUserName.setBackgroundColor(Color.rgb(215,215,215));
+        editUserName.setHint(text_userName);
+        editUserNameLayout.setErrorEnabled(true);
 
-        textPassword.setText(text_Password);
-        textPassword.setTextSize(textSize);
 
         editPassword.setTextSize(editSize);
-        editPassword.setBackgroundColor(Color.rgb(210,210,210));
+        //editPassword.setBackgroundColor(Color.rgb(215,215,215));
+        editPassword.setHint(text_Password);
+        editPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         editPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        editPasswordLayout.setCounterEnabled(true);
+        editPasswordLayout.setErrorEnabled(true);
 
-        textConfirmPassword.setText(text_Confirm_Password);
-        textConfirmPassword.setTextSize(textSize);
 
         editConfirmPassword.setTextSize(editSize);
-        editConfirmPassword.setBackgroundColor(Color.rgb(210,210,210));
+        editConfirmPassword.setHint(text_Confirm_Password);
+        editConfirmPasswordLayout.setErrorEnabled(true);
+        editConfirmPasswordLayout.setCounterEnabled(true);
         editConfirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
         textBornDate.setText(text_Born_Date);
@@ -285,11 +421,13 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         textYear.setText(text_year);
         textYear.setTextSize(textSize);
 
-        textPhone.setText(text_Phone_Numbers);
-        textPhone.setTextSize(textSize);
-
         editPhone.setTextSize(editSize);
-        editPhone.setBackgroundColor(Color.rgb(210,210,210));
+        //editPhone.setBackgroundColor(Color.rgb(215,215,215));
+        editPhone.setHint(text_Phone_Numbers);
+        editPhone.setInputType(InputType.TYPE_CLASS_PHONE);
+        editPhoneLayout.setErrorEnabled(true);
+        editPhoneLayout.setCounterEnabled(true);
+        editPhoneLayout.setCounterMaxLength(8);
 
         buttonCompleteRegister.setText(text_Complete_Register);
         buttonCompleteRegister.setTextSize(textSize);
@@ -300,7 +438,6 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         loadSpinnerYears();
         loadSpinnerMonths();
         loadSpinnerDays();
-
     }
 
     private void loadSpinnerYears(){
@@ -317,28 +454,30 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
                 DateManager.getDaysFromMonth((Integer)spinnerMonth.getSelectedItem(),(Integer)spinnerYear.getSelectedItem())));
         spinnerDay.setSelection(0);
     }
-    private void setItemsBoundsVertical(){
+    @Override
+    protected void setItemsBoundsVertical(){
         setBounds(textTitle,1,titleHeight_V,0);
         setBounds(textRegister,1,textHeight_V,0);
-        addSpace(5);
-        setBounds(textIdNumber,textWidth_V,textHeight_V,textX_V);
-        setBounds(editIdNumber,editWidth_V,editHeight_V,editX_V);
-        addSpace(5);
-        setBounds(textFullName,textWidth_V,textHeight_V,textX_V);
-        setBounds(editFullName,editWidth_V,editHeight_V,editX_V);
-        addSpace(5);
-        setBounds(textEmail,textWidth_V,textHeight_V,textX_V);
-        setBounds(editEmail,editWidth_V,editHeight_V,editX_V);
-        addSpace(5);
-        setBounds(textUserName,textWidth_V,textHeight_V,textX_V);
-        setBounds(editUserName,editWidth_V,editHeight_V,editX_V);
-        addSpace(5);
-        setBounds(textPassword,textWidth_V,textHeight_V,textX_V);
-        setBounds(editPassword,editWidth_V,editHeight_V,editX_V);
-        addSpace(5);
-        setBounds(textConfirmPassword,textWidth_V,textHeight_V,textX_V);
-        setBounds(editConfirmPassword,editWidth_V,editHeight_V,editX_V);
-        addSpace(5);
+        addSpace(5,100);
+
+        setTextInputLayoutBounds(editIdNumberLayout,editIdNumber,editWidth_V,editHeight_V,editX_V);
+        addSpace(5,100);
+
+        setTextInputLayoutBounds(editFullNameLayout,editFullName,editWidth_V,editHeight_V,editX_V);
+        addSpace(5,100);
+
+        setTextInputLayoutBounds(editEmailLayout,editEmail,editWidth_V,editHeight_V,editX_V);
+        addSpace(5,100);
+
+        setTextInputLayoutBounds(editUserNameLayout,editUserName,editWidth_V,editHeight_V,editX_V);
+        addSpace(5,100);
+
+        setTextInputLayoutBounds(editPasswordLayout,editPassword,editWidth_V,editHeight_V,editX_V);
+        addSpace(5,100);
+
+        setTextInputLayoutBounds(editConfirmPasswordLayout,editConfirmPassword,editWidth_V,editHeight_V,editX_V);
+        addSpace(5,100);
+
         setBounds(textBornDate,textWidth_V,textHeight_V,textX_V);
         setBounds(textDay,textDate_Width,textHeight_V,textDayX_V);
         totalY-=(height*textHeight_V);
@@ -350,56 +489,45 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         setSpinnerBounds(spinnerMonth,editDate_Width,editHeight_V,editMonthX_V);
         totalY-=(height*editHeight_V);
         setSpinnerBounds(spinnerYear,editDate_Width,editHeight_V,editYearX_V);
-        addSpace(5);
-        setBounds(textPhone,textWidth_V,textHeight_V,textX_V);
-        setBounds(editPhone,editPhoneWidth_V,editHeight_V,editPhoneX_V);
+        addSpace(5,100);
+
+        setTextInputLayoutBounds(editPhoneLayout,editPhone,editWidth_V,editHeight_V,editX_V);
+
         totalY-=(height*editHeight_V);
         setBounds(buttonAddPhoneField,buttonPlusWidth_V,editHeight_V,buttonPlusX_V);
-        addSpace(5);
+        addSpace(5,100);
         setBounds(buttonCompleteRegister,buttonWidth_V,editHeight_V,buttonX_V);
-
     }
-    private void setItemsBoundsHorizontal(){
+    @Override
+    protected void setItemsBoundsHorizontal(){
         //addSpace(3);
         //setBounds(textTitle1,titleWidth,titleHeight,titleX);
         //setBounds(textTitle2,titleWidth,titleHeight,titleX);
         //setBounds(textTitle3,titleWidth,titleHeight,titleX);
         //setBounds(textName,nameWidth,nameHeight,nameX);
     }
-    private void setSpinnerBounds(Spinner spinner,float w,float h, float x){
-        spinner.setMinimumWidth((int)(w*width));
-        spinner.setMinimumHeight((int)(h*height));
-        spinner.setX(x*width);
-        spinner.setY(totalY);
-        totalY+=((int)(h*height));
-    }
-    private void setBounds(TextView view, float w, float h, float x){
-        view.setWidth((int)(w*width));
-        view.setHeight((int)(h*height));
-        view.setX(x*width);
-        view.setY(totalY);
-        totalY+=((int)(h*height));
-    }
-    private void addSpace(int space){
-        totalY+=(space*height/100);
-    }
-
-
     private void createItems(){
         textTitle = new TextView(this);
         textRegister = new TextView(this);
-        textIdNumber = new TextView(this);
+
         editIdNumber = new EditText(this);
-        textFullName = new TextView(this);
+        editIdNumberLayout = new TextInputLayout(this);
+
         editFullName = new EditText(this);
-        textEmail = new TextView(this);
+        editFullNameLayout = new TextInputLayout(this);
+
         editEmail = new EditText(this);
-        textUserName = new TextView(this);
+        editEmailLayout = new TextInputLayout(this);
+
         editUserName = new EditText(this);
-        textPassword = new TextView(this);
+        editUserNameLayout = new TextInputLayout(this);
+
         editPassword = new EditText(this);
-        textConfirmPassword = new TextView(this);
+        editPasswordLayout = new TextInputLayout(this);//findViewById(R.id.text_input_password_1);
+
         editConfirmPassword = new EditText(this);
+        editConfirmPasswordLayout = new TextInputLayout(this);//findViewById(R.id.text_input_password_2);
+
         textBornDate = new TextView(this);
         textDay = new TextView(this);
         textMonth = new TextView(this);
@@ -407,18 +535,35 @@ public class RegisterUserActivity extends AppCompatActivity implements IRegister
         spinnerDay = new Spinner(this);
         spinnerMonth = new Spinner(this);
         spinnerYear = new Spinner(this);
-        textPhone = new TextView(this);
+
         editPhone = new EditText(this);
+        editPhoneLayout = new TextInputLayout(this);
+
         buttonAddPhoneField = new Button(this);
         buttonCompleteRegister = new Button(this);
     }
+    private void configCanvas(){
+        canvasView = new CanvasView(context,width,height,0,totalY);
+        canvasView.setBackgroundColor(Color.CYAN);
+       /* canvasView.addLine(numberX,0,percentageWitdh+percentageX,0);
+        float k = questionBannerHeight;
+        canvasView.addLine(numberX,k,percentageWitdh+percentageX,questionBannerHeight);
+        for(int i = 0;i<form.getChapters().size();i++){
+            k+=questionHeight;
+            canvasView.addLine(numberX,k,percentageWitdh+percentageX,k);
+        }
+        k+=questionBannerHeight;
+        canvasView.addLine(numberX,k,percentageWitdh+percentageX,k);
 
-    private void getScreenSizes()
-    {
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        width = size.x;
-        height = size.y;
+        canvasView.addLine(numberX,0,numberX,totalY);
+        canvasView.addLine(questionX,0,questionX,totalY);
+        canvasView.addLine(pointsX,0,pointsX,totalY);
+        canvasView.addLine(percentageX,0,percentageX,totalY);
+        canvasView.addLine(percentageX+percentageWitdh,0,percentageX+percentageWitdh,totalY);
+
+        canvasView.draw(new Canvas(Bitmap.createBitmap(width,totalY, Bitmap.Config.ARGB_8888)));
+        canvasView.setX(0);
+        canvasView.setY(layoutY);
+        layout.addView(canvasView); */
     }
 }

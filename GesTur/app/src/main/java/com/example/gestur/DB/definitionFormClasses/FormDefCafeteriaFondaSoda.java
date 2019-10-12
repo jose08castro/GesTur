@@ -1,5 +1,9 @@
 package com.example.gestur.DB.definitionFormClasses;
 
+import com.example.gestur.logic.chapters.ScoreChapter;
+import com.example.gestur.logic.forms.CafeteriaFondaSodaForm;
+import com.example.gestur.logic.forms.ScoreForm;
+
 import java.util.ArrayList;
 
 public class FormDefCafeteriaFondaSoda {
@@ -23,15 +27,15 @@ public class FormDefCafeteriaFondaSoda {
     public FormDefCafeteriaFondaSoda(){
 
     }
-    public FormDefCafeteriaFondaSoda(String name,int type,ArrayList<ChapterDefScore> chapters,String establishmentName,int tables,int places,int collaborators,String placeType){
+    public FormDefCafeteriaFondaSoda(String name,int type,ArrayList<ChapterDefScore> chapters){
         this.name = name;
         this.type = type;
         this.chapters = chapters;
-        this.establishmentName = establishmentName;
-        this.tables = tables;
-        this.places = places;
-        this.collaborators = collaborators;
-        this.placeType = placeType;
+        this.establishmentName = "";
+        this.tables = 0;
+        this.places = 0;
+        this.collaborators = 0;
+        this.placeType = "";
         achievedPoints = 0;
         achievedPercentage = 0f;
         applicablePoints = 0;

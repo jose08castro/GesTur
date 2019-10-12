@@ -20,6 +20,27 @@ public class SpaForm extends ScoreForm{
         this.rooms = rooms;
         loadTypologies();
     }
+
+    public String getEstablishmentName() {
+        return establishmentName;
+    }
+
+    public int getCollaborators() {
+        return collaborators;
+    }
+
+    public String getTypology() {
+        return typology;
+    }
+
+    public int getRooms() {
+        return rooms;
+    }
+
+    public ArrayList<String> getTypologies() {
+        return typologies;
+    }
+
     private void loadTypologies(){
         typologies = new ArrayList<>();
         typologies.add("Urbano");

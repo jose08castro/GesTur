@@ -1,5 +1,8 @@
 package com.example.gestur.DB.definitionFormClasses;
 
+import com.example.gestur.logic.chapters.ScoreChapter;
+import com.example.gestur.logic.forms.ScoreForm;
+
 import java.util.ArrayList;
 
 public class FormDefHotel {

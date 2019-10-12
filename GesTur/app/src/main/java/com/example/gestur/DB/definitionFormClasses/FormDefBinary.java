@@ -1,5 +1,8 @@
 package com.example.gestur.DB.definitionFormClasses;
 
+import com.example.gestur.logic.chapters.BinaryChapter;
+import com.example.gestur.logic.forms.BinaryForm;
+
 import java.util.ArrayList;
 
 public class FormDefBinary {

@@ -1,24 +1,21 @@
 package com.example.gestur.logic.checkList;
 
+import com.example.gestur.DB.definitionCheckListClasses.CheckListQuestionDef;
 import com.example.gestur.logic.checkList.CheckListForm;
 
 public class CheckListQuestion {
-    private String number;
     private String question;
-    private Boolean isDone;
+    private boolean yes;
+    private boolean no;
     private CheckListForm form;
 
-    public CheckListQuestion(String number, String question, boolean isDone) {
-        this.number = number;
+    public CheckListQuestion(String question, boolean yes,boolean no) {
         this.question = question;
-        this.isDone = isDone;
+        this.yes = yes;
+        this.no = no;
     }
     public void setForm(CheckListForm form){
         this.form = form;
-    }
-
-    public String getNumber() {
-        return number;
     }
 
     public String getQuestion() {
@@ -26,10 +23,19 @@ public class CheckListQuestion {
     }
 
     public boolean isDone() {
-        return isDone;
+        return yes;
     }
     public void setDone(boolean done){
-        isDone = done;
+        yes = done;
+        no = !done;
         form.update();
+    }
+
+    public boolean isYes() {
+        return yes;
+    }
+
+    public boolean isNo() {
+        return no;
     }
 }

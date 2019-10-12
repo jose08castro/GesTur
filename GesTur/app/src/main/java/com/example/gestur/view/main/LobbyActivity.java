@@ -19,140 +19,97 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.gestur.DB.DB;
 import com.example.gestur.R;
+import com.example.gestur.logic.Activity;
+import com.example.gestur.logic.User;
 import com.example.gestur.view.checkListView.CheckListView;
 import com.example.gestur.view.FormView;
 
-public class LobbyActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,ILobbyActivityConstants{
+import java.util.ArrayList;
 
-    final Context context = this;
-    private ConstraintLayout layoutLobby;
+public class LobbyActivity extends AbstractActivity implements NavigationView.OnNavigationItemSelectedListener,ILobbyActivityConstants{
+
+    private RelativeLayout layoutLobby;
     private ScrollView scroll;
-    private int width;
-    private int height;
-    private int totalY;
 
     private TextView textTitle;
-    private TextView textName1;
-    private Button buttonForm;
-    private TextView textFormPer;
-    private Button buttonCheckList;
-    private TextView textCheckPer;
+    private TextView textNoActivities;
 
-    //private Button
+    private ArrayList<ActivityPanel> activityPanels;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        user = DB.getInstance().getCurrentUser();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        getScreenSizes();
-        totalY = 0;
+        configElements();
         createItems();
-        configItems();
+        setItemsConfiguration();
         setItemsBounds();
         addItems();
-        scroll.setMinimumHeight(1500);
+
+        loadActivities();
+
+        scroll.setMinimumHeight(5200);
         layoutLobby.setMinimumHeight(5200);
     }
+    private void loadActivities(){
+        if(user.getActivities() != null && user.getActivities().size()>0){
+            int counter = 0;
+            for(Activity activity:user.getActivities()){
+                ActivityPanel panel = new ActivityPanel(activity,this);
+                panel.addComponents(width,height,totalY,layoutLobby);
+                totalY+=panel.getHeight();
+                addSpace(5,100);
+                activityPanels.add(panel);
+                counter++;
+            }
+        }
+    }
+
     private void createItems(){
         layoutLobby = findViewById(R.id.layoutLobby);
         scroll = findViewById(R.id.scrollLobby);
         textTitle = new TextView(layoutLobby.getContext());
-        textName1 = new TextView(layoutLobby.getContext());
-        buttonForm = new Button(layoutLobby.getContext());
-        textFormPer = new TextView(layoutLobby.getContext());
-        buttonCheckList = new Button(layoutLobby.getContext());
-        textCheckPer = new TextView(layoutLobby.getContext());
+        textNoActivities = new TextView(layoutLobby.getContext());
+        activityPanels = new ArrayList<ActivityPanel>();
     }
-    private void configItems(){
+
+    @Override
+    protected void setItemsBoundsHorizontal() {
+
+    }
+
+    @Override
+    protected void setItemsBoundsVertical() {
+
+        addSpace(1,100);
+        setBounds(textTitle,text_title_Width,text_title_Heght,text_title_X);
+        addSpace(2,100);
+        setBounds(textNoActivities,1,text_title_Heght,0);
+    }
+
+    @Override
+    protected void setItemsConfiguration() {
         textTitle.setText(text_title);
         textTitle.setGravity(Gravity.CENTER);
-        textTitle.setTextSize(32);
+        textTitle.setTextSize(getTextSize(32));
 
-        textName1.setTextSize(20);
-        textName1.setGravity(Gravity.CENTER);
-        textName1.setText(text_example);
-
-        buttonForm.setText(text_button_Form);
-        buttonForm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(context, FormView.class));
-            }
-        });
-
-        textFormPer.setText("0%");
-        textFormPer.setTextSize(20);
-        textFormPer.setGravity(Gravity.CENTER);
-
-        buttonCheckList.setText(text_button_Check);
-        buttonCheckList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(context, CheckListView.class));
-            }
-        });
-
-        textCheckPer.setText("0%");
-        textCheckPer.setTextSize(20);
-        textCheckPer.setGravity(Gravity.CENTER);
+        textNoActivities.setText("Actividades agregadas: " +user.getActivities().size());
+        textNoActivities.setGravity(Gravity.CENTER);
+        textNoActivities.setTextSize(getTextSize(40));
     }
-    private void setItemsBounds(){
-        addSpace(space1p);
-        setBounds(textTitle,text_title_Width,text_title_Heght,text_title_X);
-        addSpace(space1p);
-        setBounds(textName1,text_name_Width,text_name_Height,text_name_X);
-        addSpace(space1p);
-        setBounds(buttonForm,button_Width_V,button_height_V,button_X_V);
-        addSpace(-button_height_V);
-        setBounds(textFormPer,textPer_Width_V,textPer_height_V,textPer_X_V);
-        addSpace(space1p);
-        setBounds(buttonCheckList,button_Width_V,button_height_V,button_X_V);
-        addSpace(-button_height_V);
-        setBounds(textCheckPer,textPer_Width_V,textPer_height_V,textPer_X_V);
-    }
+
     private void addItems(){
         layoutLobby.addView(textTitle);
-        layoutLobby.addView(textName1);
-        layoutLobby.addView(buttonForm);
-        layoutLobby.addView(textFormPer);
-        layoutLobby.addView(buttonCheckList);
-        layoutLobby.addView(textCheckPer);
-    }
-    private void setBounds(View view, float w,float h,float x){
-        view.setMinimumWidth((int)(w*width));
-        view.setMinimumHeight((int)(h*height));
-        view.setX(x*width);
-        view.setY(totalY);
-        totalY+=((int)(h*height));
-    }
-    private void addSpace(float space){
-        totalY+=((int)(space*height));
+        layoutLobby.addView(textNoActivities);
     }
 
     @Override
@@ -160,9 +117,9 @@ public class LobbyActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
+        DB.getInstance().logOut();
+        startActivity(new Intent(context, LoginActivity.class));
     }
 
     @Override
@@ -187,7 +144,6 @@ public class LobbyActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -212,12 +168,25 @@ public class LobbyActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    private void getScreenSizes()
-    {
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        width = size.x;
-        height = size.y;
+    private void configElements(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 }

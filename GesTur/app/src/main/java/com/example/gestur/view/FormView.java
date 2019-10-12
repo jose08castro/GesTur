@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import com.example.gestur.R;
 import com.example.gestur.logic.forms.BinaryForm;
 import com.example.gestur.logic.forms.ConCentersBinaryForm;
+import com.example.gestur.logic.forms.Form;
 import com.example.gestur.view.conCentersFormView.ConCenterHeaderView;
 import com.example.gestur.view.formView.BinaryFormChapterTransferView;
 import com.example.gestur.view.formView.BinaryFormFooterView;
@@ -44,7 +45,8 @@ public class FormView extends AppCompatActivity {
         getScreenSizes();
         space = (int)(1/20f*height);
         finalSpace = (int)(1/15f*height);
-        form = InfoPasser.getInstance().getCurrentForm();
+
+        form = (BinaryForm) InfoPasser.getInstance().getCurrentForm();
 
         formHeader = new BinaryFormHeaderView(form,this);
         formPanel =  new BinaryFormPanelView(form,this);

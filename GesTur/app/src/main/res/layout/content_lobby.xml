@@ -9,7 +9,7 @@
     tools:context=".view.main.LobbyActivity"
     tools:showIn="@layout/app_bar_lobby">
 
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/layoutLobby"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,5 +19,5 @@
         android:minHeight="1500dp">
 
 
-    </android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
 </ScrollView>

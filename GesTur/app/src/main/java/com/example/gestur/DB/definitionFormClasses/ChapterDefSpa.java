@@ -1,5 +1,9 @@
 package com.example.gestur.DB.definitionFormClasses;
 
+import com.example.gestur.logic.chapters.ScoreChapter;
+import com.example.gestur.logic.questions.ScoreObsQuestion;
+import com.example.gestur.logic.questions.ScoreQuestion;
+
 import java.util.ArrayList;
 
 public class ChapterDefSpa {

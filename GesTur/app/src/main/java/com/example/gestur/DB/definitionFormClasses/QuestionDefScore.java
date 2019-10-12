@@ -1,5 +1,7 @@
 package com.example.gestur.DB.definitionFormClasses;
 
+import com.example.gestur.logic.questions.ScoreQuestion;
+
 public class QuestionDefScore extends Object{
 
     public String number;
@@ -20,4 +22,5 @@ public class QuestionDefScore extends Object{
         NA = false;
         score = minScore;
     }
+
 }

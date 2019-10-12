@@ -3,16 +3,17 @@ package com.example.gestur.logic.chapters;
 import com.example.gestur.logic.questions.BinaryQuestion;
 import com.example.gestur.logic.forms.BinaryForm;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BinaryChapter extends Chapter{
+public class BinaryChapter extends Chapter implements Serializable {
 
     private ArrayList<BinaryQuestion> questions;
     private int yesQuestions;
     private int noQuestions;
     private int NAQuestions;
 
-    public BinaryChapter(String name,String num, ArrayList<BinaryQuestion> questions, int percentage){
+    public BinaryChapter(String name,String num, ArrayList<BinaryQuestion> questions, float percentage){
         super(name,num,percentage);
         yesQuestions = 0;
         noQuestions = 0;

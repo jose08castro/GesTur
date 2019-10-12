@@ -35,4 +35,24 @@ public class CafeteriaFondaSodaForm extends ScoreForm{
             chapters.add(chapter);
         }
     }
+
+    public String getEstablishmentName() {
+        return establishmentName;
+    }
+
+    public int getTables() {
+        return tables;
+    }
+
+    public int getPlaces() {
+        return places;
+    }
+
+    public int getCollaborators() {
+        return collaborators;
+    }
+
+    public String getPlaceType() {
+        return placeType;
+    }
 }

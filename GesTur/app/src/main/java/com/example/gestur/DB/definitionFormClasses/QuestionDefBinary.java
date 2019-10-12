@@ -1,5 +1,7 @@
 package com.example.gestur.DB.definitionFormClasses;
 
+import com.example.gestur.logic.questions.BinaryQuestion;
+
 public class QuestionDefBinary {
     public String number;
     public String question;
@@ -17,5 +19,4 @@ public class QuestionDefBinary {
         yes = false;
         no = false;
     }
-
 }

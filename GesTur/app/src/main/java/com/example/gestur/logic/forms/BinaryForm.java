@@ -2,9 +2,10 @@ package com.example.gestur.logic.forms;
 
 import com.example.gestur.logic.chapters.BinaryChapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BinaryForm extends Form{
+public class BinaryForm extends Form implements Serializable {
 
     protected ArrayList<BinaryChapter> chapters;
 

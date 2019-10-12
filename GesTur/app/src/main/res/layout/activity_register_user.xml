@@ -16,5 +16,25 @@
         android:focusableInTouchMode="true"
         android:layout_height="wrap_content">
 
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_password_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true"
+            tools:ignore="MissingConstraints">
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_password_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true"
+            tools:ignore="MissingConstraints">
+
+        </android.support.design.widget.TextInputLayout>
+
     </android.support.constraint.ConstraintLayout>
 </com.example.gestur.view.main.TrackableScrollView>

@@ -1,5 +1,6 @@
 package com.example.gestur.logic.questions;
 
+import com.example.gestur.DB.definitionFormClasses.QuestionDefScore;
 import com.example.gestur.logic.chapters.ScoreChapter;
 
 public class ScoreQuestion extends Question{
@@ -15,6 +16,7 @@ public class ScoreQuestion extends Question{
         maxScore = max;
         this.score = score;
     }
+
     public int getScore() {
         return score;
     }

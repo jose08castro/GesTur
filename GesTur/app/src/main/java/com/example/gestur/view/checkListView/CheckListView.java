@@ -28,11 +28,11 @@ public class CheckListView extends AppCompatActivity {
         layout = findViewById(R.id.layoutCheckList);
         currentY = 0;
 
-        CheckListForm checkListForm = new CheckListForm("Chequeo Tematicos",
-                "Tec","josueggss73@gmail.com",
-                "23/12/2019","83492382",1,12,null);
+        //CheckListForm checkListForm = new CheckListForm("Chequeo Tematicos",
+         //       "Tec","josueggss73@gmail.com",
+         //       "23/12/2019","83492382",1,12,null);
 
-        formHeader = new CheckListHeader(checkListForm,this);
+        //formHeader = new CheckListHeader(checkListForm,this);
 
         addComponents();
         layout.setMinimumHeight(currentY+200);

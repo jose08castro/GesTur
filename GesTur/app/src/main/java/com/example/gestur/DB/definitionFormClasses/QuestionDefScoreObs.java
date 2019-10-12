@@ -1,5 +1,7 @@
 package com.example.gestur.DB.definitionFormClasses;
 
+import com.example.gestur.logic.questions.ScoreObsQuestion;
+
 public class QuestionDefScoreObs {
     public String number;
     public String question;

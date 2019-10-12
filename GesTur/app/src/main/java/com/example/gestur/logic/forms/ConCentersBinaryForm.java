@@ -10,13 +10,15 @@ public class ConCentersBinaryForm extends BinaryForm {
     private int eventRooms;
     private int places;
     private int collaborators;
+    private ArrayList<String> chapterNames;
 
-    public ConCentersBinaryForm(String name,int type, String establishment, int rooms, int places, int collaborators, ArrayList<BinaryChapter> chapters) {
+    public ConCentersBinaryForm(String name,int type, String establishment, int rooms, int places, int collaborators, ArrayList<BinaryChapter> chapters,ArrayList<String> chapterNames) {
         super(name,type,chapters);
         this.establishmentName = establishment;
         this.eventRooms = rooms;
         this.places = places;
         this.collaborators = collaborators;
+        this.chapterNames = chapterNames;
     }
     @Override
     public void addChapters(ArrayList<BinaryChapter> chapters){

@@ -1,5 +1,7 @@
 package com.example.gestur.logic.questions;
 
+import com.example.gestur.DB.definitionFormClasses.QuestionDefHotel;
+
 public class HotelQuestion extends ScoreQuestion {
 
     private String question1Star;

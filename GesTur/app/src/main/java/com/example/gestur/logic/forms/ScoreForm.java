@@ -19,6 +19,10 @@ public class ScoreForm extends Form{
         update();
     }
 
+    public ArrayList<ScoreChapter> getChapters() {
+        return chapters;
+    }
+
     @Override
     public void update(){
         totalPoints = 0;
@@ -35,6 +39,13 @@ public class ScoreForm extends Form{
                 NApoints += chapter.getNaPoints();
             }
         }
+    }
+
+    public int getApplicablePoints() {
+        return applicablePoints;
+    }
+    public int getNApoints(){
+        return NApoints;
     }
 
     public void addChapters(ArrayList<ScoreChapter> chapters){

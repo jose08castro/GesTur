@@ -13,14 +13,9 @@ public interface IRegisterUserConstants {
     String text_day = "Dia";
     String text_month = "Mes";
     String text_year = "Año";
-    String text_Phone_Numbers = "Números de Teléfono";
+    String text_Phone_Numbers = "Número de Teléfono";
     String text_Complete_Register = "COMPLETAR REGISTRO";
 
-    float titleX_V = 1/7f;
-    float titleWidth_V = 5/7f;
-
-    float titleRegisterX_V = 3/15f;
-    float titleRegisterWidth_V = 9/15f;
 
     float textX_V = 1/15f; //Para todos
     float textWidth_V = 13/15f;

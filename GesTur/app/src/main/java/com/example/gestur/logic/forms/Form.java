@@ -2,9 +2,10 @@ package com.example.gestur.logic.forms;
 
 import com.example.gestur.logic.chapters.Chapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Form implements IForm{
+public abstract class Form implements IForm, Serializable {
 
     protected String name;
     protected int type;

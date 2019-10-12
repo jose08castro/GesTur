@@ -1,20 +1,23 @@
 package com.example.gestur.view;
 
 import com.example.gestur.logic.chapters.BinaryChapter;
+import com.example.gestur.logic.checkList.CheckListForm;
 import com.example.gestur.logic.forms.BinaryForm;
 import com.example.gestur.logic.forms.ConCentersBinaryForm;
+import com.example.gestur.logic.forms.Form;
 
 public class InfoPasser {
 
-    private BinaryForm currentForm;
+    private Form form;
     private BinaryChapter currentChapter;
-    private ConCentersBinaryForm conCentersBinaryForm;
+
+    private CheckListForm checkListForm;
 
     private static InfoPasser infoPasser = new InfoPasser();
 
     private InfoPasser(){
-        conCentersBinaryForm = null;
-        currentForm = null;
+        form = null;
+        checkListForm = null;
         currentChapter = null;
     }
     public static  InfoPasser getInstance(){
@@ -29,12 +32,20 @@ public class InfoPasser {
         return currentChapter;
     }
 
-    public void setCurrentForm(BinaryForm form)
+    public void setCurrentForm(Form form)
     {
-        currentForm = form;
+        this.form = form;
     }
 
-    public BinaryForm getCurrentForm(){
-        return currentForm;
+    public void setCheckListForm(CheckListForm form){
+        this.checkListForm = form;
+    }
+
+    public Form getCurrentForm(){
+        return form;
+    }
+
+    public CheckListForm getCurrentCheckListForm(){
+        return checkListForm;
     }
 }
