@@ -110,4 +110,8 @@ public abstract class AbstractActivity extends AppCompatActivity {
     protected int getHeight(){
         return totalY;
     }
+
+    public void update(){
+
+    }
 }

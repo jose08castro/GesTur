@@ -1,9 +1,6 @@
 package com.example.gestur.view.main;
 
 import android.content.Intent;
-import android.os.Parcelable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +12,7 @@ import com.example.gestur.logic.checkList.CheckListForm;
 import com.example.gestur.logic.forms.Form;
 import com.example.gestur.view.FormView;
 import com.example.gestur.view.InfoPasser;
-import com.example.gestur.view.checkListView.CheckListView;
+import com.example.gestur.view.CheckListView;
 
 public class ActivityPanel extends AbstractActivityComponent implements  IActivityPanelConstants{
 
@@ -61,15 +58,15 @@ public class ActivityPanel extends AbstractActivityComponent implements  IActivi
 
     @Override
     protected void setItemsBoundsVertical() {
-        setBounds(textActivityName,text_name_Width,text_name_Height,text_name_X);
+        setBounds(textActivityName,text_name_Width,text_name_Height,text_name_X,true,false);
         addSpace(1,100);
-        setBounds(buttonForm,button_Width_V,button_height_V,button_X_V);
+        setBounds(buttonForm,button_Width_V,button_height_V,button_X_V,true,false);
         addSpace(-button_height_V);
-        setBounds(textFormPer,textPer_Width_V,textPer_height_V,textPer_X_V);
+        setBounds(textFormPer,textPer_Width_V,textPer_height_V,textPer_X_V,true,false);
         addSpace(1,100);
-        setBounds(buttonCheckList,button_Width_V,button_height_V,button_X_V);
+        setBounds(buttonCheckList,button_Width_V,button_height_V,button_X_V,true,false);
         addSpace(-button_height_V);
-        setBounds(textCheckPer,textPer_Width_V,textPer_height_V,textPer_X_V);
+        setBounds(textCheckPer,textPer_Width_V,textPer_height_V,textPer_X_V,true,false);
     }
 
     @Override
@@ -84,7 +81,6 @@ public class ActivityPanel extends AbstractActivityComponent implements  IActivi
         textActivityName.setGravity(Gravity.CENTER);
         textActivityName.setText(activity.getName());
 
-
         buttonForm.setText(text_button_Form);
         buttonForm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,8 +90,7 @@ public class ActivityPanel extends AbstractActivityComponent implements  IActivi
             }
         });
 
-        textFormPer.setText(String.valueOf(form.getAchievedPercentage()));
-        //textFormPer.setText("0%");
+        textFormPer.setText(String.valueOf(form.getAchievedPercentage())+"%");
         textFormPer.setTextSize(getTextSize(50));
         textFormPer.setGravity(Gravity.CENTER);
 
@@ -103,13 +98,12 @@ public class ActivityPanel extends AbstractActivityComponent implements  IActivi
         buttonCheckList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InfoPasser.getInstance().setCheckListForm(checkListForm);
+                InfoPasser.getInstance().setCurrentCheckListForm(checkListForm);
                 context.startActivity(new Intent(context, CheckListView.class));
             }
         });
 
-        textCheckPer.setText(String.valueOf(checkListForm.getAchievedPercentage()));
-        //textCheckPer.setText("0%");
+        textCheckPer.setText(String.valueOf(checkListForm.getAchievedPercentage())+"%");
         textCheckPer.setTextSize(getTextSize(50));
         textCheckPer.setGravity(Gravity.CENTER);
 

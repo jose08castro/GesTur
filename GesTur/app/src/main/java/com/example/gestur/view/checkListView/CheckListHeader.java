@@ -1,6 +1,7 @@
 package com.example.gestur.view.checkListView;
 
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -8,8 +9,11 @@ import android.widget.TextView;
 
 import com.example.gestur.logic.checkList.CheckListForm;
 import com.example.gestur.view.IHeaderView;
+import com.example.gestur.view.main.AbstractActivity;
+import com.example.gestur.view.main.AbstractActivityComponent;
+import com.example.gestur.view.main.IActivityComponent;
 
-public class CheckListHeader implements IHeaderView,ICheckListHeaderConstants {
+public class CheckListHeader extends AbstractActivityComponent implements ICheckListHeaderConstants {
 
     private TextView title1;
     private TextView title2;
@@ -25,19 +29,14 @@ public class CheckListHeader implements IHeaderView,ICheckListHeaderConstants {
     private EditText editPhone;
     private EditText editDate;
 
-    private int width;
-    private int height;
-    private int layoutY;
-    private int totalY;
-
     private RelativeLayout layout;
     private CheckListForm form;
-    private AppCompatActivity context;
+    private AbstractActivity context;
 
-    public CheckListHeader(CheckListForm form, AppCompatActivity context){
+    public CheckListHeader(CheckListForm form, AbstractActivity context){
+        super();
         this.form = form;
         this.context = context;
-        totalY = 0;
     }
 
     @Override
@@ -46,9 +45,8 @@ public class CheckListHeader implements IHeaderView,ICheckListHeaderConstants {
         width = screenX;
         height = screenY;
         layoutY = currentY;
-
         createItems();
-        configItems();
+        setItemsConfiguration();
         setItemsBounds();
         addItems();
     }
@@ -56,6 +54,7 @@ public class CheckListHeader implements IHeaderView,ICheckListHeaderConstants {
         title1 = new TextView(context);
         title2 = new TextView(context);
         titleCheckList = new TextView(context);
+
         textEnterprise = new TextView(context);
         textEmail = new TextView(context);
         textPhone = new TextView(context);
@@ -67,41 +66,86 @@ public class CheckListHeader implements IHeaderView,ICheckListHeaderConstants {
         editDate = new EditText(context);
 
     }
-    private void configItems(){
+
+    @Override
+    protected void setItemsBoundsHorizontal() {
+        setBounds(title1,1,title_height_V,0,true,false);
+        setBounds(title2,1,title_height_V,0,true,false);
+        setBounds(titleCheckList,1,title_height_V,0,true,false);
+        setBounds(textEnterprise,field_width_V,text_height_V,field_X_V,true,false);
+        setBounds(textEmail,field_width_V,text_height_V,field_X_V,true,false);
+        setBounds(textDate,field_width_V,text_height_V,field_X_V,true,false);
+        setBounds(textPhone,field_width_V,text_height_V,field_X_V,true,false);
+        setBounds(editEnterprise,field_width_V,edit_height_V,field_X_V,true,false);
+        setBounds(editEmail,field_width_V,edit_height_V,field_X_V,true,false);
+        setBounds(editDate,field_width_V,edit_height_V,field_X_V,true,false);
+        setBounds(editPhone,field_width_V,edit_height_V,field_X_V,true,false);
+    }
+
+    @Override
+    protected void setItemsBoundsVertical() {
+        setBounds(title1,1,title_height_V,0,true,false);
+        setBounds(title2,1,title_height_V,0,true,false);
+        setBounds(titleCheckList,1,title_height_V,0,true,false);
+        addSpace(5,100);
+        setBounds(textEnterprise,field_width_V,text_height_V,field_X_V,true,false);
+        setBounds(editEnterprise,field_width_V,edit_height_V,field_X_V,true,false);
+        setBounds(textEmail,field_width_V,text_height_V,field_X_V,true,false);
+        setBounds(editEmail,field_width_V,edit_height_V,field_X_V,true,false);
+        setBounds(textDate,field_width_V,text_height_V,field_X_V,true,false);
+        setBounds(editDate,field_width_V,edit_height_V,field_X_V,true,false);
+        setBounds(textPhone,field_width_V,text_height_V,field_X_V,true,false);
+        setBounds(editPhone,field_width_V,edit_height_V,field_X_V,true,false);
+    }
+
+    @Override
+    protected void setItemsConfiguration() {
+
         title1.setText(text_title1);
         title1.setGravity(Gravity.CENTER);
-        title1.setTextSize(20);
+        title1.setTextSize(getTextSize(50));
 
         title2.setText(text_title2);
         title2.setGravity(Gravity.CENTER);
-        title2.setTextSize(20);
+        title2.setTextSize(getTextSize(50));
 
         titleCheckList.setText(form.getTitleForm());
         titleCheckList.setGravity(Gravity.CENTER);
-        titleCheckList.setTextSize(24);
+        titleCheckList.setTextSize(40);
 
-    }
-    private void setItemsBounds(){
-        setBounds(title1,1,title_height_V,0);
-        setBounds(title2,1,title_height_V,0);
-        setBounds(titleCheckList,1,title_height_V,0);
+        textEnterprise.setText(text_enterprise);
+        textEnterprise.setTextSize(getTextSize(45));
 
+        textEmail.setText(text_email);
+        textEmail.setTextSize(getTextSize(45));
+
+        textPhone.setText(text_phone);
+        textPhone.setTextSize(getTextSize(45));
+
+        textDate.setText(text_date);
+        textDate.setTextSize(getTextSize(45));
+
+        editEnterprise.setTextSize(getTextSize(45));
+        editDate.setTextSize(getTextSize(45));
+        editEmail.setTextSize(getTextSize(45));
+
+        editPhone.setTextSize(getTextSize(45));
+        editPhone.setInputType(InputType.TYPE_CLASS_PHONE);
     }
+
     private void addItems(){
         layout.addView(title1);
         layout.addView(title2);
         layout.addView(titleCheckList);
-    }
-    private void setBounds(TextView view, float w, float h, float x){
-        view.setWidth((int)(w*width));
-        view.setHeight((int)(h*height));
-        view.setX(x*width);
-        view.setY(totalY+layoutY);
-        totalY+=((int)(h*height));
-    }
 
-    @Override
-    public int getHeight() {
-        return totalY;
+        layout.addView(textEnterprise);
+        layout.addView(textEmail);
+        layout.addView(textPhone);
+        layout.addView(textDate);
+
+        layout.addView(editEnterprise);
+        layout.addView(editEmail);
+        layout.addView(editDate);
+        layout.addView(editPhone);
     }
 }

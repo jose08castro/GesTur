@@ -12,7 +12,7 @@ public class HotelQuestion extends ScoreQuestion {
     private int selectedQuestion;
 
     public HotelQuestion(String number, String description, Boolean NA,String q1,String q2,String q3,String q4,String q5,int selection) {
-        super(number, 1,5,description, NA,selection);
+        super(number, 0,5,description, NA,selection);
         this.question1Star = q1;
         this.question2Star = q2;
         this.question3Star = q3;

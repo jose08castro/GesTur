@@ -69,11 +69,14 @@ public class LoginActivity extends AbstractActivity implements ILoginActivityCon
 
     private boolean DBanswered;
 
+    private IObservable observable;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        observable = this;
         DBanswered = false;
         progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
 
@@ -86,8 +89,9 @@ public class LoginActivity extends AbstractActivity implements ILoginActivityCon
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //DB.getInstance().logIn("josueggss73","12345678",observable);
                 validateSignIn();
-                //startActivity(new Intent(context, LobbyActivity.class));
+
             }
         });
 
@@ -98,7 +102,7 @@ public class LoginActivity extends AbstractActivity implements ILoginActivityCon
             }
         });
         setGoogleSignInReqs();
-
+        DB.getInstance().logIn("josueggss73","12345678",observable);
         //DB.getInstance().setFormDefinitions();
         //DB.getInstance().setCheckListDefinitions();
     }

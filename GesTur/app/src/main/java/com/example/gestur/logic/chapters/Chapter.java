@@ -42,4 +42,7 @@ public abstract class Chapter implements IChapter {
     public float getAchievedFormPercentage(){
         return achievedFormPercentage;
     }
+    public abstract int getTotalPoints();
+
+    public abstract int getTotalQuestions();
 }

@@ -1,4 +1,4 @@
-package com.example.gestur.view.formView;
+package com.example.gestur.view.binaryFormView;
 
 public interface IBinaryFormHeaderViewConstants {
     float titleX = 1/20f;

@@ -5,7 +5,7 @@ import com.example.gestur.logic.chapters.Chapter;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Form implements IForm, Serializable {
+public abstract class Form implements IForm {
 
     protected String name;
     protected int type;
@@ -55,4 +55,5 @@ public abstract class Form implements IForm, Serializable {
     public void setAchievedPercentage(float achievedPercentage) {
         this.achievedPercentage = achievedPercentage;
     }
+    //public abstract ArrayList<Chapter> getChapters();
 }

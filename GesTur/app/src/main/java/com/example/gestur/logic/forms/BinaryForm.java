@@ -5,7 +5,7 @@ import com.example.gestur.logic.chapters.BinaryChapter;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BinaryForm extends Form implements Serializable {
+public class BinaryForm extends Form {
 
     protected ArrayList<BinaryChapter> chapters;
 
@@ -16,13 +16,14 @@ public class BinaryForm extends Form implements Serializable {
         achievedPercentage = 0f;
         achievedPoints = 0;
         addChapters(chapters);
-        update();
     }
+
     public void addChapters(ArrayList<BinaryChapter> chapters){
         if(chapters!=null) {
             for (BinaryChapter chapter : chapters) {
                 addChapter(chapter);
             }
+            update();
         }
     }
     public void addChapter(BinaryChapter chapter){
@@ -46,6 +47,7 @@ public class BinaryForm extends Form implements Serializable {
                 achievedPercentage += chapter.getAchievedFormPercentage();
                 achievedPoints += chapter.getAchievedPoints();
             }
+            achievedPercentage = (float)(Math.round(achievedPercentage*Math.pow(10,2)) / Math.pow(10,2));
         }
     }
 

@@ -86,9 +86,18 @@ public class DB {
         registerUserDataResult = false;
         currentUserKey = "";
     }
-    public void updateUserActivities(){
+    public void updateUserActivities(final IObservable observable){
         DatabaseReference ref = firebaseDatabase.getReference("Users").child(currentUserKey);
-        ref.child("activities").setValue(DummyRealFactory.getDummyActivityList(currentUser.getActivities()));
+        ref.child("activities").setValue(DummyRealFactory.getDummyActivityList(currentUser.getActivities())).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    observable.notifyObservable(1,"Sincronización exitosa");
+                }else{
+                    observable.notifyObservable(2,"No se puede sincronizar");
+                }
+            }
+        });
     }
     private void logInWhenUserFound(final IObservable observable){
         mAuth.signInWithEmailAndPassword(currentUser.getEmailAddress(), currentUser.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -104,6 +113,7 @@ public class DB {
             }
         });
     }
+
     private boolean searchUserWithUserName(final String userName, final String password, final IObservable observable){
         if(currentUser == null) {
             DatabaseReference ref = firebaseDatabase.getReference("Users");
@@ -164,7 +174,7 @@ public class DB {
                     }
                     currentActivity.setForm(currentForm);
                     currentUser.addActivity(currentActivity);
-                    updateUserActivities();
+                    //updateUserActivities();
                     observable.notifyObservable(1,"Prueba todo bien");
 
                     break;

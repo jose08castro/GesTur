@@ -27,6 +27,7 @@ public class BinaryChapter extends Chapter implements Serializable {
             for (BinaryQuestion question : questions) {
                 addQuestion(question);
             }
+            updateOnCreate();
         }
     }
     public BinaryForm getForm(){
@@ -36,7 +37,10 @@ public class BinaryChapter extends Chapter implements Serializable {
         question.setChapter(this);
         questions.add(question);
     }
-
+    public void updateOnCreate(){
+        updateTotals();
+        updatePercentages();
+    }
     public void update(){
         updateTotals();
         updatePercentages();

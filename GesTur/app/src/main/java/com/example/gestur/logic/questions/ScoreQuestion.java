@@ -21,7 +21,7 @@ public class ScoreQuestion extends Question{
         return score;
     }
 
-    public void setScore(short score) {
+    public void setScore(int score) {
         this.score = score;
         chapter.update();
     }

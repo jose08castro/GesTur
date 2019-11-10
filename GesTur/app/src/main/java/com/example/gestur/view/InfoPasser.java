@@ -1,6 +1,7 @@
 package com.example.gestur.view;
 
 import com.example.gestur.logic.chapters.BinaryChapter;
+import com.example.gestur.logic.chapters.Chapter;
 import com.example.gestur.logic.checkList.CheckListForm;
 import com.example.gestur.logic.forms.BinaryForm;
 import com.example.gestur.logic.forms.ConCentersBinaryForm;
@@ -9,7 +10,7 @@ import com.example.gestur.logic.forms.Form;
 public class InfoPasser {
 
     private Form form;
-    private BinaryChapter currentChapter;
+    private Chapter currentChapter;
 
     private CheckListForm checkListForm;
 
@@ -24,11 +25,11 @@ public class InfoPasser {
         return infoPasser;
     }
 
-    public void setCurrentChapter(BinaryChapter chapter){
+    public void setCurrentChapter(Chapter chapter){
         currentChapter = chapter;
     }
 
-    public BinaryChapter getCurrentChapter(){
+    public Chapter getCurrentChapter(){
         return currentChapter;
     }
 
@@ -37,7 +38,7 @@ public class InfoPasser {
         this.form = form;
     }
 
-    public void setCheckListForm(CheckListForm form){
+    public void setCurrentCheckListForm(CheckListForm form){
         this.checkListForm = form;
     }
 

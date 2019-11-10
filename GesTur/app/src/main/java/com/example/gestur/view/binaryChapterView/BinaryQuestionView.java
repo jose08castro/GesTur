@@ -1,4 +1,4 @@
-package com.example.gestur.view.chapterView;
+package com.example.gestur.view.binaryChapterView;
 
 import android.view.View;
 import android.widget.RadioButton;
@@ -8,12 +8,15 @@ import android.widget.TextView;
 import com.example.gestur.logic.questions.BinaryQuestion;
 import com.example.gestur.view.ChapterView;
 import com.example.gestur.view.IQuestion;
+import com.example.gestur.view.main.AbstractActivityComponent;
 
-public class BinaryQuestionView implements IQuestion, IBinaryViewConstants {
+public class BinaryQuestionView extends AbstractActivityComponent implements IQuestion, IBinaryQuestionViewConstants {
 
     private BinaryQuestion binaryQuestion;
+
     private TextView questionView;
     private TextView numberView;
+
     private RadioButton buttonYes;
     private RadioButton buttonNo;
     private RadioButton buttonNA;
@@ -24,8 +27,6 @@ public class BinaryQuestionView implements IQuestion, IBinaryViewConstants {
     private View.OnClickListener NoListener;
     private View.OnClickListener NAListener;
 
-    private int totalY;
-
     public BinaryQuestionView(BinaryQuestion binaryQuestion, ChapterView context){
         this.binaryQuestion = binaryQuestion;
         questionView = new TextView(context);
@@ -33,44 +34,50 @@ public class BinaryQuestionView implements IQuestion, IBinaryViewConstants {
         buttonYes = new RadioButton(context);
         buttonNo = new RadioButton(context);
         buttonNA = new RadioButton(context);
-
         this.context = context;
-
-        questionView.setText(binaryQuestion.getQuestion());
-        numberView.setText(String.valueOf(binaryQuestion.getNumber()));
-        totalY = 0;
-        setListeners();
     }
     @Override
     public void addComponents(int screenX, int screenY,int currentY, RelativeLayout layout) {
+        width = screenX;
+        height = screenY;
+        layoutY = currentY;
+        setItemsConfiguration();
+        setItemsBounds();
+        layout.addView(numberView);
+        layout.addView(questionView);
+        layout.addView(buttonYes);
+        layout.addView(buttonNo);
+        layout.addView(buttonNA);
+    }
 
+    @Override
+    protected void setItemsBoundsHorizontal() {
+
+        int newHeight = getTextViewHeight(questionView,(int)(textWidth*width));
+        setBounds(numberView,numberWidth,numberHeight,startX,false,false);
+        setBounds(buttonYes,radioButtonWidth,radioButtonHeight,yesX,false,false);
+        setBounds(buttonNo,radioButtonWidth,radioButtonHeight,noX,false,false);
+        setBounds(buttonNA,radioButtonWidth,radioButtonHeight,naX,true,false);
+        setBounds(questionView,textWidth,newHeight,questionX,true,true);
+    }
+
+    @Override
+    protected void setItemsBoundsVertical() {
+        int newHeight = getTextViewHeight(questionView,(int)(textWidth*width));
+        setBounds(numberView,numberWidth,numberHeight,startX,false,false);
+        setBounds(buttonYes,radioButtonWidth,radioButtonHeight,yesX,false,false);
+        setBounds(buttonNo,radioButtonWidth,radioButtonHeight,noX,false,false);
+        setBounds(buttonNA,radioButtonWidth,radioButtonHeight,naX,false,false);
+        setBounds(questionView,textWidth,newHeight,questionX,true,true);
+    }
+
+    @Override
+    protected void setItemsConfiguration() {
+        questionView.setText(binaryQuestion.getQuestion());
+        numberView.setText(String.valueOf(binaryQuestion.getNumber()));
         buttonYes.setText("");
         buttonNo.setText("");
         buttonNA.setText("");
-
-        questionView.setWidth((int)(screenX*textWidth));
-        numberView.setWidth((int)(screenX*numberWidth));
-        buttonYes.setWidth((int)(screenX*radioButtonWidth));
-        buttonNo.setWidth((int)(screenX*radioButtonWidth));
-        buttonNA.setWidth((int)(screenX*radioButtonWidth));
-
-        questionView.setHeight((int)(screenY*textHeight));
-        numberView.setHeight((int)(screenY*numberHeight));
-        buttonYes.setHeight((int)(radioButtonHeight));
-        buttonNo.setHeight((int)(radioButtonHeight));
-        buttonNA.setHeight((int)(radioButtonHeight));
-
-        questionView.setX(screenX*questionX);
-        numberView.setX(screenX*startX);
-        buttonYes.setX(yesX*screenX);
-        buttonNo.setX(noX*screenX);
-        buttonNA.setX(naX*screenX);
-
-        questionView.setY(currentY);
-        numberView.setY(currentY);
-        buttonYes.setY(currentY);
-        buttonNo.setY(currentY);
-        buttonNA.setY(currentY);
 
         if(binaryQuestion.isYes()){
             buttonYes.setChecked(true);
@@ -81,17 +88,7 @@ public class BinaryQuestionView implements IQuestion, IBinaryViewConstants {
         if(binaryQuestion.isNA()){
             buttonNA.setChecked(true);
         }
-
-        layout.addView(numberView);
-        layout.addView(questionView);
-        layout.addView(buttonYes);
-        layout.addView(buttonNo);
-        layout.addView(buttonNA);
-    }
-
-    @Override
-    public int getHeight() {
-        return totalY;
+        setListeners();
     }
 
     private void setListeners(){

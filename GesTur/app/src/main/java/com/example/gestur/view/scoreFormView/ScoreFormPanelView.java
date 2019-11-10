@@ -1,26 +1,23 @@
-package com.example.gestur.view.formView;
+package com.example.gestur.view.scoreFormView;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.gestur.logic.chapters.BinaryChapter;
-import com.example.gestur.logic.forms.BinaryForm;
+import com.example.gestur.logic.chapters.Chapter;
+import com.example.gestur.logic.chapters.ScoreChapter;
+import com.example.gestur.logic.forms.ScoreForm;
 import com.example.gestur.view.CanvasView;
-import com.example.gestur.view.IPanelView;
+import com.example.gestur.view.binaryFormView.IBinaryFormPanelViewConstants;
+import com.example.gestur.view.main.AbstractActivity;
+import com.example.gestur.view.main.AbstractActivityComponent;
 
-public class BinaryFormPanelView implements IPanelView,IBinaryFormPanelViewConstants {
+public class ScoreFormPanelView extends AbstractActivityComponent implements IBinaryFormPanelViewConstants {
 
-    private BinaryForm form;
-    private AppCompatActivity context;
-    private int totalY;
-    private int layoutY;
-    private int width;
-    private int height;
+    private ScoreForm form;
+    private AbstractActivity context;
     private RelativeLayout layout;
     private CanvasView canvasView;
 
@@ -29,11 +26,12 @@ public class BinaryFormPanelView implements IPanelView,IBinaryFormPanelViewConst
     private TextView textPoints;
     private TextView textPercentage;
 
-    public BinaryFormPanelView(BinaryForm form, AppCompatActivity context){
+    public ScoreFormPanelView(ScoreForm form, AbstractActivity context){
         this.form = form;
         this.context = context;
         totalY = 0;
     }
+
     @Override
     public void addComponents(int screenX, int screenY, int currentY, RelativeLayout layout) {
         this.layout = layout;
@@ -42,31 +40,31 @@ public class BinaryFormPanelView implements IPanelView,IBinaryFormPanelViewConst
         layoutY = currentY;
 
         addItems(null,1,questionBannerHeight);
-        for(BinaryChapter chapter: form.getChapters()){
+        for(ScoreChapter chapter: form.getChapters()){
             addItems(chapter,2,questionHeight);
         }
         addItems(null,3,questionBannerHeight);
         configCanvas();
 
     }
-    private void addItems(BinaryChapter chapter, int type,float height){
+    private void addItems(Chapter chapter, int type, float height){
         createItems();
         if(type == 1){
-            configItems("#","Capitulo","Puntaje","%",16);
+            configItems("#","Capitulo","Puntaje","%",getTextSize(60));
         }
         if(type == 2){
             configItems(chapter.getNumber(), chapter.getName(),
                     String.valueOf(chapter.getTotalQuestions()),
                     String.valueOf(chapter.getTotalPercentage())+"%",
-                    16);
+                    getTextSize(60));
         }
         if(type == 3){
-            configItems("Total","",String.valueOf(form.getTotalPoints()),"100%",16);
+            configItems("Total","",String.valueOf(form.getTotalPoints()),"100%",getTextSize(60));
         }
-        setBounds(textNumber,numberWitdh,height,numberX);
-        setBounds(textQuestion,questionWidth,height,questionX);
-        setBounds(textPoints,pointsWitdh,height,pointsX);
-        setBounds(textPercentage,percentageWitdh,height,percentageX);
+        setBounds(textNumber,numberWitdh,height,numberX,false,false);
+        setBounds(textQuestion,questionWidth,height,questionX,false,false);
+        setBounds(textPoints,pointsWitdh,height,pointsX,false,false);
+        setBounds(textPercentage,percentageWitdh,height,percentageX,false,false);
         totalY+=((int)(this.height*height));
 
         layout.addView(textNumber);
@@ -78,18 +76,20 @@ public class BinaryFormPanelView implements IPanelView,IBinaryFormPanelViewConst
         textNumber.setText(textN);
         //textNumber.setBackgroundColor(Color.CYAN);
         textNumber.setTextSize(size);
+        textNumber.setGravity(Gravity.CENTER);
 
         textQuestion.setText(textQ);
         //textQuestion.setBackgroundColor(Color.argb(111,111,111,111));
         textQuestion.setTextSize(size);
+        textQuestion.setGravity(Gravity.CENTER);
 
         textPoints.setText(textPo);
         textPoints.setTextSize(size);
-        //textPoints.setBackgroundColor(Color.argb(111,111,111,111));
+        textPoints.setGravity(Gravity.CENTER);
 
         textPercentage.setText(textPer);
         textPercentage.setTextSize(size);
-        //textPercentage.setBackgroundColor(Color.argb(111,111,111,111));
+        textPercentage.setGravity(Gravity.CENTER);
     }
     private void createItems(){
         textNumber = new TextView(context);
@@ -97,19 +97,20 @@ public class BinaryFormPanelView implements IPanelView,IBinaryFormPanelViewConst
         textPoints = new TextView(context);
         textPercentage = new TextView(context);
     }
-    private void setBounds(TextView view, float w, float h, float x){
-        view.setWidth((int)(w*width));
-        view.setHeight((int)(h*height));
-        view.setX(x*width);
-        view.setY(totalY+layoutY);
-        view.setGravity(Gravity.CENTER);
-    }
-    private void addSpace(int space){
-        totalY+=(space*height/100);
-    }
+
     @Override
-    public int getHeight() {
-        return totalY;
+    protected void setItemsBoundsHorizontal() {
+
+    }
+
+    @Override
+    protected void setItemsBoundsVertical() {
+
+    }
+
+    @Override
+    protected void setItemsConfiguration() {
+
     }
 
     @Override

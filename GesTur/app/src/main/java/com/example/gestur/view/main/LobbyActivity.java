@@ -1,38 +1,32 @@
 package com.example.gestur.view.main;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gestur.DB.DB;
 import com.example.gestur.R;
 import com.example.gestur.logic.Activity;
 import com.example.gestur.logic.User;
-import com.example.gestur.view.checkListView.CheckListView;
-import com.example.gestur.view.FormView;
 
 import java.util.ArrayList;
 
-public class LobbyActivity extends AbstractActivity implements NavigationView.OnNavigationItemSelectedListener,ILobbyActivityConstants{
+public class LobbyActivity extends AbstractActivity implements NavigationView.OnNavigationItemSelectedListener,
+        ILobbyActivityConstants, IObservable{
 
     private RelativeLayout layoutLobby;
     private ScrollView scroll;
@@ -57,8 +51,8 @@ public class LobbyActivity extends AbstractActivity implements NavigationView.On
 
         loadActivities();
 
-        scroll.setMinimumHeight(5200);
-        layoutLobby.setMinimumHeight(5200);
+        scroll.setMinimumHeight(totalY+100);
+        layoutLobby.setMinimumHeight(totalY+100);
     }
     private void loadActivities(){
         if(user.getActivities() != null && user.getActivities().size()>0){
@@ -154,7 +148,8 @@ public class LobbyActivity extends AbstractActivity implements NavigationView.On
         } else if (id == R.id.new_activity) {
             startActivity(new Intent(this, RegisterActivity.class));
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.synchronize) {
+            DB.getInstance().updateUserActivities(this);
 
         } else if (id == R.id.nav_manage) {
 
@@ -188,5 +183,14 @@ public class LobbyActivity extends AbstractActivity implements NavigationView.On
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override //1 exito, 2 fallo
+    public void notifyObservable(int n, String msg) {
+        if(n == 1){
+            Toast.makeText(this,msg, Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this,msg, Toast.LENGTH_SHORT).show();
+        }
     }
 }

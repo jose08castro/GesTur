@@ -162,6 +162,7 @@ public class DummyRealFactory {
                 question.question5Star,
                 question.selectedQuestion);
     }
+
     public static ScoreChapter getRealClass(ChapterDefSpa chapter){
         ArrayList<ScoreQuestion> questions = new ArrayList<>();
         for(QuestionDefScoreObs q:chapter.questionsScore){
@@ -202,6 +203,7 @@ public class DummyRealFactory {
                 questions2,
                 chapter.totalPercentage);
     }
+
     public static BinaryForm getRealClass(FormDefBinary form){
         ArrayList<BinaryChapter> chapters2 = new ArrayList<>();
         for(ChapterDefBinary c:form.chapters){
@@ -269,6 +271,7 @@ public class DummyRealFactory {
                 form.places,
                 form.collaborators,chapters2);
     }
+
     public static CheckListQuestion getRealClass(CheckListQuestionDef question){
         return new CheckListQuestion(question.question,
                 question.yes,
@@ -553,7 +556,7 @@ public class DummyRealFactory {
             questionsTechDef.add(getDummyCheckListQuestion(q));
         }
         checkListDef.questionsLegal = questionsLegalDef;
-        checkListDef.questionsTech = questionsLegalDef;
+        checkListDef.questionsTech = questionsTechDef;
         return checkListDef;
     }
     public static CheckListQuestionDef getDummyCheckListQuestion(CheckListQuestion q){
@@ -622,7 +625,6 @@ public class DummyRealFactory {
         }
         return dummies;
     }
-
 
     public static UserDummy getDummyUser(User user){
         UserDummy userDummy = new UserDummy();

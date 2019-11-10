@@ -5,14 +5,20 @@ import android.widget.TextView;
 
 import com.example.gestur.logic.chapters.IChapter;
 import com.example.gestur.logic.chapters.ScoreChapter;
+import com.example.gestur.logic.questions.HotelQuestion;
+import com.example.gestur.logic.questions.ScoreObsQuestion;
 import com.example.gestur.logic.questions.ScoreQuestion;
 import com.example.gestur.view.ChapterView;
 import com.example.gestur.view.IPanelView;
 import com.example.gestur.view.IScoreViewConstants;
+import com.example.gestur.view.InfoPasser;
+import com.example.gestur.view.main.AbstractActivityComponent;
+import com.example.gestur.view.main.IActivityComponent;
 
 import java.util.ArrayList;
 
-public class ScoreChapterPanelView implements IPanelView, IScoreChapterPanelViewConstants, IScoreQuestionViewConstants{
+public class ScoreChapterPanelView extends AbstractActivityComponent implements IPanelView, IScoreChapterPanelViewConstants, IScoreQuestionViewConstants{
+
     private TextView textNumber;
     private TextView textReq;
     private TextView textScore;
@@ -23,19 +29,16 @@ public class ScoreChapterPanelView implements IPanelView, IScoreChapterPanelView
     private TextView textTotalPercentage;
     private TextView textFormPercentage;
 
-    //private TextView totalNa;
-    //private TextView totalPoints;
-    //private TextView totalPercentage;
-    //private TextView formPercentage;
+    private ArrayList<IActivityComponent> questions;
 
-    private int panelHeight;
-
-    private ArrayList<ScoreQuestionView> questions;
     private ScoreChapter chapter;
     private ChapterView context;
+    private RelativeLayout layout;
 
     public ScoreChapterPanelView(ScoreChapter chapter, ChapterView context){
         this.context = context;
+        this.chapter = chapter;
+
         textNumber = new TextView(context);
         textReq = new TextView(context);
         textScore = new TextView(context);
@@ -46,31 +49,62 @@ public class ScoreChapterPanelView implements IPanelView, IScoreChapterPanelView
         textTotalPercentage = new TextView(context);
         textFormPercentage = new TextView(context);
 
-        panelHeight = 0;
-        this.chapter = chapter;
-
         createQuestions(context);
     }
 
     public void createQuestions(ChapterView context){
         questions = new ArrayList<>();
-        for(ScoreQuestion question: chapter.getQuestions()){
-            questions.add(new ScoreQuestionView(question,context));
+        int type = InfoPasser.getInstance().getCurrentForm().getType();
+        if(type == 2){
+            for(ScoreQuestion question: chapter.getQuestions()){
+                questions.add(new HotelQuestionView((HotelQuestion) question,context));
+            }
+        }else if(type == 10 || type == 11){
+            for(ScoreQuestion question: chapter.getQuestions()){
+                questions.add(new ScoreQuestionView(question,context));
+            }
+        }else if(type == 14){
+            for(ScoreQuestion question: chapter.getQuestions()){
+                questions.add(new ScoreObservationQuestionView((ScoreObsQuestion)question,context));
+            }
         }
     }
 
     @Override
     public void addComponents(int screenX, int screenY, int currentY, RelativeLayout layout) {
-
-        addDataBar(screenX,screenY,currentY,layout);
-        addQuestions(screenX,screenY, currentY+panelHeight,layout);
-        addTotalsBar(screenX,screenY,currentY+panelHeight,layout);
+        width = screenX;
+        height = screenY;
+        layoutY = currentY;
+        this.layout = layout;
+        //createItems();
+        //setItemsConfiguration();
+        //setItemsBounds();
+        addItems();
+        //addQuestions(screenX,screenY,currentY,la);
         update();
+    }
+    private void createItems(){
+
+    }
+    private void addItems(){
+        for(IActivityComponent questionView: questions){
+            questionView.addComponents(width,height,layoutY+totalY,layout);
+            totalY+=questionView.getHeight();
+        }
+    }
+    @Override
+    protected void setItemsBoundsHorizontal() {
+
     }
 
     @Override
-    public int getHeight() {
-        return panelHeight;
+    protected void setItemsBoundsVertical() {
+
+    }
+
+    @Override
+    protected void setItemsConfiguration() {
+
     }
 
     @Override
@@ -81,74 +115,12 @@ public class ScoreChapterPanelView implements IPanelView, IScoreChapterPanelView
         textFormPercentage.setText(String.valueOf(chapter.getAchievedFormPercentage()));
     }
 
-    private void addDataBar(int screenX, int screenY, int currentY, RelativeLayout layout){
-        /*
-        textNumber.setText("#");
-        textNumber.setX(startX*screenX);
-        textNumber.setY(currentY);
-        textNumber.setWidth((int)(textNumberWidth*screenX));
-        textNumber.setHeight((int)(dataBarHeight*screenY));
 
-        textReq.setText("Requerimientos");
-        textReq.setX(startQuestion*screenX);
-        textReq.setY(currentY);
-        textReq.setWidth((int)(textQuestionWidth*screenX));
-        textReq.setHeight((int)(dataBarHeight*screenY));
-
-        textScore.setText("");
-        textScore.setX(startSpinner*screenX);
-        textScore.setY(currentY);
-        textScore.setWidth((int)(checkBoxWidth*screenX));
-        textScore.setHeight((int)(dataBarHeight*screenY));
-
-        textNa.setText("NA");
-        textNa.setX(startCheck*screenX);
-        textNa.setY(currentY);
-        textNa.setWidth((int)(checkBoxWidth*screenX));
-        textNa.setHeight((int)(dataBarHeight*screenY));
-
-        layout.addView(textNumber);
-        layout.addView(textReq);
-        layout.addView(textScore);
-        layout.addView(textNa);
-
-        panelHeight += dataBarHeight*screenY;
-        */
-    }
-    private void addQuestions(int screenX, int screenY, int currentY, RelativeLayout layout){
+    private void addQuestions(){
         for(int i = 0;i<questions.size();i++){
-            questions.get(i).addComponents(screenX,screenY,currentY,layout);
-            currentY+=(screenY*height);
-            panelHeight +=(screenY*height);
+            questions.get(i).addComponents(width,height,totalY+layoutY,layout);
+            totalY += questions.get(i).getHeight();
         }
     }
-    private void addTotalsBar(int screenX, int screenY, int currentY, RelativeLayout layout) {
-        /*
-        textTotalPoints.setText("Total");
-        textTotalPoints.setX(screenX * questionX);
-        textTotalPoints.setY(currentY);
-        textTotalPoints.setWidth((int) (screenX * textWidth));
-        textTotalPoints.setHeight((int) (screenY * totalsBarHeight));
 
-        textTotalPercentage.setText();
-        textTotalPercentage.setX();
-        textTotalPercentage.setY();
-        textTotalPercentage.setWidth();
-        textTotalPercentage.setHeight();
-
-
-        textTotalNa.setText("0");
-        textTotalNa.setX(screenX * naX);
-        textTotalNa.setY(currentY);
-        textTotalNa.setWidth((int) (screenX * radioButtonWidth));
-        textTotalNa.setHeight((int) (screenY * totalsBarHeight));
-
-        layout.addView(textTotalPoints);
-        layout.addView(textTotalPercentage);
-        layout.addView(textFormPercentage);
-        layout.addView(textTotalNa);
-
-        panelHeight += totalsBarHeight * screenY;
-        */
-    }
 }

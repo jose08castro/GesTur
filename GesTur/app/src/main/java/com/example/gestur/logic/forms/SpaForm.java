@@ -64,4 +64,20 @@ public class SpaForm extends ScoreForm{
             chapters.add(chapter);
         }
     }
+
+    public void setEstablishmentName(String establishmentName) {
+        this.establishmentName = establishmentName;
+    }
+
+    public void setCollaborators(int collaborators) {
+        this.collaborators = collaborators;
+    }
+
+    public void setTypology(String typology) {
+        this.typology = typology;
+    }
+
+    public void setRooms(int rooms) {
+        this.rooms = rooms;
+    }
 }

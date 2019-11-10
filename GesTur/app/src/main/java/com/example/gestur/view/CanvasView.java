@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.example.gestur.view.chapterView.IBinaryViewConstants;
+import com.example.gestur.view.binaryChapterView.IBinaryViewConstants;
 
 import java.util.ArrayList;
 

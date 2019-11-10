@@ -30,6 +30,16 @@ public class CheckListQuestion {
         no = !done;
         form.update();
     }
+    public void setNo(){
+        no = true;
+        yes = false;
+        form.update();
+    }
+    public void setYes(){
+        no = false;
+        yes = true;
+        form.update();
+    }
 
     public boolean isYes() {
         return yes;

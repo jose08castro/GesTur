@@ -20,15 +20,16 @@ public class ScoreChapter extends Chapter{
         this.questions = new ArrayList<>();
         form = null;
         addQuestions(questions);
-        update();
 
+    }
+    public void updateOnCreate(){
+        updateTotals();
+        updatePercentages();
     }
     public void update(){
         updateTotals();
         updatePercentages();
-        if(form!=null){
-            form.update();
-        }
+        form.update();
     }
     private void updateTotals(){
         achievedPoints = 0;
@@ -71,6 +72,7 @@ public class ScoreChapter extends Chapter{
             for (ScoreQuestion quest : quests) {
                 addQuestion(quest);
             }
+            updateOnCreate();
         }
     }
     public void addQuestion(ScoreQuestion quest){
@@ -92,6 +94,15 @@ public class ScoreChapter extends Chapter{
 
     public int getTotalPoints() {
         return totalPoints;
+    }
+
+    @Override
+    public int getTotalQuestions() {
+        if(questions!=null){
+            return questions.size();
+        }else{
+            return 0;
+        }
     }
 
     public int getApplicablePoints(){

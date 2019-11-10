@@ -104,6 +104,7 @@ public class CheckListForm {
             achievedPercentage = 0f;
         }else{
             achievedPercentage = 100*(((float)done)/((float)total));
+            achievedPercentage = (float)(Math.round(achievedPercentage*Math.pow(10,2)) / Math.pow(10,2));
         }
     }
 
